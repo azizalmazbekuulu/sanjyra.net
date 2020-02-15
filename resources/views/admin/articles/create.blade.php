@@ -3,9 +3,9 @@
 @section('content')
     <div class="container">
         @component('admin.components.breadcrumb')
-            @slot('title') Создание новостей @endslot
-            @slot('parent') Главная @endslot
-            @slot('active') Новости @endslot
+            @slot('title') Макалаларды түзүү @endslot
+            @slot('parent') Башкы бет @endslot
+            @slot('active') Макалалар @endslot
         @endcomponent
         <hr>
         <form action="{{route('admin.article.store')}}" method="post">

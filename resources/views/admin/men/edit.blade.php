@@ -3,18 +3,18 @@
 @section('content')
     <div class="container">
         @component('admin.components.breadcrumb')
-            @slot('title') Макалаларды оңдоо @endslot
+            @slot('title') Эркек адамдарды оңдоо @endslot
             @slot('parent') Башкы бет @endslot
-            @slot('active') Макалалар @endslot
+            @slot('active') Эркек адамдар @endslot
         @endcomponent
         <hr>
-        <form action="{{route('admin.article.update', $article)}}" method="post">
+        <form action="{{route('admin.man.update', $man)}}" method="post">
             <input type="hidden" name="_method" value="put">
             {{ csrf_field() }}
 
             {{-- Form include --}}
-            @include('admin.articles.partials.form')
-            <input type="hidden" name="modified_by" value="{{Auth::id()}}">
+            @include('admin.men.partials.form')
+
         </form>
     </div>
 @endsection

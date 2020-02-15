@@ -3,9 +3,9 @@
 @section('content')
     <div class="container">
         @component('admin.components.breadcrumb')
-            @slot('title') Создание пользователя @endslot
-            @slot('parent') Главная @endslot
-            @slot('active') Пользователь @endslot
+            @slot('title') Колдонуучулардын тизмеси @endslot
+            @slot('parent') Башкы бет @endslot
+            @slot('active') Колдонуучу @endslot
         @endcomponent
         <hr>
         <form action="{{route('admin.user_management.user.store')}}" method="post">

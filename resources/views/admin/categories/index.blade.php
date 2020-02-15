@@ -5,20 +5,20 @@
 <div class="container">
     
     @component('admin.components.breadcrumb')
-        @slot('title') Список категорий @endslot
-        @slot('parent') Главвная @endslot
-        @slot('active') Категории @endslot
+        @slot('title') Категориялардын тизмеси @endslot
+        @slot('parent') Башкы бет @endslot
+        @slot('active') Категориялар @endslot
     @endcomponent
 
     <hr>
 
-    <a href="{{route('admin.category.create')}}" class="btn btn-primary float-right"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Создать категорию</a>
+    <a href="{{route('admin.category.create')}}" class="btn btn-primary float-right"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Категория түзүү</a>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Наименование</th>
-                <th>Публикация</th>
-                <th class="text-right">Действие</th>
+                <th>Аталышы</th>
+                <th>Жарыялоо</th>
+                <th class="text-right">Аракет</th>
             </tr>
         </thead>
         <tbody>
@@ -27,7 +27,7 @@
                     <td>{{$category->title}}</td>
                     <td>{{$category->published}}</td>
                     <td class="text-right">
-                        <form onsubmit="if(confirm('Удалить?')){ return true }else{ return false }" action="{{route('admin.category.destroy', $category)}}" method="post">
+                        <form onsubmit="if(confirm('Өчүрүү керекпи?')){ return true }else{ return false }" action="{{route('admin.category.destroy', $category)}}" method="post">
                             <input type="hidden" name="_method" value="DELETE">
                             {{ csrf_field() }}
                             <a class="btn btn-default" href="{{ route('admin.category.edit', $category) }}"><i class="fas fa-edit"></i></a>
@@ -37,7 +37,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="3" class="text-center">Данные отсутствуют</td>
+                    <td colspan="3" class="text-center">Категориялар жок</td>
                 </tr>
             @endforelse
         </tbody>

@@ -3,9 +3,9 @@
 @section('content')
     <div class="container">
         @component('admin.components.breadcrumb')
-            @slot('title') Редактирование категории @endslot
-            @slot('parent') Главная @endslot
-            @slot('active') Категории @endslot
+            @slot('title') Категориияны оңдоо @endslot
+            @slot('parent') Башкы бет @endslot
+            @slot('active') Категориялар @endslot
         @endcomponent
         <hr>
         <form action="{{route('admin.category.update', $category)}}" method="post">

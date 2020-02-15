@@ -3,17 +3,17 @@
 @section('content')
     <div class="container">
         @component('admin.components.breadcrumb')
-            @slot('title') Категория түзүү @endslot
+            @slot('title') Ысымдарды түзүү @endslot
             @slot('parent') Башкы бет @endslot
-            @slot('active') Категориялар @endslot
+            @slot('active') Ысымдар @endslot
         @endcomponent
         <hr>
-        <form action="{{route('admin.category.store')}}" method="post">
+        <form action="{{route('admin.name.store')}}" method="post">
             {{ csrf_field() }}
 
             {{-- Form include --}}
-            @include('admin.categories.partials.form')
-
+            @include('admin.names.partials.form')
+            <input type="hidden" name="created_by" value="{{Auth::id()}}">
         </form>
     </div>
 @endsection

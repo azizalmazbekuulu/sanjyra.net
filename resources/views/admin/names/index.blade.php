@@ -5,32 +5,32 @@
 <div class="container">
     
     @component('admin.components.breadcrumb')
-        @slot('title') Колдонуучулардын тизмеси @endslot
+        @slot('title') Ысымдардын тизмеси @endslot
         @slot('parent') Башкы бет @endslot
-        @slot('active') Колдонуучулар @endslot
+        @slot('active') Ысымдар @endslot
     @endcomponent
 
     <hr>
 
-    <a href="{{route('admin.user_management.user.create')}}" class="btn btn-primary float-right"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Колдонуучу түзүү</a>
+    <a href="{{route('admin.name.create')}}" class="btn btn-primary float-right"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Ысым түзүү</a>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Аты</th>
-                <th>Email</th>
+                <th>Ысым</th>
+                <th>Публикация</th>
                 <th class="text-right">Аракет</th>
             </tr>
         </thead>
         <tbody>
-            @forelse ($users as $user)
+            @forelse ($names as $name)
                 <tr>
-                    <td>{{$user->name}}</td>
-                    <td>{{$user->email}}</td>
+                    <td>{{$name->name}}</td>
+                    <td>{{$name->published}}</td>
                     <td class="text-right">
-                        <form onsubmit="if(confirm('Өчүрүү керекпи?')){ return true }else{ return false }" action="{{route('admin.user_management.user.destroy', $user)}}" method="post">
-                            {{ method_field('DELETE') }}
+                        <form onsubmit="if(confirm('Өчүрүү керекпи?')){ return true }else{ return false }" action="{{route('admin.name.destroy', $name)}}" method="post">
+                            <input type="hidden" name="_method" value="DELETE">
                             {{ csrf_field() }}
-                            <a class="btn btn-default" href="{{ route('admin.user_management.user.edit', $user) }}"><i class="fas fa-edit"></i></a>
+                            <a class="btn btn-default" href="{{ route('admin.name.edit', $name) }}"><i class="fas fa-edit"></i></a>
                             <button type="submit" class="btn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                         </form>
                     </td>
@@ -45,7 +45,7 @@
             <tr>
                 <td colspan="3">
                     <ul class="pagination float-right">
-                        {{$users->links()}}
+                        {{$names->links()}}
                     </ul>
                 </td>
             </tr>

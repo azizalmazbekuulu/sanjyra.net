@@ -2,32 +2,32 @@
     <label for="">Статус</label>
     <select name="published" class="form-control">
         @if (isset($category->id))
-            <option value="0" @if ($category->published == 0) selected="" @endif>Не опубликовано</option>
-            <option value="1" @if ($category->published == 1) selected="" @endif>Опубликовано</option>
+            <option value="0" @if ($category->published == 0) selected="" @endif>Жарыяланган эмес</option>
+            <option value="1" @if ($category->published == 1) selected="" @endif>Жарыяланган</option>
         @else
-            <option value="0">Не опубликовано</option>
-            <option value="1">Опубликовано</option>
+            <option value="0">Жарыяланган эмес</option>
+            <option value="1">Жарыяланган</option>
         @endif
     </select>
 </div>
 <div class="form-group">
-    <label for="">Наименование</label>
-    <input type="text" class="form-control" name="title" placeholder="Заголовок категории" @if (isset($category->title)) value="{{$category->title}}"
+    <label for="">Аталыш</label>
+    <input type="text" class="form-control" name="title" placeholder="Категориянын аталышы" @if (isset($category->title)) value="{{$category->title}}"
             @else value=""
             @endif required>
 </div>
 <div class="form-group">
     <label for="">Slug</label>
-    <input type="text" class="form-control" name="slug" placeholder="Автоматическая генерация" @if (isset($category->slug)) value="{{$category->slug}}"
+    <input type="text" class="form-control" name="slug" placeholder="Автоматтык түрдө түзүлөт" @if (isset($category->slug)) value="{{$category->slug}}"
     @else value=""
     @endif readonly>
 </div>
 <div class="form-group">
-    <label for="">Родительская категория</label>
+    <label for="">Башкы категория</label>
     <select name="parent_id" class="form-control">
-        <option value="0">-- без родительской категории --</option>
+        <option value="0">-- башкы категориясыз --</option>
         @include('admin.categories.partials.categories', ['categories' => $categories])
     </select>
 </div>
 <hr>
-<input class="btn btn-primary" type="submit" value="Сохранить">
+<input class="btn btn-primary" type="submit" value="Сактоо">

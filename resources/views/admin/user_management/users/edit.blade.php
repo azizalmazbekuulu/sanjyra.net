@@ -3,9 +3,9 @@
 @section('content')
     <div class="container">
         @component('admin.components.breadcrumb')
-            @slot('title') Редактирование пользователя @endslot
-            @slot('parent') Главная @endslot
-            @slot('active') Пользователи @endslot
+            @slot('title') Колдонуучуну өзгөртүү @endslot
+            @slot('parent') Башкы бет @endslot
+            @slot('active') Колдонуучулар @endslot
         @endcomponent
         <hr>
         <form action="{{route('admin.user_management.user.update', $user)}}" method="post">

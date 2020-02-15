@@ -38,20 +38,20 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="btn btn-default nav-item">
-                            <a href="{{route('admin.index')}}">Панель состояния</a>
+                            <a href="{{route('admin.index')}}">Башкаруу тактасы</a>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="btn dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Блог</a>
                             <ul class="dropdown-menu" role="menu">
-                                <li class="dropdown-item"><a href="{{route('admin.category.index')}}">Категории</a></li>
-                                <li class="dropdown-item"><a href="{{route('admin.article.index')}}">Материалы</a></li>
+                                <li class="dropdown-item"><a href="{{route('admin.category.index')}}">Категориялар</a></li>
+                                <li class="dropdown-item"><a href="{{route('admin.article.index')}}">Материалдар</a></li>
+                                <li class="dropdown-item"><a href="{{route('admin.name.index')}}">Ысымдар</a></li>
+                                <li class="dropdown-item"><a href="{{route('admin.man.index')}}">Эркек адамдар</a></li>
+                                <li class="dropdown-item"><a href="{{route('admin.woman.index')}}">Аял адамдар</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown">
-                            <a href="#" class="btn dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Управление пользователями</a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li class="dropdown-item"><a href="{{route('admin.user_management.user.index')}}">Пользователи</a></li>
-                            </ul>
+                        <li class="btn btn-default nav-item">
+                            <a href="{{route('admin.user_management.user.index')}}">Колдонуучулар</a>
                         </li>
                     </ul>
 
@@ -59,14 +59,14 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            {{-- <li class="nav-item">
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
-                            @endif --}}
+                            @endif
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

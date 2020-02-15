@@ -8,8 +8,8 @@
     </div>
 @endif
 <div class="form-group">
-    <label for="">Имя</label>
-    <input type="text" class="form-control" name="name" placeholder="Имя" 
+    <label for="">Ысымы</label>
+    <input type="text" class="form-control" name="name" placeholder="Ысымы" 
         @if (old('name'))
             value="{{old('name')}}"
         @else
@@ -32,12 +32,12 @@
     required>
 </div>
 <div class="form-group">
-    <label for="">Пароль</label>
+    <label for="">Сыр сөз</label>
     <input type="password" class="form-control" name="password">
 </div>
 <div class="form-group">
-    <label for="">Подтверждение</label>
+    <label for="">сыр сөздү тастыктоо</label>
     <input type="password" class="form-control" name="password_confirmation">
 </div>  
 <hr>
-<input class="btn btn-primary" type="submit" value="Сохранить">
+<input class="btn btn-primary" type="submit" value="Сактоо">
