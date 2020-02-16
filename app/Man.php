@@ -21,8 +21,14 @@ class Man extends Model
         return $this->hasMany(self::class, 'father_id');
     }
 
+    //Get children category
+    public function father()
+    {
+        return $this->belongsTo(self::class, 'father_id');
+    }
+
     public function scopeLastMen($query, $count)
     {
-        return $query->orderBy('created_at', 'desc')->take($count)->get();
+        return $query->orderBy('id', 'desc')->take($count)->get();
     }
 }

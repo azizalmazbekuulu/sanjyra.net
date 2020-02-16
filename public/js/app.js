@@ -49508,6 +49508,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 $(document).ready(function () {
   CKEDITOR.replace('description_short');
   CKEDITOR.replace('description');
+  CKEDITOR.replace('info');
 });
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**

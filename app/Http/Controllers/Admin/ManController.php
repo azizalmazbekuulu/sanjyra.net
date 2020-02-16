@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Man;
+use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class ManController extends Controller
 {
@@ -13,10 +15,17 @@ class ManController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id = 1)
     {
+        $man = Man::find($id);
         return view('admin.men.index', [
-            'men' => Man::orderBy('created_at', 'desc')->paginate(10)
+            'men' => Man::orderBy('id', 'asc')->paginate(10),
+            'man' => DB::table('men as men1')
+                    ->join('men as men2', 'men2.id', '=', 'men1.id')
+                    ->select('men1.*', 'men2.name as father_name')
+                    ->get(),
+            'self_with_brothers' => Man::with('children')->where('father_id', $man->father_id)->get(),
+            'children' => Man::with('children')->where('father_id', $id)->get()
         ]);
     }
 

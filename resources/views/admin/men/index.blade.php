@@ -25,7 +25,9 @@
             @forelse ($men as $man)
                 <tr>
                     <td>{{$man->name}}</td>
-                    <td>{{$man->name}}</td>
+                    <td>
+                        {{$man->father_id}}
+                    </td>
                     <td class="text-right">
                         <form onsubmit="if(confirm('Өчүрүү керекпи?')){ return true }else{ return false }" action="{{route('admin.man.destroy', $man)}}" method="post">
                             <input type="hidden" name="_method" value="DELETE">
@@ -51,6 +53,8 @@
             </tr>
         </tfoot>
     </table>
+    <hr>
+    @include('admin.men.partials.tree', $man)
 </div>
 
 @endsection
