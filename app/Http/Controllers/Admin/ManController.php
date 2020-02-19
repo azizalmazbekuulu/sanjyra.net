@@ -15,17 +15,12 @@ class ManController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id = 1)
+    public function index()
     {
-        $man = Man::find($id);
         return view('admin.men.index', [
-            'men' => Man::orderBy('id', 'asc')->paginate(10),
-            'man' => DB::table('men as men1')
-                    ->join('men as men2', 'men2.id', '=', 'men1.id')
-                    ->select('men1.*', 'men2.name as father_name')
-                    ->get(),
-            'self_with_brothers' => Man::with('children')->where('father_id', $man->father_id)->get(),
-            'children' => Man::with('children')->where('father_id', $id)->get()
+            'man'           => Man::find(1),
+            'children'      => Man::with('children')->where('father_id', 1)->get(),
+            'grandchildren' => Man::with('children')->where('father_id', 2)->get()
         ]);
     }
 
@@ -67,7 +62,40 @@ class ManController extends Controller
      */
     public function show(Man $man)
     {
-        //
+        if ($man->id == 1)
+            return view('admin.men.index', [
+                'man'           => Man::find(1),
+                'children'      => Man::with('children')->where('father_id', 1)->get(),
+                'grandchildren' => Man::with('children')->where('father_id', 2)->get()
+            ]);
+        else
+            return view('admin.men.show', [
+                'man'           => Man::find($man->father_id),
+                'children'      => Man::with('children')->where('father_id', $man->father_id)->get(),
+                'grandchildren' => Man::with('children')->where('father_id', $man->id)->get()
+            ]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Man  $man
+     * @return \Illuminate\Http\Response
+     */
+    public function man(Man $man)
+    {
+        if ($man->id == 1)
+            return view('men.show', [
+                'man'           => Man::find(1),
+                'children'      => Man::with('children')->where('father_id', 1)->get(),
+                'grandchildren' => Man::with('children')->where('father_id', 2)->get()
+            ]);
+        else
+            return view('men.show', [
+                'man'           => Man::find($man->father_id),
+                'children'      => Man::with('children')->where('father_id', $man->father_id)->get(),
+                'grandchildren' => Man::with('children')->where('father_id', $man->id)->get()
+            ]);
     }
 
     /**

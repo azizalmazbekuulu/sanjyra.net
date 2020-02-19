@@ -13,7 +13,7 @@
     <hr>
 
     <a href="{{route('admin.man.create')}}" class="btn btn-primary float-right"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Эркек адам кошуу</a>
-    <table class="table table-striped">
+    {{-- <table class="table table-striped">
         <thead>
             <tr>
                 <th>Адам</th>
@@ -52,7 +52,7 @@
                 </td>
             </tr>
         </tfoot>
-    </table>
+    </table> --}}
     <hr>
     @include('admin.men.partials.tree', $man)
 </div>

@@ -4,7 +4,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <a class="btn btn-primary" href="{{route('admin.man.show', $man->id)}}">
+                        <a class="btn btn-primary" href="{{route('man.man', $man->id)}}">
                             {{ $man->name }}
                         </a>
                     </td>
@@ -21,7 +21,7 @@
                 @foreach ($children as $child)
                 <tr>
                     <td>
-                        <a class="btn btn-primary w-100" href="{{route('admin.man.show', $child->id)}}">
+                        <a class="btn btn-primary w-100" href="{{route('man.man', $child->id)}}">
                             {{ $child->name }}
                         </a>
                     </td>
@@ -51,7 +51,7 @@
                 @foreach ($grandchildren as $grandchild)
                 <tr>
                     <td>
-                        <a class="btn btn-primary w-100" href="{{route('admin.man.show', $grandchild->id)}}">
+                        <a class="btn btn-primary w-100" href="{{route('man.man', $grandchild->id)}}">
                             {{ $grandchild->name }}
                         </a>
                     </td>
