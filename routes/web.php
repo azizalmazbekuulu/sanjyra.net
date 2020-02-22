@@ -23,8 +23,6 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Admin', 'middleware'=>['auth']], 
     });
 });
 
-Route::get('/man', 'Admin\ManController@man');
-
 Route::get('/', function () {
     return view('welcome');
 });

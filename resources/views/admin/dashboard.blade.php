@@ -25,7 +25,7 @@
             </div>
             <div class="col-sm-3">
                 <div class="card bg-secondary text-white">
-                    <span class="card-header">Аял адамдар: {{ $count_men }}</span>
+                    <span class="card-header">Аял адамдар: {{ $count_women }}</span>
                 </div>
             </div>
         </div>
@@ -52,9 +52,9 @@
             <div class="col-sm-4">
                 <a href="{{route('admin.man.create')}}" class="btn btn-block btn-primary">Аял адам кошуу</a>
                 Акыркы кошулгандар:
-                @foreach ($men as $man)
-                    <a href="{{route('admin.man.edit', $man)}}" class="list-group-item">
-                        <h4 class="list-group-item-heading">{{$man->name}}</h4>
+                @foreach ($women as $man)
+                    <a href="{{route('admin.man.edit', $woman)}}" class="list-group-item">
+                        <h4 class="list-group-item-heading">{{$woman->name}}</h4>
                     </a>
                 @endforeach
             </div>

@@ -13,9 +13,7 @@
         @if (old('name'))
             value="{{old('name')}}"
         @else
-            @if (isset($user->name)) value="{{$user->name}}"
-            @else value=""
-            @endif
+            value="{{$user->name ?? ''}}"
         @endif
     required>
 </div>
@@ -25,9 +23,7 @@
         @if (old('email'))
             value="{{old('email')}}"
         @else
-            @if (isset($user->email)) value="{{$user->email}}"
-            @else value=""
-            @endif
+            value="{{$user->email ?? ''}}"
         @endif
     required>
 </div>

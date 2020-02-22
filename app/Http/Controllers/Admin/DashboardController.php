@@ -19,10 +19,12 @@ class DashboardController extends Controller
             'articles'   => Article::lastArticles(5),
             'names'      => Name::lastNames(5),
             'men'        => Man::lastMen(5),
+            'woman'      => Woman::lastWoman(5),
             'count_categories' => Category::count(),
             'count_articles'   => Article::count(),
             'count_names'      => Name::count(),
-            'count_men'        => Man::count()
+            'count_men'        => Man::count(),
+            'count_women'      => Woman::count()
         ]);
     }
 }

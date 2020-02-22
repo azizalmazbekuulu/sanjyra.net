@@ -1,4 +1,4 @@
-.tree {
+.tree tr, .tree td {
     border-spacing: 0px;
 }
 .tree td {

@@ -17,11 +17,8 @@ class ManController extends Controller
      */
     public function index()
     {
-        return view('admin.men.index', [
-            'man'           => Man::find(1),
-            'children'      => Man::with('children')->where('father_id', 1)->get(),
-            'grandchildren' => Man::with('children')->where('father_id', 2)->get()
-        ]);
+        $man = Man::find(1);
+        return redirect()->route('admin.man.edit', $man);
     }
 
     /**
@@ -31,11 +28,8 @@ class ManController extends Controller
      */
     public function create()
     {
-        return view('admin.men.create', [
-            'man'    => [],
-            'categories' => Category::with('children')->where('parent_id', '0')->get(),
-            'delimiter'  => ''
-        ]);
+        $man = Man::find(1);
+        return redirect()->route('admin.man.edit', $man);
     }
 
     /**
@@ -46,12 +40,17 @@ class ManController extends Controller
      */
     public function store(Request $request)
     {
-        $man = Man::create($request->all());
-        //Categories
-        if ($request->input('categories')) :
-            $man->categories()->attach($request->input('categories'));
-        endif;
-        return redirect()->route('admin.man.index');
+        $man = Man::create([
+            'name' => $request['name'],
+            'father_id' => $request['father_id'],
+            'level' => $request['level'] + 1,
+            'uruusu' => $request['uruusu'],
+            'kanchanchy_bala' => $request['kanchanchy_bala'] + 1,
+            'created_by' => $request['created_by']
+        ]);
+        $father = Man::find($request->father_id);
+        $father->update(['bala_sany' => $father->bala_sany + 1]);
+        return redirect()->route('admin.man.edit', $father);
     }
 
     /**
@@ -62,40 +61,7 @@ class ManController extends Controller
      */
     public function show(Man $man)
     {
-        if ($man->id == 1)
-            return view('admin.men.index', [
-                'man'           => Man::find(1),
-                'children'      => Man::with('children')->where('father_id', 1)->get(),
-                'grandchildren' => Man::with('children')->where('father_id', 2)->get()
-            ]);
-        else
-            return view('admin.men.show', [
-                'man'           => Man::find($man->father_id),
-                'children'      => Man::with('children')->where('father_id', $man->father_id)->get(),
-                'grandchildren' => Man::with('children')->where('father_id', $man->id)->get()
-            ]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Man  $man
-     * @return \Illuminate\Http\Response
-     */
-    public function man(Man $man)
-    {
-        if ($man->id == 1)
-            return view('men.show', [
-                'man'           => Man::find(1),
-                'children'      => Man::with('children')->where('father_id', 1)->get(),
-                'grandchildren' => Man::with('children')->where('father_id', 2)->get()
-            ]);
-        else
-            return view('men.show', [
-                'man'           => Man::find($man->father_id),
-                'children'      => Man::with('children')->where('father_id', $man->father_id)->get(),
-                'grandchildren' => Man::with('children')->where('father_id', $man->id)->get()
-            ]);
+        return redirect()->route('admin.man.edit', $man);
     }
 
     /**
@@ -106,8 +72,21 @@ class ManController extends Controller
      */
     public function edit(Man $man)
     {
+        $id = $man->id;
+        $father_id = $man->father_id;
+        if ($man->id == 1)
+        {
+            $id = 2;
+            $father_id = $man->id;
+        }
         return view('admin.men.edit', [
-            'man'    => $man,
+            'active'     => $man->id,
+            'father'     => Man::with(['children' => function ($query) {
+                $query->orderBy('kanchanchy_bala');
+              }])->where('id', $father_id)->get()->first(),
+            'man'        => Man::with(['children' => function ($query) {
+                $query->orderBy('kanchanchy_bala');
+              }])->where('id', $id)->get()->first(),
             'categories' => Category::with('children')->where('parent_id', '0')->get(),
             'delimiter'  => ''
         ]);
@@ -122,15 +101,14 @@ class ManController extends Controller
      */
     public function update(Request $request, Man $man)
     {
-        $man->update();
+        $man->update($request->all());
 
         //Categories
         $man->categories()->detach();
         if ($request->input('categories')) :
             $man->categories()->attach($request->input('categories'));
         endif;
-
-        return redirect()->route('admin.man.index');
+        return redirect()->route('admin.man.edit', $man);
     }
 
     /**
@@ -142,8 +120,14 @@ class ManController extends Controller
     public function destroy(Man $man)
     {
         $man->categories()->detach();
+        $father_id = $man->father_id;
+        $kanchanchy_bala = $man->kanchanchy_bala;
         $man->delete();
-
-        return redirect()->route('admin.man.index');
+        $father = Man::with('children')->find($father_id);
+        $father->update(['bala_sany' => ($father->bala_sany - 1)]);
+        foreach ($father->children as $child)
+            if ($child->kanchanchy_bala > $kanchanchy_bala)
+                $child->update(['kanchanchy_bala' => ($child->kanchanchy_bala -1)]);
+        return redirect()->route('admin.man.edit', $father);
     }
 }

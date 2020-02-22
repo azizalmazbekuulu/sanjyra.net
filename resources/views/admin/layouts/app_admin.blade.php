@@ -39,21 +39,28 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li class="btn btn-default nav-item">
-                            <a href="{{route('admin.index')}}">Башкаруу тактасы</a>
+                        <li class="nav-item">
+                            <a class="nav-link 
+                            {{ (Request::is('admin') ? 'active' : '') }}
+                            " href="{{route('admin.index')}}">Башкаруу тактасы</a>
                         </li>
-                        <li class="dropdown">
-                            <a href="#" class="btn dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Блог</a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li class="dropdown-item"><a href="{{route('admin.category.index')}}">Категориялар</a></li>
-                                <li class="dropdown-item"><a href="{{route('admin.article.index')}}">Материалдар</a></li>
-                                <li class="dropdown-item"><a href="{{route('admin.name.index')}}">Ысымдар</a></li>
-                                <li class="dropdown-item"><a href="{{route('admin.man.index')}}">Эркек адамдар</a></li>
-                                <li class="dropdown-item"><a href="{{route('admin.woman.index')}}">Аял адамдар</a></li>
-                            </ul>
+                        <li class="nav-item">
+                            <a class="nav-link {{ (Request::is('admin/man/*') || Request::is('admin/man') ? 'active' : '') }}" href="{{route('admin.man.index')}}">Эркек адамдар</a>
                         </li>
-                        <li class="btn btn-default nav-item">
-                            <a href="{{route('admin.user_management.user.index')}}">Колдонуучулар</a>
+                        <li class="nav-item">
+                            <a class="nav-link {{ (Request::is('admin/woman/*') || Request::is('admin/woman') ? 'active' : '') }}" href="{{route('admin.woman.index')}}">Аял адамдар</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ (Request::is('admin/name/*') || Request::is('admin/name') ? 'active' : '') }}" href="{{route('admin.name.index')}}">Ысымдар</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ (Request::is('admin/category/*') || Request::is('admin/category') ? 'active' : '') }}" href="{{route('admin.category.index')}}">Категориялар</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ (Request::is('admin/article/*') || Request::is('admin/article') ? 'active' : '') }}" href="{{route('admin.article.index')}}">Материалдар</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ (Request::is('admin/user_management/user/*') || Request::is('admin/user_management/user') ? 'active' : '') }}" href="{{route('admin.user_management.user.index')}}">Колдонуучулар</a>
                         </li>
                     </ul>
 

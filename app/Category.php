@@ -28,7 +28,7 @@ class Category extends Model
         return $this->morphedByMany('App\Article', 'categoryable');
     }
 
-    //Polymorphic relation with articles
+    //Polymorphic relation with men
     public function men()
     {
         return $this->morphedByMany('App\Man', 'categoryable');
