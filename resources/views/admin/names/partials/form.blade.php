@@ -1,9 +1,9 @@
 <div class="form-group">
-    <label for="">Статус</label>
-    <select name="published" class="form-control">
+    <label for="">Аял - Эркек</label>
+    <select name="male_female" class="form-control">
         @if (isset($name->id))
-            <option value="0" @if ($name->published == 0) selected="" @endif>Не опубликовано</option>
-            <option value="1" @if ($name->published == 1) selected="" @endif>Опубликовано</option>
+            <option value="0" @if ($name->male_female == 0) selected="" @endif>Аял ысымы</option>
+            <option value="1" @if ($name->male_female == 1) selected="" @endif>Эркек ысымы</option>
         @else
             <option value="0">Не опубликовано</option>
             <option value="1">Опубликовано</option>
@@ -12,20 +12,16 @@
 </div>
 <div class="form-group">
     <label for="">Ысым</label>
-    <input type="text" class="form-control" name="name" placeholder="Ысым" @if (isset($name->name)) value="{{$name->name}}"
-            @else value=""
-            @endif required>
+    <input type="text" class="form-control" name="name" placeholder="Ысым" value="{{$name->name ?? ''}}" required>
 </div>
 <div class="form-group">
     <label for="">Slug (Окшошу жок маани)</label>
-    <input type="text" class="form-control" name="slug" placeholder="Автоматтык түрдө түзүлөт" @if (isset($name->slug)) value="{{$name->slug}}"
-    @else value=""
-    @endif readonly>
+    <input type="text" class="form-control" name="slug" placeholder="Автоматтык түрдө түзүлөт" value="{{$name->slug ?? ''}}" readonly>
 </div>
 <div class="form-group">
     <label for="description">Аныктама</label>
     <textarea name="description" id="description">
-        @if (isset($name->description)) {{$name->description}} @endif
+        {{$name->description ?? ''}}
     </textarea>
 </div>
 <hr>

@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 class Name extends Model
 {
     //Mass assigned
-    protected $fillable = ['name', 'slug', 'published', 'description_short', 'description', 'created_by', 'modified_by'];
+    protected $guarded = ['id'];
 
     //Mutators
     public function setSlugAttribute($value)

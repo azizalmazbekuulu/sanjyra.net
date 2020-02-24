@@ -17,7 +17,7 @@
         <thead>
             <tr>
                 <th>Ысым</th>
-                <th>Публикация</th>
+                <th>Аял - Эркек</th>
                 <th class="text-right">Аракет</th>
             </tr>
         </thead>
@@ -25,7 +25,11 @@
             @forelse ($names as $name)
                 <tr>
                     <td>{{$name->name}}</td>
-                    <td>{{$name->published}}</td>
+                    <td>@if ($name->male_female)
+                        Эркек ысымы
+                    @else
+                        Аял ысымы
+                    @endif</td>
                     <td class="text-right">
                         <form onsubmit="if(confirm('Өчүрүү керекпи?')){ return true }else{ return false }" action="{{route('admin.name.destroy', $name)}}" method="post">
                             <input type="hidden" name="_method" value="DELETE">

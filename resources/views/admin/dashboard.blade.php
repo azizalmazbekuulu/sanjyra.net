@@ -46,15 +46,25 @@
                 @foreach ($men as $man)
                     <a href="{{route('admin.man.edit', $man)}}" class="list-group-item">
                         <h4 class="list-group-item-heading">{{$man->name}}</h4>
+                        @if ($man->categories()->first() != null)
+                            <p class="list-group-item-text">
+                                Категориялар: {{$man->categories()->pluck('title')->implode(', ')}}
+                            </p>
+                        @endif
                     </a>
                 @endforeach
             </div>
             <div class="col-sm-4">
                 <a href="{{route('admin.man.create')}}" class="btn btn-block btn-primary">Аял адам кошуу</a>
                 Акыркы кошулгандар:
-                @foreach ($women as $man)
+                @foreach ($women as $woman)
                     <a href="{{route('admin.man.edit', $woman)}}" class="list-group-item">
                         <h4 class="list-group-item-heading">{{$woman->name}}</h4>
+                        @if ($woman->categories()->first() != null)
+                            <p class="list-group-item-text">
+                                Категориялар: {{$woman->categories()->pluck('title')->implode(', ')}}
+                            </p>
+                        @endif
                     </a>
                 @endforeach
             </div>
@@ -87,5 +97,6 @@
                 @endforeach
             </div>
         </div>
+        <hr>
     </div>
 @endsection

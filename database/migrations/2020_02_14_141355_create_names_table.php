@@ -17,7 +17,7 @@ class CreateNamesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('slug')->unique();
-            $table->boolean('published');
+            $table->boolean('male_female');
             $table->text('description')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('modified_by')->nullable();

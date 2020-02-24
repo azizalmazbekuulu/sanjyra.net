@@ -21,10 +21,16 @@ class Man extends Model
         return $this->hasMany(self::class, 'father_id');
     }
 
-    //Get children category
-    public function father()
+    // Kyzdary
+    public function mother()
     {
-        return $this->belongsTo(self::class, 'father_id');
+        return $this->belongsTo('App\Woman', 'mother_id');
+    }
+
+    // Kyzdary
+    public function kyzdary()
+    {
+        return $this->hasMany('App\Woman', 'father_id');
     }
 
     public function scopeLastMen($query, $count)

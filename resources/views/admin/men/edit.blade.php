@@ -10,8 +10,10 @@
         <hr>
         @php
             $active_man = $man;
-            if ($father->id == $active)
+            if ($father->id == $active_man_id)
                 $active_man = $father;
+            if (isset($active_woman_id))
+                $active_woman = $active_man->kyzdary->find($active_woman_id);
         @endphp
         <div class="row">
             <div class="col-sm-6">
@@ -19,10 +21,14 @@
                 <hr>
                 <p class="text-primary">Маалыматтарды өзгөртүү:</p>
                 <form 
-                @if ($father->id == $active)
-                    action="{{route('admin.man.update', $father)}}"
+                @if (isset($active_woman))
+                    action="{{route('admin.woman.update', $active_woman)}}"
                 @else
-                    action="{{route('admin.man.update', $man)}}"
+                    @if ($father->id == $active_man_id)
+                        action="{{route('admin.man.update', $father)}}"
+                    @else
+                        action="{{route('admin.man.update', $man)}}"
+                    @endif
                 @endif
                  method="post">
                     <input type="hidden" name="_method" value="put">
@@ -38,5 +44,6 @@
                 @include('admin.men.partials.tree')
             </div>
         </div>
+        <hr>
     </div>
 @endsection

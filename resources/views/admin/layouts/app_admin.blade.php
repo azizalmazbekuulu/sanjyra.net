@@ -45,10 +45,7 @@
                             " href="{{route('admin.index')}}">Башкаруу тактасы</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ (Request::is('admin/man/*') || Request::is('admin/man') ? 'active' : '') }}" href="{{route('admin.man.index')}}">Эркек адамдар</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ (Request::is('admin/woman/*') || Request::is('admin/woman') ? 'active' : '') }}" href="{{route('admin.woman.index')}}">Аял адамдар</a>
+                            <a class="nav-link {{ (Request::is('admin/man/*') || Request::is('admin/man') ? 'active' : '') }}" href="{{route('admin.man.index')}}">Адамдар</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ (Request::is('admin/name/*') || Request::is('admin/name') ? 'active' : '') }}" href="{{route('admin.name.index')}}">Ысымдар</a>

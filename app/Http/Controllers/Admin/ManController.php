@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Man;
+use App\Name;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -50,6 +51,9 @@ class ManController extends Controller
         ]);
         $father = Man::find($request->father_id);
         $father->update(['bala_sany' => $father->bala_sany + 1]);
+        $name = Name::where('name', $man->name)->get()->first();
+        if ($name == null)
+            Name::create(['name' => $man->name, 'slug' => '', 'male_female' => 1]);
         return redirect()->route('admin.man.edit', $father);
     }
 
@@ -80,13 +84,17 @@ class ManController extends Controller
             $father_id = $man->id;
         }
         return view('admin.men.edit', [
-            'active'     => $man->id,
-            'father'     => Man::with(['children' => function ($query) {
-                $query->orderBy('kanchanchy_bala');
-              }])->where('id', $father_id)->get()->first(),
-            'man'        => Man::with(['children' => function ($query) {
-                $query->orderBy('kanchanchy_bala');
-              }])->where('id', $id)->get()->first(),
+            'active_man_id' => $man->id,
+            'father' => Man::with(['children' => function ($query) {
+                                $query->orderBy('kanchanchy_bala');
+                            },'kyzdary' => function ($query) {
+                                $query->orderBy('kanchanchy_kyz');
+                            }])->find($father_id),
+            'man'    => Man::with(['children' => function ($query) {
+                                $query->orderBy('kanchanchy_bala');
+                            },'kyzdary' => function ($query) {
+                                $query->orderBy('kanchanchy_kyz');
+                            }])->find($id),
             'categories' => Category::with('children')->where('parent_id', '0')->get(),
             'delimiter'  => ''
         ]);
@@ -108,6 +116,9 @@ class ManController extends Controller
         if ($request->input('categories')) :
             $man->categories()->attach($request->input('categories'));
         endif;
+        $name = Name::where('name', $man->name)->get()->first();
+        if ($name == null)
+            Name::create(['name' => $man->name, 'slug' => '', 'male_female' => 1]);
         return redirect()->route('admin.man.edit', $man);
     }
 

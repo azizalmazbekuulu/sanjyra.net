@@ -1,19 +1,46 @@
 <div class="form-group">
     <label for="">Ысым</label>
-    <input type="text" class="form-control" name="name" placeholder="Ысым" value="{{$active_man->name ?? ''}}" required>
+    <input type="text" class="form-control" name="name" placeholder="Ысым" 
+    @if (isset($active_woman))
+        value="{{$active_woman->name ?? ''}}"  
+    @else
+        value="{{$active_man->name ?? ''}}" 
+    @endif
+    required>
 </div>
 <div class="form-group">
     <label for="">Энесинин IDси</label>
-    <input type="text" class="form-control" name="mother_id" placeholder="Энесинин IDси" value="{{$active_man->mother_id ?? ''}}">
+    <input type="text" class="form-control" name="mother_id" placeholder="Энесинин IDси"  
+    @if (isset($active_woman))
+        value="{{$active_woman->mother_id ?? ''}}"  
+    @else
+        value="{{$active_man->mother_id ?? ''}}" 
+    @endif>
 </div>
 <div class="form-group">
     <label for="">Энесинин аты</label>
-    <input type="text" class="form-control" name="mother_name" placeholder="Энесинин аты" value="{{$active_man->mother_name ?? ''}}">
+    <input type="text" class="form-control" name="mother_name" placeholder="Энесинин аты" @if (isset($active_woman))
+        @if ($active_woman->mother_id != 0)
+            value="{{$active_woman->mother()->first()->name ?? ''}}" readonly="readonly"
+        @else
+            value="{{$active_woman->mother_name ?? ''}}"
+        @endif
+    @else
+        @if ($active_man->mother_id != 0)
+            value="{{$active_man->mother()->first()->name ?? ''}}" readonly="readonly"
+        @else
+            value="{{$active_man->mother_name ?? ''}}"
+        @endif
+    @endif>
 </div>
 <div class="form-group">
     <label for="info">Маалымат</label>
     <textarea name="info" id="info">
-        {!!$active_man->info ?? ''!!}
+        @if (isset($active_woman))
+            {!! $active_woman->info ?? '' !!}
+        @else
+            {!! $active_man->info ?? '' !!}
+        @endif
     </textarea>
 </div>
 <div class="form-group">
