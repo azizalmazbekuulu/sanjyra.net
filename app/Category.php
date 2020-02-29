@@ -4,11 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 class Category extends Model
 {
+    use Searchable;
+    
     //Mass assigned
-    protected $fillable = ['title', 'slug', 'parent_id', 'published', 'created_by', 'modified_by'];
+    protected $guarded = ['id'];
     
     //Mutators
     public function setSlugAttribute($value)
@@ -32,6 +35,12 @@ class Category extends Model
     public function men()
     {
         return $this->morphedByMany('App\Man', 'categoryable');
+    }
+
+    //Polymorphic relation with women
+    public function women()
+    {
+        return $this->morphedByMany('App\Woman', 'categoryable');
     }
 
     public function scopeLastCategories($query, $count)

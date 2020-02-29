@@ -4,11 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 class Article extends Model
 {
+    use Searchable;
+    
     //Mass assigned
-    protected $fillable = ['title', 'slug', 'description_short', 'description', 'image_show', 'image', 'meta_title', 'meta_description', 'meta_keyword', 'published', 'created_by', 'modified_by'];
+    protected $guarded = ['id'];
     
     //Mutators
     public function setSlugAttribute($value)

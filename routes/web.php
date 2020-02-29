@@ -23,12 +23,25 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Admin', 'middleware'=>['auth']], 
     });
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'SanjyraController@index');
 
 Auth::routes([
     'register' => false
 ]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'SanjyraController@index')->name('home');
+
+Route::get('/man', 'SanjyraController@man')->name('man');
+Route::get('/man/{man}', 'SanjyraController@man_show')->name('man-show');
+Route::get('/woman/{woman}', 'SanjyraController@woman_show')->name('woman-show');
+
+Route::get('/name', 'SanjyraController@name')->name('name');
+Route::get('/name/{slug}', 'SanjyraController@name_show')->name('name-show');
+
+Route::get('/famous-people', 'SanjyraController@famous_people')->name('famous-people');
+Route::get('/famous-person', 'SanjyraController@famous_person')->name('famous-person');
+
+Route::get('/article', 'SanjyraController@article')->name('article');
+
+Route::get('/category', 'SanjyraController@category')->name('category');
+

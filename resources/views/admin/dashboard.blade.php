@@ -41,7 +41,7 @@
                 @endforeach
             </div>
             <div class="col-sm-4">
-                <a href="{{route('admin.man.create')}}" class="btn btn-block btn-primary">Эркек адам кошуу</a>
+                <a href="{{route('admin.man.create')}}" class="btn btn-block btn-primary">Aдам кошуу</a>
                 Акыркы кошулгандар:
                 @foreach ($men as $man)
                     <a href="{{route('admin.man.edit', $man)}}" class="list-group-item">
@@ -55,7 +55,7 @@
                 @endforeach
             </div>
             <div class="col-sm-4">
-                <a href="{{route('admin.man.create')}}" class="btn btn-block btn-primary">Аял адам кошуу</a>
+                <a href="{{route('admin.man.create')}}" class="btn btn-block btn-primary">Адам кошуу</a>
                 Акыркы кошулгандар:
                 @foreach ($women as $woman)
                     <a href="{{route('admin.man.edit', $woman)}}" class="list-group-item">

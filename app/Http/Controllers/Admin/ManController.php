@@ -52,8 +52,15 @@ class ManController extends Controller
         $father = Man::find($request->father_id);
         $father->update(['bala_sany' => $father->bala_sany + 1]);
         $name = Name::where('name', $man->name)->get()->first();
-        if ($name == null)
-            Name::create(['name' => $man->name, 'slug' => '', 'male_female' => 1]);
+        if ($name == null) {
+            $number_of_name = Man::where('name', $man->name)->count();
+            Name::create(['name' => $man->name, 'slug' => '', 'male_female' => 1, 'number_of_name' => $number_of_name]);
+        }
+        else {
+            $name = Name::where('name', $man->name)->get()->first();
+            $name->number_of_name++;
+            $name->save();
+        }
         return redirect()->route('admin.man.edit', $father);
     }
 
@@ -76,12 +83,13 @@ class ManController extends Controller
      */
     public function edit(Man $man)
     {
-        $id = $man->id;
-        $father_id = $man->father_id;
-        if ($man->id == 1)
-        {
+        if ($man->id == 1) {
             $id = 2;
-            $father_id = $man->id;
+            $father_id = 1;
+        }
+        else {
+            $id = $man->id;
+            $father_id = $man->father_id;
         }
         return view('admin.men.edit', [
             'active_man_id' => $man->id,
@@ -109,6 +117,11 @@ class ManController extends Controller
      */
     public function update(Request $request, Man $man)
     {
+        if ($man->name !== $request['name']) {
+            $name = Name::where('name', $man->name)->get()->first();
+            $name->number_of_name--;
+            $name->save();
+        }
         $man->update($request->all());
 
         //Categories
@@ -118,7 +131,7 @@ class ManController extends Controller
         endif;
         $name = Name::where('name', $man->name)->get()->first();
         if ($name == null)
-            Name::create(['name' => $man->name, 'slug' => '', 'male_female' => 1]);
+            Name::create(['name' => $man->name, 'slug' => '', 'male_female' => 1, 'number_of_name' => 1]);
         return redirect()->route('admin.man.edit', $man);
     }
 
@@ -133,6 +146,11 @@ class ManController extends Controller
         $man->categories()->detach();
         $father_id = $man->father_id;
         $kanchanchy_bala = $man->kanchanchy_bala;
+        $name = Name::where('name', $man->name)->get()->first();
+        if ($name != null) {
+            $name->number_of_name--;
+            $name->save();
+        }
         $man->delete();
         $father = Man::with('children')->find($father_id);
         $father->update(['bala_sany' => ($father->bala_sany - 1)]);

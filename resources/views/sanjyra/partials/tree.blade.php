@@ -1,4 +1,4 @@
-<div class="row justify-content-center d-flex flex-nowrap pt-3" style="overflow: auto;">
+<div class="row justify-content-center d-flex flex-nowrap p-3" style="overflow: auto;">
     <table class="tree">
         <tbody>
             <tr>
@@ -10,7 +10,7 @@
                         bg-primary text-white
                     @endif
                      w-100 h-100"
-                     href="{{route('admin.man.edit', $father)}}">
+                     href="{{route('man-show', $father)}}">
                         {{ $father->name }}
                     </a>
                 </td>
@@ -35,7 +35,7 @@
                         bg-primary text-white
                     @endif
                      w-100 h-100"
-                     href="{{route('admin.man.edit', $child)}}">
+                     href="{{route('man-show', $child)}}">
                         {{$child->name}}
                     </a>
                 </td>
@@ -67,7 +67,7 @@
                 @foreach ($man->children as $grandchild)
                 <tr>
                     <td>
-                        <a class="btn bg-primary font-weight-bold text-white border border-dark rounded-pill w-100 h-100" href="{{route('admin.man.edit', $grandchild)}}">
+                        <a class="btn bg-primary font-weight-bold text-white border border-dark rounded-pill w-100 h-100" href="{{route('man-show', $grandchild)}}">
                             {{ $grandchild->name }}
                         </a>
                     </td>
@@ -77,7 +77,6 @@
         </tbody>
     </table>
 </div>
-<hr>
 <div class="card">
 <div class="card-header">
     @if ($father->id != $active_man->id)
@@ -89,14 +88,14 @@
 <div class="card-body">
 <dl class="row">
     @if ($active_man->uruusu != '')
-        <dt class="col-sm-3">Уруусу</dt>
-        <dd class="col-sm-9">{{$active_man->uruusu}}</dd>
+        <dt class="col-sm-2">Уруусу</dt>
+        <dd class="col-sm-10">{{$active_man->uruusu}}</dd>
     @endif
     @if ($active_man->mother_name != '' || $active_man->mother_id != 0)
-        <dt class="col-sm-3">Энеси</dt>
-        <dd class="col-sm-9">
+        <dt class="col-sm-2">Энеси</dt>
+        <dd class="col-sm-10">
             @if ($active_man->mother_id != 0)
-                <a href="{{route('admin.woman.edit', $active_man->mother)}}">
+                <a href="{{route('woman-show', $active_man->mother)}}">
                     {{$active_man->mother->name}}
                 </a>
             @else
@@ -105,8 +104,8 @@
         </dd>
     @endif
     @if ($active_man->kyzdary->first() != null)
-        <dt class="col-sm-3">Кыздары</dt>
-        <dd class="col-sm-9">
+        <dt class="col-sm-2">Кыздары</dt>
+        <dd class="col-sm-10">
             @foreach ($active_man->kyzdary as $kyzy)
                 <a class="btn font-weight-bold border border-dark 
                 @if (isset($active_woman) && $kyzy->id == $active_woman->id)
@@ -115,7 +114,7 @@
                     bg-primary text-white
                 @endif
                 "
-                href="{{route('admin.woman.edit', $kyzy)}}">
+                href="{{route('woman-show', $kyzy)}}">
                     {{ $kyzy->name }}
                 </a>
             @endforeach
@@ -125,10 +124,10 @@
                         <h6 class="card-header">{{$active_man->name}} кызы {{$active_woman->name}}</h6>
                         <dl class="row pt-2">
                         @if ($active_woman->mother_name != '' || $active_woman->mother_id != 0)
-                            <dt class="col-sm-3">Энеси</dt>
-                            <dd class="col-sm-9">
+                            <dt class="col-sm-2">Энеси</dt>
+                            <dd class="col-sm-10">
                                 @if ($active_woman->mother_id != 0)
-                                    <a href="{{route('admin.woman.edit', $active_woman->mother)}}">
+                                    <a href="{{route('woman-show', $active_woman->mother)}}">
                                         {{$active_woman->mother->name}}
                                     </a>
                                 @else
@@ -141,21 +140,21 @@
                             <dd class="col-sm-10">
                                 @foreach ($active_woman->uuldary as $uulu)
                                     <a class="btn font-weight-bold border border-dark bg-primary text-white"
-                                    href="{{route('admin.man.edit', $uulu)}}">
+                                    href="{{route('man-show', $uulu)}}">
                                         {{ $uulu->name }}
                                     </a>
                                 @endforeach
                             </dd>
                         @endif
                         @if ($active_woman->categories()->first() != null)
-                            <dt class="col-sm-3">Категориялар</dt>
-                            <dd class="list-group-item-text col-sm-9">
+                            <dt class="col-sm-2">Категориялар</dt>
+                            <dd class="list-group-item-text col-sm-10">
                                 {{$active_woman->categories()->pluck('title')->implode(', ')}}
                             </dd>
                         @endif
                         @if ($active_woman->info != '')
-                            <dt class="col-sm-3">Маалымат</dt>
-                            <dd class="col-sm-9">{!! $active_woman->info !!}</dd>
+                            <dt class="col-sm-2">Маалымат</dt>
+                            <dd class="col-sm-10">{!! $active_woman->info !!}</dd>
                         @endif
                         </dl>
                     </div>
@@ -169,9 +168,9 @@
             {{$active_man->categories()->pluck('title')->implode(', ')}}
         </dd>
     @endif
-    @if ($active_man->info != '' && !isset($active_woman))
-        <dt class="col-sm-3">Маалымат</dt>
-        <dd class="col-sm-9">{!! $active_man->info !!}</dd>
+    @if ($active_man->info != '' && !isset($active_woman_id))
+        <dt class="col-sm-2">Маалымат</dt>
+        <dd class="col-sm-10">{!! $active_man->info !!}</dd>
     @endif
 </dl>
 </div></div>

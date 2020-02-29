@@ -51,7 +51,12 @@ class WomanController extends Controller
         ]);
         $name = Name::where('name', $woman->name)->get()->first();
         if ($name == null)
-            Name::create(['name' => $woman->name, 'slug' => '', 'male_female' => 0]);
+            Name::create(['name' => $woman->name, 'slug' => '', 'male_female' => 0, 'number_of_name' => 1]);
+        else {
+            $name = Name::where('name', $woman->name)->get()->first();
+            $name->number_of_name++;
+            $name->save();
+        }
         return redirect()->route('admin.man.edit', $father);
     }
 
@@ -75,16 +80,19 @@ class WomanController extends Controller
     public function edit(Woman $woman)
     {
         $man = Man::find($woman->father_id);
-        $id = $woman->father_id;
-        $father_id = $man->father_id;
-        if ($id == 1)
-        {
+        if ($man->id == 1) {
             $id = 2;
-            $father_id = $man->id;
+            $father_id = 1;
+        }
+        else {
+            $id = $man->id;
+            $father_id = $man->father_id;
         }
         return view('admin.men.edit', [
             'active_man_id'   => $man->id,
-            'active_woman_id' => $woman->id,
+            'active_woman' => Woman::with(['uuldary' => function ($query) {
+                                $query->orderBy('kanchanchy_bala');
+                            }])->find($woman->id),
             'father' => Man::with(['children' => function ($query) {
                                 $query->orderBy('kanchanchy_bala');
                             },'kyzdary' => function ($query) {
@@ -109,16 +117,25 @@ class WomanController extends Controller
      */
     public function update(Request $request, Woman $woman)
     {
-        $woman->update($request->all());
+        if ($woman->name !== $request['name']) {
+            $name = Name::where('name', $woman->name)->get()->first();
+            $name->number_of_name--;
+            $name->save();
+        }
+        $woman->name = $request['name'];
+        $woman->mother_id = $request['mother_id'];
+        $woman->mother_name = $request['mother_name'];
+        $woman->info = $request['info'];
 
         //Categories
         $woman->categories()->detach();
         if ($request->input('categories')) :
             $woman->categories()->attach($request->input('categories'));
         endif;
+        $woman->save();
         $name = Name::where('name', $woman->name)->get()->first();
         if ($name == null)
-            Name::create(['name' => $woman->name, 'male_female' => 0, 'slug' => '']);
+            Name::create(['name' => $woman->name, 'male_female' => 0, 'slug' => '', 'number_of_name' => 1]);
         return redirect()->route('admin.woman.edit', $woman);
     }
 
@@ -133,6 +150,9 @@ class WomanController extends Controller
         $woman->categories()->detach();
         $father_id = $woman->father_id;
         $kanchanchy_kyz = $woman->kanchanchy_kyz;
+        $name = Name::where('name', $woman->name)->get()->first();
+        $name->number_of_name--;
+        $name->save();
         $woman->delete();
         $father = Man::with('kyzdary')->find($father_id);
         foreach ($father->kyzdary as $child)

@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Woman extends Model
 {
+    use Searchable;
+
     //Mass assigned
     protected $guarded = ['id'];
 
@@ -15,10 +18,16 @@ class Woman extends Model
         return $this->morphToMany('App\Category', 'categoryable');
     }
 
-    // Kyzdary
+    // Mother
     public function mother()
     {
         return $this->belongsTo(self::class, 'mother_id');
+    }
+
+    // Baldary
+    public function uuldary()
+    {
+        return $this->hasMany('App\Man', 'mother_id');
     }
 
     public function scopeLastWomen($query, $count)

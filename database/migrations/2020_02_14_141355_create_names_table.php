@@ -19,6 +19,7 @@ class CreateNamesTable extends Migration
             $table->string('slug')->unique();
             $table->boolean('male_female');
             $table->text('description')->nullable();
+            $table->integer('number_of_name')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('modified_by')->nullable();
             $table->timestamps();

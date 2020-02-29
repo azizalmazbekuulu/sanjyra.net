@@ -34,7 +34,21 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        
+                        <li class="nav-item">
+                            <a class="nav-link {{ (Request::is('man/*') || Request::is('man') ? 'active' : '') }}" href="{{route('man')}}">Адамдар</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ (Request::is('name/*') || Request::is('name') ? 'active' : '') }}" href="{{route('name')}}">Ысымдар</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ (Request::is('famous/*') || Request::is('famous') ? 'active' : '') }}" href="{{route('famous-people')}}">Белгилүү инсандар</a>
+                        </li>
+                        {{-- <li class="nav-item">
+                            <a class="nav-link {{ (Request::is('category/*') || Request::is('category') ? 'active' : '') }}" href="{{route('category')}}">Категориялар</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ (Request::is('article/*') || Request::is('article') ? 'active' : '') }}" href="{{route('article')}}">Макалалар</a>
+                        </li> --}}
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -73,7 +87,7 @@
             </div>
         </nav>
 
-        <main class="container">
+        <main class="container py-3">
             @yield('content')
         </main>
     </div>

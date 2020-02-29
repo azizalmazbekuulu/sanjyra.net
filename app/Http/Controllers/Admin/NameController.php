@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Name;
+use App\Man;
+use App\Woman;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -41,6 +43,12 @@ class NameController extends Controller
     public function store(Request $request)
     {
         $name = Name::create($request->all());
+        if ($name->male_female)
+            $number_of_name = Man::count()->where('name', $name->name);
+        else
+            $number_of_name = Woman::count()->where('name', $name->name);
+        $name->number_of_name = $number_of_name;
+        $name->save();
         return redirect()->route('admin.name.index');
     }
 

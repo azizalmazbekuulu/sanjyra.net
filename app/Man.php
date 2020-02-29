@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Man extends Model
 {
+    use Searchable;
+
     //Mass assigned
     protected $guarded = ['id'];
 
@@ -21,7 +24,13 @@ class Man extends Model
         return $this->hasMany(self::class, 'father_id');
     }
 
-    // Kyzdary
+    // Father
+    public function father()
+    {
+        return $this->belongsTo(self::class, 'father_id');
+    }
+
+    // Mother
     public function mother()
     {
         return $this->belongsTo('App\Woman', 'mother_id');
@@ -36,6 +45,11 @@ class Man extends Model
     public function scopeLastMen($query, $count)
     {
         return $query->orderBy('id', 'desc')->take($count)->get();
+    }
+
+    public function scopeMostCommonNames($query, $count)
+    {
+        return $query->selectRaw('count(*) as name_count, name')->groupBy('name')->orderBy('name_count', 'desc')->take($count)->get();
     }
 
     // public function full_generation(Man $man, Array $full_generation = [])
