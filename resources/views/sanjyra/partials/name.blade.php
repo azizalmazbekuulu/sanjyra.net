@@ -20,10 +20,10 @@
         <span class="list-group-item">Көп кездешкен ысымдар</span>
     @foreach ($common_names as $common_name)
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            <a href="{{route('name-show', $common_name->name)}}">
+            <a href="{{route('name', $common_name->slug)}}">
                 <h4>{{$common_name->name}}</h4>
             </a>
-            <span class="badge badge-primary badge-pill">{{$common_name->name_count}}</span>
+            <span class="badge badge-primary badge-pill">{{$common_name->number_of_name}}</span>
         </li>
     @endforeach
     </ul>

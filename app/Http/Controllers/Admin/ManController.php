@@ -104,7 +104,8 @@ class ManController extends Controller
                                 $query->orderBy('kanchanchy_kyz');
                             }])->find($id),
             'categories' => Category::with('children')->where('parent_id', '0')->get(),
-            'delimiter'  => ''
+            'delimiter'  => '',
+            'person' => Man::with('father')->where('id', $man->id)->get()->first()
         ]);
     }
 
@@ -122,7 +123,7 @@ class ManController extends Controller
             $name->number_of_name--;
             $name->save();
         }
-        $man->update($request->all());
+        $man->update($request->except('categories'));
 
         //Categories
         $man->categories()->detach();

@@ -1,6 +1,6 @@
 @extends('sanjyra.layouts.app')
 @section('content')
-@isset($active_name)
+@if($active_name != null)
     <dl class="row">
         <dt class="col-sm-4">
             <a href="{{route('name')}}">
@@ -11,7 +11,7 @@
             <p>{!! $active_name->description !!}</p>
         </dd>
     </dl>
-@endisset
+@endif
 <div class="row p-3">
     @include('sanjyra.partials.name')
 </div>

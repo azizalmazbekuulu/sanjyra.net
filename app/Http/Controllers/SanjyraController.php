@@ -26,39 +26,22 @@ class SanjyraController extends Controller
                                 $query->orderBy('kanchanchy_kyz');
                             }])->find(2),
             'names' => Name::orderBy('created_at', 'desc')->paginate(7),
-            'common_names' => Man::mostCommonNames(7)
+            'common_names' => Name::orderBy('number_of_name', 'desc')->paginate(7)
         ]);
     }
 
-    public function man()
+    public function man(Man $man = null)
     {
-        return view('sanjyra.men.show', [
-            'active_man_id' => 1,
-            'father' => Man::with(['children' => function ($query) {
-                                $query->orderBy('kanchanchy_bala');
-                            },'kyzdary' => function ($query) {
-                                $query->orderBy('kanchanchy_kyz');
-                            }])->find(1),
-            'man'    => Man::with(['children' => function ($query) {
-                                $query->orderBy('kanchanchy_bala');
-                            },'kyzdary' => function ($query) {
-                                $query->orderBy('kanchanchy_kyz');
-                            }])->find(2)
-        ]);
-    }
-
-    public function man_show(Man $man)
-    {
-        if ($man->id == 1) {
-            $id = 2;
-            $father_id = 1;
-        }
-        else {
-            $id = $man->id;
+        $active_id = 1;
+        $man_id = 2;
+        $father_id = 1;
+        if ($man != null && $man->id != 1) {
+            $active_id = $man->id;
+            $man_id = $man->id;
             $father_id = $man->father_id;
         }
         return view('sanjyra.men.show', [
-            'active_man_id' => $man->id,
+            'active_man_id' => $active_id,
             'father' => Man::with(['children' => function ($query) {
                                 $query->orderBy('kanchanchy_bala');
                             },'kyzdary' => function ($query) {
@@ -68,7 +51,8 @@ class SanjyraController extends Controller
                                 $query->orderBy('kanchanchy_bala');
                             },'kyzdary' => function ($query) {
                                 $query->orderBy('kanchanchy_kyz');
-                            }])->find($id)
+                            }])->find($man_id),
+            'person' => Man::with('father')->where('id', $active_id)->get()->first()
         ]);
     }
 
@@ -97,24 +81,17 @@ class SanjyraController extends Controller
                                 $query->orderBy('kanchanchy_bala');
                             },'kyzdary' => function ($query) {
                                 $query->orderBy('kanchanchy_kyz');
-                            }])->find($id)
+                            }])->find($id),
+            'person' => Man::with('father')->where('id', $active_id)->get()->first()
         ]);
     }
 
-    public function name()
-    {
-        return view('sanjyra.names.show', [
-            'names' => Name::orderBy('created_at', 'desc')->paginate(7),
-            'common_names' => Man::mostCommonNames(7)
-        ]);
-    }
-
-    public function name_show($slug)
+    public function name($slug = '')
     {
         return view('sanjyra.names.show', [
             'active_name'  => Name::where('slug', $slug)->get()->first(),
             'names' => Name::orderBy('created_at', 'desc')->paginate(7),
-            'common_names' => Man::mostCommonNames(7)
+            'common_names' => Name::orderBy('number_of_name', 'desc')->paginate(7)
         ]);
     }
 
@@ -123,6 +100,11 @@ class SanjyraController extends Controller
         return view('sanjyra.famous.index', [
             // 'famous_people' => ,
         ]);
+    }
+
+    public function person_search(String $man, String $father)
+    {
+        // $men = Man::where('name');
     }
 
     public function category()

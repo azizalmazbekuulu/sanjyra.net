@@ -104,7 +104,8 @@ class WomanController extends Controller
                                 $query->orderBy('kanchanchy_kyz');
                             }])->find($id),
             'categories' => Category::with('children')->where('parent_id', '0')->get(),
-            'delimiter'  => ''
+            'delimiter'  => '',
+            'person' => Man::with('father')->where('id', $man->id)->get()->first()
         ]);
     }
 

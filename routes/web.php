@@ -31,12 +31,10 @@ Auth::routes([
 
 Route::get('/home', 'SanjyraController@index')->name('home');
 
-Route::get('/man', 'SanjyraController@man')->name('man');
-Route::get('/man/{man}', 'SanjyraController@man_show')->name('man-show');
+Route::get('/man/{man?}', 'SanjyraController@man')->name('man');
 Route::get('/woman/{woman}', 'SanjyraController@woman_show')->name('woman-show');
 
-Route::get('/name', 'SanjyraController@name')->name('name');
-Route::get('/name/{slug}', 'SanjyraController@name_show')->name('name-show');
+Route::get('/name/{slug?}', 'SanjyraController@name')->name('name');
 
 Route::get('/famous-people', 'SanjyraController@famous_people')->name('famous-people');
 Route::get('/famous-person', 'SanjyraController@famous_person')->name('famous-person');

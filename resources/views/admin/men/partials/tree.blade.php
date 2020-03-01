@@ -77,8 +77,10 @@
         </tbody>
     </table>
 </div>
-<hr>
-<div class="card">
+<div class="justify-content-center">
+    @include('admin.men.partials.full_generation')
+</div>
+<div class="card my-3">
 <div class="card-header">
     @if ($father->id != $active_man->id)
         {{$father->name}} уулу {{$active_man->name}}
@@ -164,8 +166,8 @@
         </dd>
     @endif
     @if ($active_man->categories()->first() != null)
-        <dt>Категориялар</dt>
-        <dd class="list-group-item-text">
+        <dt class="col-sm-3">Категориялар</dt>
+        <dd class="list-group-item-text col-sm-9">
             {{$active_man->categories()->pluck('title')->implode(', ')}}
         </dd>
     @endif
