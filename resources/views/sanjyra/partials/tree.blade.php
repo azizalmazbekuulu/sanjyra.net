@@ -23,7 +23,7 @@
                             bg-primary text-white
                         @endif
                         w-100 h-100"
-                        href="{{route('man', $father)}}">
+                        href="{{route('man', $father->id)}}">
                             {{ $father->name }}
                         </a>
                     </td>
@@ -46,7 +46,7 @@
                             bg-primary text-white
                         @endif
                         w-100 h-100"
-                        href="{{route('man', $father->children->where('kanchanchy_bala', $i)->first())}}">
+                        href="{{route('man', $father->children->where('kanchanchy_bala', $i)->first()->id)}}">
                             {{ $father->children->where('kanchanchy_bala', $i)->first()->name }}
                         </a>
                     </td>
@@ -76,7 +76,7 @@
                         @endphp
                         @if ($man->children->where('kanchanchy_bala', $order)->first() != null)
                         <a class="btn font-weight-bold border border-dark rounded-pill bg-primary text-white w-100 h-100"
-                        href="{{route('man', $man->children->where('kanchanchy_bala', $order)->first())}}">
+                        href="{{route('man', $man->children->where('kanchanchy_bala', $order)->first()->id)}}">
                             {{ $man->children->where('kanchanchy_bala', $order)->first()->name }}
                         </a>
                         @endif
@@ -153,7 +153,7 @@
                             <dd class="col-sm-10">
                                 @foreach ($active_woman->uuldary as $uulu)
                                     <a class="btn font-weight-bold border border-dark bg-primary text-white"
-                                    href="{{route('man', $uulu)}}">
+                                    href="{{route('man', $uulu->id)}}">
                                         {{ $uulu->name }}
                                     </a>
                                 @endforeach

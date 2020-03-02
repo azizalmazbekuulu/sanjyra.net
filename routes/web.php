@@ -31,13 +31,14 @@ Auth::routes([
 
 Route::get('/home', 'SanjyraController@index')->name('home');
 
-Route::get('/man/{man?}', 'SanjyraController@man')->name('man');
+Route::get('/man/{id?}', 'SanjyraController@man')->name('man');
 Route::get('/woman/{woman}', 'SanjyraController@woman_show')->name('woman-show');
 
 Route::get('/name/{slug?}', 'SanjyraController@name')->name('name');
 
-Route::get('/famous-people', 'SanjyraController@famous_people')->name('famous-people');
-Route::get('/famous-person', 'SanjyraController@famous_person')->name('famous-person');
+Route::post('/person-search', 'SanjyraController@person_search')->name('person-search');
+
+Route::get('/famous-people/{category?}', 'SanjyraController@famous_people')->name('famous-people');
 
 Route::get('/article', 'SanjyraController@article')->name('article');
 

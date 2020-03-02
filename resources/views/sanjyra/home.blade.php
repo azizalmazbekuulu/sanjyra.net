@@ -8,6 +8,9 @@ if (isset($active_woman_id))
 @endphp
 @section('content')
 <div class="justify-content-center">
+    @include('sanjyra.search.person_search')
+</div>
+<div class="justify-content-center">
     @include('sanjyra.partials.tree')
 </div>
 <div class="justify-content-center p-3">
