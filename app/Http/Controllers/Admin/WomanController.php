@@ -43,12 +43,26 @@ class WomanController extends Controller
     {
         $father = Man::with('kyzdary')->find($request->father_id);
         $kanchanchy_kyz = $father->kyzdary->count() + 1;
+
         $woman = Woman::create([
             'name' => $request['name'],
             'father_id' => $request['father_id'],
             'kanchanchy_kyz' => $kanchanchy_kyz,
             'created_by' => $request['created_by']
         ]);
+
+        // Categories
+        if ($request->input('categories')) :
+            $woman->categories()->attach($request->input('categories'));
+        endif;
+
+        // Image
+        if ($request->file('photo') != null) {
+            $woman->image = $request->file('photo')->store('people-image', 'public');
+            $woman->save();
+        }
+
+        // Name
         $name = Name::where('name', $woman->name)->get()->first();
         if ($name == null)
             Name::create(['name' => $woman->name, 'slug' => '', 'male_female' => 0, 'number_of_name' => 1]);
@@ -57,6 +71,7 @@ class WomanController extends Controller
             $name->number_of_name++;
             $name->save();
         }
+
         return redirect()->route('admin.man.edit', $father);
     }
 
@@ -133,10 +148,20 @@ class WomanController extends Controller
         if ($request->input('categories')) :
             $woman->categories()->attach($request->input('categories'));
         endif;
+
+        // Image
+        if ($request->file('photo') != null) {
+            Storage::delete($woman->image);
+            $woman->image = $request->file('photo')->store('people-image', 'public');
+        }
+
         $woman->save();
+
+        // Name
         $name = Name::where('name', $woman->name)->get()->first();
         if ($name == null)
             Name::create(['name' => $woman->name, 'male_female' => 0, 'slug' => '', 'number_of_name' => 1]);
+        
         return redirect()->route('admin.woman.edit', $woman);
     }
 
@@ -151,14 +176,34 @@ class WomanController extends Controller
         $woman->categories()->detach();
         $father_id = $woman->father_id;
         $kanchanchy_kyz = $woman->kanchanchy_kyz;
+
+        // Name
         $name = Name::where('name', $woman->name)->get()->first();
         $name->number_of_name--;
         $name->save();
+
+        Storage::delete($woman->image);
+
         $woman->delete();
         $father = Man::with('kyzdary')->find($father_id);
         foreach ($father->kyzdary as $child)
             if ($child->kanchanchy_kyz > $kanchanchy_kyz)
                 $child->update(['kanchanchy_kyz' => ($child->kanchanchy_kyz -1)]);
         return redirect()->route('admin.man.edit', $father);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Woman  $woman
+     * @return \Illuminate\Http\Response
+     */
+    public function image_delete(Woman $woman)
+    {
+        Storage::delete($woman->image);
+
+        $woman->update(['image' => null]);
+
+        return redirect()->route('admin.woman.edit', $woman);
     }
 }

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} - @yield('title')</title>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -26,12 +26,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link {{ (Request::is('man/*') || Request::is('man') ? 'active' : '') }}" href="{{route('man')}}">Адамдар</a>
-                        </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link {{ (Request::is('name/*') || Request::is('name') ? 'active' : '') }}" href="{{route('name')}}">Ысымдар</a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a class="nav-link {{ (Request::is('famous/*') || Request::is('famous') ? 'active' : '') }}" href="{{route('famous-people')}}">Белгилүү инсандар</a>
                         </li>
@@ -83,11 +80,17 @@
             @yield('content')
         </main>
 
-        <footer class="container p-3">
+        <footer class="container pt-3">
             <div class="row p-3">
-                <div class="col-sm-9"> </div>
+                <div class="col-sm-9 text-center">
+                    &copy; 2020 <a href="{{route('man')}}">Sanjyra.net</a>
+                </div>
                 <div class="col-sm-3">
-                    <a href="https://www.facebook.com/groups/471779633154987/" target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a>
+                    {{-- <a href="https://www.facebook.com/groups/471779633154987/" target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a> --}}
+                    <dl>
+                        <dt>Email</dt>
+                        <dd><a href="mailto:help@sanjyra.net">help@sanjyra.net</a></dd>
+                    </dl>
                 </div>
             </div>
         </footer>

@@ -37,10 +37,22 @@ class Category extends Model
         return $this->morphedByMany('App\Man', 'categoryable');
     }
 
+    //Polymorphic relation with uruu
+    public function uruu()
+    {
+        return $this->morphedByMany('App\Uruu', 'categoryable');
+    }
+
     //Polymorphic relation with women
     public function women()
     {
         return $this->morphedByMany('App\Woman', 'categoryable');
+    }
+
+    //Polymorphic relation with reference
+    public function reference()
+    {
+        return $this->morphedByMany('App\Reference', 'categoryable');
     }
 
     public function scopeLastCategories($query, $count)

@@ -165,9 +165,13 @@
                                 {{$active_woman->categories()->pluck('title')->implode(', ')}}
                             </dd>
                         @endif
-                        @if ($active_woman->info != '')
+                        @if ($active_woman->info != '' || $active_woman->image != '')
                             <dt class="col-sm-2">Маалымат</dt>
-                            <dd class="col-sm-10">{!! $active_woman->info !!}</dd>
+                            <dd class="col-sm-10 row">
+                                @if ($active_woman->image != '')
+                                    <img class="m-3" width="200px" src="{{ asset('storage/'. $active_woman->image) }}" alt="{{$active_woman->name}}">
+                                @endif
+                                {!! $active_woman->info !!}</dd>
                         @endif
                         </dl>
                     </div>
@@ -181,9 +185,13 @@
             {{$active_man->categories()->pluck('title')->implode(', ')}}
         </dd>
     @endif
-    @if ($active_man->info != '' && !isset($active_woman_id))
+    @if (($active_man->image != '' || $active_man->info != '') && !isset($active_woman_id))
         <dt class="col-sm-2">Маалымат</dt>
-        <dd class="col-sm-10">{!! $active_man->info !!}</dd>
+        <dd class="col-sm-10 row">
+            @if ($active_man->image != '')
+                <img class="m-3" width="200px" src="{{ asset('storage/' . $active_man->image) }}" alt="{{$active_man->name}}">
+            @endif
+            {!! $active_man->info !!}</dd>
     @endif
 </dl>
 </div></div>

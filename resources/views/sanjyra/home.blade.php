@@ -6,17 +6,18 @@ if ($father->id == $active_man_id)
 if (isset($active_woman_id))
     $active_woman = $active_man->kyzdary->find($active_woman_id);
 @endphp
+@section('title')
+    @if (isset($active_woman))
+        {{$active_man->name}} кызы {{$active_woman->name}}
+    @else
+        {{$father->name}}{{$active_man_id == $man->id ? ' уулу '.$man->name : ''}}
+    @endif
+@endsection
 @section('content')
 <div class="justify-content-center">
     @include('sanjyra.search.person_search')
 </div>
 <div class="justify-content-center">
     @include('sanjyra.partials.tree')
-</div>
-<div class="justify-content-center p-3">
-    @include('sanjyra.partials.famous_people')
-</div>
-<div class="row p-3">
-    @include('sanjyra.partials.name')
 </div>
 @endsection

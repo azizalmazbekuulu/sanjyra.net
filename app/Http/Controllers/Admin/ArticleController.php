@@ -43,11 +43,19 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $article = Article::create($request->all());
+        $article = Article::create($request->except('photo', 'categories'));
+
         //Categories
         if ($request->input('categories')) :
             $article->categories()->attach($request->input('categories'));
         endif;
+
+        // Image
+        if ($request->file('photo') != null) {
+            $article->image = $request->file('photo')->store('article-image', 'public');
+            $article->save();
+        }
+
         return redirect()->route('admin.article.index');
     }
 
@@ -88,13 +96,20 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        $article->update($request->except('slug'));
+        $article->update($request->except('slug', 'categories', 'photo'));
 
         //Categories
         $article->categories()->detach();
         if ($request->input('categories')) :
             $article->categories()->attach($request->input('categories'));
         endif;
+
+        // Image
+        if ($request->file('photo') != null) {
+            Storage::delete($article->image);
+            $article->image = $request->file('photo')->store('article-image', 'public');
+            $article->save();
+        }
 
         return redirect()->route('admin.article.index');
     }
@@ -107,6 +122,7 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        Storage::delete($article->image);
         $article->categories()->detach();
         $article->delete();
 

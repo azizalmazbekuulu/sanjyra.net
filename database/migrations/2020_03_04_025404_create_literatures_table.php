@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMenTable extends Migration
+class CreateLiteraturesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,12 @@ class CreateMenTable extends Migration
      */
     public function up()
     {
-        Schema::create('men', function (Blueprint $table) {
+        Schema::create('literatures', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->integer('father_id');
-            $table->integer('level');
-            $table->tinyInteger('kanchanchy_bala');
-            $table->integer('mother_id')->nullable();
-            $table->string('mother_name')->nullable();
-            $table->tinyInteger('bala_sany')->nullable();
-            $table->string('uruusu')->nullable();
-            $table->mediumText('info')->nullable();
+            $table->text('title');
+            $table->text('slug');
+            $table->text('author');
+            $table->mediumText('description')->nullable();
             $table->text('image')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('modified_by')->nullable();
@@ -38,6 +33,6 @@ class CreateMenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('men');
+        Schema::dropIfExists('literatures');
     }
 }

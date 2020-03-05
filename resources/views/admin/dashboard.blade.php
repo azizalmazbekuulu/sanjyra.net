@@ -20,12 +20,12 @@
             </div>
             <div class="col-sm-3">
                 <div class="card bg-secondary text-white">
-                    <span class="card-header">Эркек адамдар: {{ $count_men }}</span>
+                    <span class="card-header">Эркектер: {{ $count_men }}</span>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="card bg-secondary text-white">
-                    <span class="card-header">Аял адамдар: {{ $count_women }}</span>
+                    <span class="card-header">Аялдар: {{ $count_women }}</span>
                 </div>
             </div>
         </div>

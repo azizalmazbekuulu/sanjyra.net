@@ -29,7 +29,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/admin') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -40,21 +40,22 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link 
-                            {{ (Request::is('admin') ? 'active' : '') }}
-                            " href="{{route('admin.index')}}">Башкаруу тактасы</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link {{ (Request::is('admin/man/*') || Request::is('admin/man') ? 'active' : '') }}" href="{{route('admin.man.index')}}">Адамдар</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ (Request::is('admin/name/*') || Request::is('admin/name') ? 'active' : '') }}" href="{{route('admin.name.index')}}">Ысымдар</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link {{ (Request::is('admin/article/*') || Request::is('admin/article') ? 'active' : '') }}" href="{{route('admin.article.index')}}">Материалдар</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link {{ (Request::is('admin/category/*') || Request::is('admin/category') ? 'active' : '') }}" href="{{route('admin.category.index')}}">Категориялар</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ (Request::is('admin/article/*') || Request::is('admin/article') ? 'active' : '') }}" href="{{route('admin.article.index')}}">Материалдар</a>
+                            <a class="nav-link {{ (Request::is('admin/literature/*') || Request::is('admin/literature') ? 'active' : '') }}" href="{{route('admin.literature.index')}}">Колдонулган адабияттар</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ (Request::is('admin/uruu/*') || Request::is('admin/uruu') ? 'active' : '') }}" href="{{route('admin.uruu.index')}}">Уруулар</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ (Request::is('admin/user_management/user/*') || Request::is('admin/user_management/user') ? 'active' : '') }}" href="{{route('admin.user_management.user.index')}}">Колдонуучулар</a>
@@ -97,7 +98,7 @@
             </div>
         </nav>
 
-        <main class="container">
+        <main class="container py-3">
             @yield('content')
         </main>
     </div>

@@ -33,6 +33,18 @@
         @endif
     @endif>
 </div>
+@if (!isset($active_woman))
+<div class="form-group">
+    <label for="uruusu">Уруусу</label>
+    <input type="text" class="form-control" name="uruusu" id="uruusu" placeholder="Уруусу" value="{{$active_man->uruusu ?? ''}}" @if ($active_man->uruusu != '')
+        readonly="readonly"
+    @endif>
+</div>
+@endif
+<div class="form-group">
+    <label for="photo">Сүрөт</label>
+    <input type="file" name="photo" class="form-control-file" id="photo">
+</div>
 <div class="form-group">
     <label for="info">Маалымат</label>
     <textarea name="info" id="info">
@@ -50,8 +62,7 @@
     </select>
 </div>
 <input type="hidden" name="father_id" value="{{$active_man->father_id}}">
-<input type="hidden" name="uruusu" value="{{$active_man->uruusu}}">
 <input type="hidden" name="level" value="{{$active_man->level}}">
 <input type="hidden" name="kanchanchy_bala" value="{{$active_man->kanchanchy_bala}}">
-<hr>
 <input class="btn btn-primary" type="submit" value="Сактоо">
+<hr>

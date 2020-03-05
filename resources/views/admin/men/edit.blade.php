@@ -18,7 +18,7 @@
                 @include('admin.men.partials.create')
                 <hr>
                 <p class="text-primary">Маалыматтарды өзгөртүү:</p>
-                <form 
+                <form enctype="multipart/form-data"
                 @if (isset($active_woman))
                     action="{{route('admin.woman.update', $active_woman)}}"
                 @else
@@ -37,6 +37,7 @@
 
                     <input type="hidden" name="modified_by" value="{{Auth::id()}}">
                 </form>
+                @include('admin.men.partials.image_delete_form')
             </div>
             <div class="col-sm-6 justify-content-center" style="padding: 30px;">
                 @include('admin.men.partials.tree')

@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Man;
 use App\Name;
+use App\Uruu;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ManController extends Controller
 {
@@ -51,6 +53,19 @@ class ManController extends Controller
         ]);
         $father = Man::find($request->father_id);
         $father->update(['bala_sany' => $father->bala_sany + 1]);
+
+        // Categories
+        if ($request->input('categories')) :
+            $man->categories()->attach($request->input('categories'));
+        endif;
+
+        // Image
+        if ($request->file('photo') != null) {
+            $man->image = $request->file('photo')->store('people-image', 'public');
+            $man->save();
+        }
+
+        // Name
         $name = Name::where('name', $man->name)->get()->first();
         if ($name == null) {
             $number_of_name = Man::where('name', $man->name)->count();
@@ -123,13 +138,22 @@ class ManController extends Controller
             $name->number_of_name--;
             $name->save();
         }
-        $man->update($request->except('categories'));
+        $man->update($request->except('categories', 'photo'));
 
         //Categories
         $man->categories()->detach();
         if ($request->input('categories')) :
             $man->categories()->attach($request->input('categories'));
         endif;
+
+        // Image
+        if ($request->file('photo') != null) {
+            Storage::delete($man->image);
+            $man->image = $request->file('photo')->store('people-image', 'public');
+            $man->save();
+        }
+
+        // Name
         $name = Name::where('name', $man->name)->get()->first();
         if ($name == null)
             Name::create(['name' => $man->name, 'slug' => '', 'male_female' => 1, 'number_of_name' => 1]);
@@ -147,17 +171,38 @@ class ManController extends Controller
         $man->categories()->detach();
         $father_id = $man->father_id;
         $kanchanchy_bala = $man->kanchanchy_bala;
+
         $name = Name::where('name', $man->name)->get()->first();
         if ($name != null) {
             $name->number_of_name--;
             $name->save();
         }
+
+        Storage::delete($man->image);
+
         $man->delete();
+
         $father = Man::with('children')->find($father_id);
         $father->update(['bala_sany' => ($father->bala_sany - 1)]);
+
         foreach ($father->children as $child)
             if ($child->kanchanchy_bala > $kanchanchy_bala)
                 $child->update(['kanchanchy_bala' => ($child->kanchanchy_bala -1)]);
         return redirect()->route('admin.man.edit', $father);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Man  $man
+     * @return \Illuminate\Http\Response
+     */
+    public function image_delete(Man $man)
+    {
+        Storage::delete($man->image);
+
+        $man->update(['image' => null]);
+
+        return redirect()->route('admin.man.edit', $man);
     }
 }

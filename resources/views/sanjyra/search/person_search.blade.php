@@ -9,8 +9,14 @@
         <input class="form-control" type="text" id="father_name" pattern="[А-Яа-я]{1,}" title="Атасынын атын жазыңыз" placeholder="Атасынын атын жазыңыз" name="father_name" required="required">
     </div>
     <div class="form-group">
-        <select name="uruusu" id="uruusu">
-            <option value="monoldor"></option>
+        <select class="form-control" name="uruusu" id="uruusu">
+            <option value="">Уруулар</option>
+            @isset($uruular)
+                @forelse ($uruular as $uruu)
+                    <option value="$uruu->name">{{$uruu->name}}</option>
+                @empty
+                @endforelse
+            @endisset
         </select>
     </div>
     <button type="submit" class="btn btn-primary">Издөө</button>

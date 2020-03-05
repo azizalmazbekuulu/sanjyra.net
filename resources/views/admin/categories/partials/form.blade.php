@@ -12,15 +12,11 @@
 </div>
 <div class="form-group">
     <label for="">Аталыш</label>
-    <input type="text" class="form-control" name="title" placeholder="Категориянын аталышы" @if (isset($category->title)) value="{{$category->title}}"
-            @else value=""
-            @endif required>
+    <input type="text" class="form-control" name="title" placeholder="Категориянын аталышы" value="{{$category->title ?? ''}}" required>
 </div>
 <div class="form-group">
     <label for="">Slug</label>
-    <input type="text" class="form-control" name="slug" placeholder="Автоматтык түрдө түзүлөт" @if (isset($category->slug)) value="{{$category->slug}}"
-    @else value=""
-    @endif readonly>
+    <input type="text" class="form-control" name="slug" placeholder="Автоматтык түрдө түзүлөт" value="{{$category->slug ?? ''}}" readonly>
 </div>
 <div class="form-group">
     <label for="">Башкы категория</label>
@@ -29,5 +25,5 @@
         @include('admin.categories.partials.categories', ['categories' => $categories])
     </select>
 </div>
-<hr>
 <input class="btn btn-primary" type="submit" value="Сактоо">
+<hr>
