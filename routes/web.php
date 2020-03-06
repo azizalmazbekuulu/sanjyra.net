@@ -13,15 +13,25 @@
 
 Route::group(['prefix'=>'admin', 'namespace'=>'Admin', 'middleware'=>['auth']], function(){
     Route::get('/', 'DashboardController@dashboard')->name('admin.index');
+
     Route::resource('/category', 'CategoryController', ['as'=>'admin']);
+
     Route::resource('/article', 'ArticleController', ['as'=>'admin']);
+    Route::delete('/article/image-delete/{article}', 'ArticleController@image_delete', ['as'=>'admin'])->name('admin.article.image-delete');
+
     Route::resource('/name', 'NameController', ['as'=>'admin']);
+
     Route::resource('/man', 'ManController', ['as'=>'admin']);
-    Route::post('/man/image-delete', 'ManController@image_delete', ['as'=>'admin'])->name('admin.man.image-delete');
+    Route::delete('/man/image-delete/{man}', 'ManController@image_delete', ['as'=>'admin'])->name('admin.man.image-delete');
+
     Route::resource('/woman', 'WomanController', ['as'=>'admin']);
-    Route::post('/woman/image-delete', 'WomanController@image_delete', ['as'=>'admin'])->name('admin.woman.image-delete');
+    Route::delete('/woman/image-delete/{woman}', 'WomanController@image_delete', ['as'=>'admin'])->name('admin.woman.image-delete');
+
     Route::resource('/uruu', 'UruuController', ['as'=>'admin']);
+
     Route::resource('/literature', 'LiteratureController', ['as'=>'admin']);
+    Route::delete('/literature/image-delete/{literature}', 'LiteratureController@image_delete', ['as'=>'admin'])->name('admin.literature.image-delete');
+
     Route::group(['prefix' => 'user_management', 'namespace' => 'UserManagement'], function() {
         Route::resource('/user', 'UserController', ['as' => 'admin.user_management']);
     });
@@ -36,7 +46,7 @@ Route::get('/woman/{id}', 'SanjyraController@woman_show')->name('woman-show');
 
 Route::get('/name/{slug?}', 'SanjyraController@name')->name('name');
 
-Route::post('/person-search', 'SanjyraController@person_search')->name('person-search');
+Route::post('/person-search', 'SearchController@person_search')->name('person-search');
 
 Route::get('/famous-people/{category?}', 'SanjyraController@famous_people')->name('famous-people');
 

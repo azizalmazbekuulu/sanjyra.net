@@ -18,6 +18,13 @@
     <label for="">Slug (Окшошу жок маани)</label>
     <input type="text" class="form-control" name="slug" placeholder="Автоматтык түрдө түзүлөт" value="{{$article->slug ?? ''}}" readonly>
 </div>
+@if ($article->image != null)
+    <img src="{{ asset('storage/'.$article->image) }}" alt="{{$article->name}}">
+@endif
+<div class="form-group">
+    <label for="photo">Сүрөт</label>
+    <input class="form-control-file" type="file" name="photo" id="photo">
+</div>
 <div class="form-group">
     <label for="">Башкы категория</label>
     <select name="categories[]" class="form-control" multiple="multiple">

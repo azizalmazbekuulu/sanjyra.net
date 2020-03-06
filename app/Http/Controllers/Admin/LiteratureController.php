@@ -128,4 +128,19 @@ class LiteratureController extends Controller
 
         return redirect()->route('admin.literature.index');
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Literature  $literature
+     * @return \Illuminate\Http\Response
+     */
+    public function image_delete(Literature $literature)
+    {
+        Storage::disk('public')->delete($literature->image);
+
+        $literature->update(['image' => null]);
+
+        return redirect()->route('admin.literature.edit', $literature);
+    }
 }

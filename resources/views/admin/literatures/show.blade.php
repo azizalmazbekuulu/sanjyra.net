@@ -13,7 +13,7 @@
                 <h5 class="card-title">{{$literature->title}}</h5>
                 <h5 class="card-title">{{$literature->author}}</h5>
                 @if ($literature->image != '')
-                    <img src="{{ asset('storage/'.$literature->image) }}" alt="{{$literature->title}}">
+                    <img width="300px" src="{{ asset('storage/'.$literature->image) }}" alt="{{$literature->title}}">
                 @endif
                 <p class="card-text">
                     {!! $literature->description !!}

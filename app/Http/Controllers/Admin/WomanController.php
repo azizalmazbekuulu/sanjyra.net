@@ -8,6 +8,7 @@ use App\Category;
 use App\Woman;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class WomanController extends Controller
 {
@@ -200,7 +201,7 @@ class WomanController extends Controller
      */
     public function image_delete(Woman $woman)
     {
-        Storage::delete($woman->image);
+        Storage::disk('public')->delete($woman->image);
 
         $woman->update(['image' => null]);
 

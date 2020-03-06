@@ -24,7 +24,7 @@
         <tbody>
             @forelse ($articles as $article)
                 <tr>
-                    <td>{{$article->title}}</td>
+                    <td><a href="{{ route('admin.article.show', $article) }}">{{$article->title}}</a></td>
                     <td>{{$article->published}}</td>
                     <td class="text-right">
                         <form onsubmit="if(confirm('Өчүрүү керекпи?')){ return true }else{ return false }" action="{{route('admin.article.destroy', $article)}}" method="post">

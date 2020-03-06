@@ -28,11 +28,11 @@
                     <ul class="navbar-nav mr-auto">
                         {{-- <li class="nav-item">
                             <a class="nav-link {{ (Request::is('name/*') || Request::is('name') ? 'active' : '') }}" href="{{route('name')}}">Ысымдар</a>
-                        </li> --}}
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link {{ (Request::is('famous/*') || Request::is('famous') ? 'active' : '') }}" href="{{route('famous-people')}}">Белгилүү инсандар</a>
                         </li>
-                        {{-- <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link {{ (Request::is('category/*') || Request::is('category') ? 'active' : '') }}" href="{{route('category')}}">Категориялар</a>
                         </li>
                         <li class="nav-item">
@@ -80,17 +80,14 @@
             @yield('content')
         </main>
 
-        <footer class="container pt-3">
-            <div class="row p-3">
+        <footer class="footer">
+            <div class="row">
                 <div class="col-sm-9 text-center">
                     &copy; 2020 <a href="{{route('man')}}">Sanjyra.net</a>
                 </div>
                 <div class="col-sm-3">
                     {{-- <a href="https://www.facebook.com/groups/471779633154987/" target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a> --}}
-                    <dl>
-                        <dt>Email</dt>
-                        <dd><a href="mailto:help@sanjyra.net">help@sanjyra.net</a></dd>
-                    </dl>
+                    Email: <a href="mailto:help@sanjyra.net">help@sanjyra.net</a>
                 </div>
             </div>
         </footer>

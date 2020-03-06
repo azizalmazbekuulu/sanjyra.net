@@ -199,7 +199,7 @@ class ManController extends Controller
      */
     public function image_delete(Man $man)
     {
-        Storage::delete($man->image);
+        Storage::disk('public')->delete($man->image);
 
         $man->update(['image' => null]);
 

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Uruu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
@@ -11,7 +13,14 @@ class SearchController extends Controller
     {
         $name = $request["name"];
         $father_name = $request['father_name'];
-        $uruusu = $request['uruusu'];
+        if ($request['uruusu'] == 'all') {
+            $man_uruusu = '';
+            $woman_uruusu = '';
+        }
+        else {
+            $man_uruusu = " AND t1.uruusu = '".$request['uruusu']."'";
+            $woman_uruusu = " AND t2.uruusu = '".$request['uruusu']."'";
+        }
         $relevance = "
         (
             case
@@ -38,21 +47,17 @@ class SearchController extends Controller
         t2.father_id AS grand_id,t3.name AS grand_name, $relevance
         FROM men t1,men t2,men t3 
         WHERE t1.father_id=t2.id AND t2.father_id=t3.id AND t1.name LIKE '%$name%' 
-                AND t2.name LIKE '%$father_name%' AND t2.uruusu LIKE '%$uruusu%'
+                AND t2.name LIKE '%$father_name%'$man_uruusu
         ORDER BY relevance desc";
         $query_women = "SELECT t1.id,t1.name,t2.uruusu,t2.name AS father_name,t2.id AS father_id,
         t2.father_id AS grand_id,t3.name AS grand_name, $relevance
         FROM women t1,men t2,men t3 
         WHERE t1.father_id=t2.id AND t2.father_id=t3.id AND t1.name LIKE '%$name%' 
-                AND t2.name LIKE '%$father_name%' AND t2.uruusu LIKE '%$uruusu%'
+                AND t2.name LIKE '%$father_name%'$woman_uruusu
         ORDER BY relevance desc";
         $men = DB::select($query_men);
         $women = DB::select($query_women);
-        $route = 'sanjyra.search.person_search_result';
-        if (isset($request['route'])) {
-            $route = 'admin.men';
-        }
-        return view('', [
+        return view('sanjyra.search.person_search_result', [
             'men' => $men,
             'women' => $women,
             'uruular' => Uruu::orderBy('name')->get()

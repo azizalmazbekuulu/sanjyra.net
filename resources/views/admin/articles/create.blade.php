@@ -8,7 +8,7 @@
             @slot('active') Макалалар @endslot
         @endcomponent
         <hr>
-        <form action="{{route('admin.article.store')}}" method="post">
+        <form action="{{route('admin.article.store')}}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
 
             {{-- Form include --}}

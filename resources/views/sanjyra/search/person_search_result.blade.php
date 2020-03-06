@@ -46,6 +46,7 @@
         </tfoot> --}}
     </table>
     </div>
+    @endif
 <div class="col-sm-6">
 @if ($men != null)
 <table>
@@ -84,5 +85,4 @@
 @endif
 </div>
 </div>
-@endif
 @endsection

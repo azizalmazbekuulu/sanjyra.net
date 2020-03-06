@@ -16,5 +16,8 @@
             @include('admin.literatures.partials.form')
             <input type="hidden" name="modified_by" value="{{Auth::id()}}">
         </form>
+        @if ($literature->image != null)
+            @include('admin.literatures.partials.image_delete_form')
+        @endif
     </div>
 @endsection

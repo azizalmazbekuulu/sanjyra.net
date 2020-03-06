@@ -6,6 +6,7 @@ use App\Article;
 use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -127,5 +128,20 @@ class ArticleController extends Controller
         $article->delete();
 
         return redirect()->route('admin.article.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Article  $article
+     * @return \Illuminate\Http\Response
+     */
+    public function image_delete(Article $article)
+    {
+        Storage::disk('public')->delete($article->image);
+
+        $article->update(['image' => null]);
+
+        return redirect()->route('admin.article.edit', $article);
     }
 }

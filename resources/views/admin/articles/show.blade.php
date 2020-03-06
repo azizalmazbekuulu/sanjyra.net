@@ -11,6 +11,9 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">{{$article->title}}</h5>
+                @if ($article->image != null)
+                    <img width="300px" src="{{ asset('storage/'.$article->image) }}" alt="{{$article->name}}">
+                @endif
                 <p class="card-text">
                     {!! $article->description !!}
                 </p>

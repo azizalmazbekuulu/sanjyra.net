@@ -46,7 +46,7 @@
                             <a class="nav-link {{ (Request::is('admin/name/*') || Request::is('admin/name') ? 'active' : '') }}" href="{{route('admin.name.index')}}">Ысымдар</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ (Request::is('admin/article/*') || Request::is('admin/article') ? 'active' : '') }}" href="{{route('admin.article.index')}}">Материалдар</a>
+                            <a class="nav-link {{ (Request::is('admin/article/*') || Request::is('admin/article') ? 'active' : '') }}" href="{{route('admin.article.index')}}">Макалалар</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ (Request::is('admin/category/*') || Request::is('admin/category') ? 'active' : '') }}" href="{{route('admin.category.index')}}">Категориялар</a>

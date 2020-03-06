@@ -16,6 +16,9 @@
         @include('admin.literatures.partials.categories', ['categories' => $categories])
     </select>
 </div>
+@if ($literature->image != null)
+    <img src="{{ asset('storage/'.$literature->image) }}" alt="{{$literature->name}}">
+@endif
 <div class="form-group">
     <label for="photo">Сүрөт</label>
     <input class="form-control-file" type="file" name="photo" id="photo">
