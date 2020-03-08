@@ -3,9 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Санжыра">
+    <meta name="keywords" content="санжыра; кыргыз;">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }} - @yield('title')</title>
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/social.js') }}" defer></script>
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -81,13 +84,13 @@
         </main>
 
         <footer class="footer">
-            <div class="row">
-                <div class="col-sm-9 text-center">
-                    &copy; 2020 <a href="{{route('man')}}">Sanjyra.net</a>
-                </div>
-                <div class="col-sm-3">
+            <div class="row m-0">
+                <div class="col-sm-3 text-center">
                     {{-- <a href="https://www.facebook.com/groups/471779633154987/" target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a> --}}
                     Email: <a href="mailto:help@sanjyra.net">help@sanjyra.net</a>
+                </div>
+                <div class="col-sm-9 text-center">
+                    &copy; 2020 <a href="{{route('man')}}">Sanjyra.net</a>
                 </div>
             </div>
         </footer>

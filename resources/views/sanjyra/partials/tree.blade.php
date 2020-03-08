@@ -1,4 +1,4 @@
-<div class="row justify-content-center d-flex flex-nowrap p-3" style="overflow: auto;">
+<div class="container py-3" style="overflow: auto;">
     <table class="tree">
         <tbody>
             @php
@@ -16,7 +16,7 @@
                 <tr>
                 @if ($i == 1)
                     <td>
-                        <a class="btn font-weight-bold border border-dark rounded-pill
+                        <a class="btn text-nowrap font-weight-bold border border-dark rounded-pill
                         @if ($father->id == $active_man_id)
                             bg-success text-danger
                         @else
@@ -39,7 +39,7 @@
                 @endif
                 @if ($i <= $father->bala_sany && $father->children->where('kanchanchy_bala', $i)->first() != null)
                     <td>
-                        <a class="btn font-weight-bold border border-dark rounded-pill
+                        <a class="btn text-nowrap font-weight-bold border border-dark rounded-pill
                         @if ($father->children->where('kanchanchy_bala', $i)->first()->id == $active_man_id)
                             bg-success text-danger
                         @else
@@ -67,15 +67,10 @@
                 @if ($i >= $man->kanchanchy_bala && $i < $man->bala_sany + $man->kanchanchy_bala)
                     <td>
                         @php
-                        if ($man->kanchanchy_bala == $man->children->first()->kanchanchy_bala) {
-                            $order = $i-$man->kachanchy_bala;
-                        }
-                        else {
-                            $order = $i-$man->kachanchy_bala-1;
-                        }
+                            $order = $i-$man->kanchanchy_bala+1;
                         @endphp
                         @if ($man->children->where('kanchanchy_bala', $order)->first() != null)
-                        <a class="btn font-weight-bold border border-dark rounded-pill bg-primary text-white w-100 h-100"
+                        <a class="btn text-nowrap font-weight-bold border border-dark rounded-pill bg-primary text-white w-100 h-100"
                         href="{{route('man', $man->children->where('kanchanchy_bala', $order)->first()->id)}}">
                             {{ $man->children->where('kanchanchy_bala', $order)->first()->name }}
                         </a>

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Man;
-use App\Woman;
-use App\Category;
-use App\Article;
 use App\Name;
 use App\Uruu;
+use App\Woman;
+use App\Article;
+use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;

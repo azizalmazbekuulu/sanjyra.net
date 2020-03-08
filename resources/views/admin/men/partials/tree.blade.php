@@ -1,79 +1,84 @@
-<div class="row justify-content-center d-flex flex-nowrap pt-3" style="overflow: auto;">
+<div class="container py-3" style="overflow: auto;">
     <table class="tree">
         <tbody>
-            <tr>
-                <td>
-                    <a class="btn font-weight-bold border border-dark rounded-pill
-                    @if ($father->id == $active_man_id)
-                        bg-success text-danger
-                    @else
-                        bg-primary text-white
-                    @endif
-                     w-100 h-100"
-                     href="{{route('admin.man.edit', $father)}}">
-                        {{ $father->name }}
-                    </a>
-                </td>
-                <td>
-                    <svg height="20" width="40">
-                        <line x1="0" y1="10" x2="40" y2="10" style="stroke:rgb(0,0,0);stroke-width:2" />
-                        Балдары:
-                    </svg>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="tree">
-        <tbody>
-            @foreach ($father->children as $child)
-            <tr>
-                <td>
-                    <a class="btn font-weight-bold border border-dark rounded-pill 
-                    @if ($child->id == $active_man_id)
-                        bg-success text-danger
-                    @else
-                        bg-primary text-white
-                    @endif
-                     w-100 h-100"
-                     href="{{route('admin.man.edit', $child)}}">
-                        {{$child->name}}
-                    </a>
-                </td>
-                @if ($child->bala_sany > 0 && $child->id == $man->id)
-                    <td>
-                        <svg height="20" width="40">
-                        <line x1="0" y1="10" x2="40" y2="10" style="stroke:rgb(0,0,0);stroke-width:2" />
-                        Балдары:
-                        </svg>
-                    </td>
-                    <?php $grandlining = $child->kanchanchy_bala - 1; ?>
-                @else
-                    <td></td>
-                @endif
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-    <table class="tree">
-        <tbody>
-            @isset($grandlining)
-                @for ($i = 0; $i < $grandlining; $i++)
-                    <tr>
-                        <td><span class="btn">&nbsp;</span></td>
-                    </tr>
-                @endfor
-            @endisset
-            @if ($man->bala_sany > 0)
-                @foreach ($man->children as $grandchild)
+            @php
+            if ($father->bala_sany - $man->kanchanchy_bala > $man->bala_sany) {
+                $count = $father->bala_sany;
+            }
+            elseif ($man->bala_sany > 0 && $man->kanchanchy_bala == $man->children->first()->kanchanchy_bala) {
+                $count = ($father->bala_sany > $man->bala_sany ? $father->bala_sany : $man->bala_sany);
+            }
+            else {
+                $count = $father->bala_sany + $man->bala_sany;
+            }
+            @endphp
+            @for ($i = 1; $i <= $count; $i++)
                 <tr>
+                @if ($i == 1)
                     <td>
-                        <a class="btn bg-primary font-weight-bold text-white border border-dark rounded-pill w-100 h-100" href="{{route('admin.man.edit', $grandchild)}}">
-                            {{ $grandchild->name }}
+                        <a class="btn text-nowrap font-weight-bold border border-dark rounded-pill
+                        @if ($father->id == $active_man_id)
+                            bg-success text-danger
+                        @else
+                            bg-primary text-white
+                        @endif
+                        w-100 h-100"
+                        href="{{route('admin.man.edit', $father->id)}}">
+                            {{ $father->name }}
                         </a>
                     </td>
+                    <td>
+                        <svg height="20" width="40">
+                            <line x1="0" y1="10" x2="40" y2="10" style="stroke:rgb(0,0,0);stroke-width:2" />
+                            Балдары:
+                        </svg>
+                    </td>
+                @else
+                    <td></td>
+                    <td></td>
+                @endif
+                @if ($i <= $father->bala_sany && $father->children->where('kanchanchy_bala', $i)->first() != null)
+                    <td>
+                        <a class="btn text-nowrap font-weight-bold border border-dark rounded-pill
+                        @if ($father->children->where('kanchanchy_bala', $i)->first()->id == $active_man_id)
+                            bg-success text-danger
+                        @else
+                            bg-primary text-white
+                        @endif
+                        w-100 h-100"
+                        href="{{route('admin.man.edit', $father->children->where('kanchanchy_bala', $i)->first()->id)}}">
+                            {{ $father->children->where('kanchanchy_bala', $i)->first()->name }}
+                        </a>
+                    </td>
+                    @if ($father->children->where('kanchanchy_bala', $i)->first()->id == $man->id && $man->bala_sany > 0)
+                        <td>
+                            <svg height="20" width="40">
+                                <line x1="0" y1="10" x2="40" y2="10" style="stroke:rgb(0,0,0);stroke-width:2" />
+                                Балдары:
+                            </svg>
+                        </td>
+                    @else
+                        <td></td>
+                    @endif
+                @else
+                    <td></td>
+                    <td></td>
+                @endif
+                @if ($i >= $man->kanchanchy_bala && $i < $man->bala_sany + $man->kanchanchy_bala)
+                    <td>
+                        @php
+                            $order = $i-$man->kanchanchy_bala+1;
+                        @endphp
+                        @if ($man->children->where('kanchanchy_bala', $order)->first() != null)
+                        <a class="btn text-nowrap font-weight-bold border border-dark rounded-pill bg-primary text-white w-100 h-100"
+                        href="{{route('admin.man.edit', $man->children->where('kanchanchy_bala', $order)->first()->id)}}">
+                            {{ $man->children->where('kanchanchy_bala', $order)->first()->name }}
+                        </a>
+                        @endif
+                    </td>
+                @endif
                 </tr>
-                @endforeach
-            @endif
+            @endfor
         </tbody>
     </table>
 </div>

@@ -11,7 +11,6 @@
     @endcomponent
 
     <hr>
-
     <a href="{{route('admin.article.create')}}" class="btn btn-primary float-right"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Макала түзүү</a>
     <table class="table table-striped">
         <thead>
