@@ -2,12 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Man;
 use App\Uruu;
+use App\Woman;
+use App\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class SearchController extends Controller
 {
+    public function main_search(Request $request)
+    {
+        $q = $request['query'];
+        $query_men = "SELECT *
+        FROM men WHERE MATCH (info) AGAINST
+        ('".$q."' IN NATURAL LANGUAGE MODE)";
+        $query_women = "SELECT *
+        FROM women WHERE MATCH (info) AGAINST
+        ('".$q."' IN NATURAL LANGUAGE MODE)";
+        $query_article = "SELECT *
+        FROM articles WHERE MATCH (title, description) AGAINST
+        ('".$q."' IN NATURAL LANGUAGE MODE)";
+        $men = DB::select($query_men);
+        $women = DB::select($query_women);
+        $articles = DB::select($query_article);
+        return view('sanjyra.search.main_search_result',[
+            'men' => $men,
+            'women' => $women,
+            'articles' => $articles,
+            'query' => $q
+        ]);
+    }
 
     public function person_search(Request $request)
     {
@@ -57,10 +84,22 @@ class SearchController extends Controller
         ORDER BY relevance desc";
         $men = DB::select($query_men);
         $women = DB::select($query_women);
-        return view('sanjyra.search.person_search_result', [
-            'men' => $men,
-            'women' => $women,
-            'uruular' => Uruu::orderBy('name')->get()
-        ]);
+        if ($request['admin'] == true)
+        {
+            return view('admin.men.search.person_search_result', [
+                'men' => $men,
+                'women' => $women,
+                'uruular' => Uruu::orderBy('name')->get()
+            ]);
+        }
+        else {
+            return view('sanjyra.search.person_search_result', [
+                'men' => $men,
+                'women' => $women,
+                'uruular' => Uruu::orderBy('name')->get(),
+                'name' => $name,
+                'father_name' => $father_name
+            ]);
+        }
     }
 }

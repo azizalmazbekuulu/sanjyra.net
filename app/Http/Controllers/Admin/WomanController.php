@@ -121,6 +121,7 @@ class WomanController extends Controller
                             }])->find($id),
             'categories' => Category::with('children')->where('parent_id', '0')->get(),
             'delimiter'  => '',
+            'uruular' => Uruu::orderBy('name')->get(),
             'person' => Man::with('father')->where('id', $man->id)->get()->first()
         ]);
     }

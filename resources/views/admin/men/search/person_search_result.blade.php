@@ -24,9 +24,9 @@
         @forelse ($women as $woman)
         <tr>
             <td>{{$i++}}</td>
-            <td><a href="{{route('woman-show', $woman->grand_id)}}">{{ $woman->grand_name }}</a></td>
-            <td><a href="{{route('woman-show', $woman->father_id)}}">{{ $woman->father_name }}</a></td>
-            <td><a href="{{route('woman-show', $woman->id)}}">{{ $woman->name }}</a></td>
+            <td><a href="{{ url('admin/man') . '/'  . $woman->grand_id . '/edit' }}">{{ $woman->grand_name }}</a></td>
+            <td><a href="{{ url('admin/man') . '/'  . $woman->father_id . '/edit' }}">{{ $woman->father_name }}</a></td>
+            <td><a href="{{ url('admin/woman') . '/'  . $woman->id . '/edit' }}">{{ $woman->name }}</a></td>
             <td>{{ $woman->uruusu }}</td>
         </tr>
         @empty
@@ -46,12 +46,6 @@
         </tfoot> --}}
     </table>
     </div>
-    @else
-    <ul>
-        <li>Аты: {{$name}}</li>
-        <li>Атасынын аты: {{$father_name}}</li>
-    </ul>
-    <p>Мындай маалымат табылган жок. Маалыматтын тууралыгын текшериңиз.</p>
     @endif
 <div class="col-sm-6">
 @if ($men != null)
@@ -67,9 +61,9 @@
     @forelse ($men as $man)
     <tr>
         <td>{{$i++}}</td>
-        <td><a href="{{route('man', $man->grand_id)}}">{{ $man->grand_name }}</a></td>
-        <td><a href="{{route('man', $man->father_id)}}">{{ $man->father_name }}</a></td>
-        <td><a href="{{route('man', $man->id)}}">{{ $man->name }}</a></td>
+        <td><a href="{{ url('admin/man') . '/' . $man->grand_id . '/edit' }}">{{ $man->grand_name }}</a></td>
+        <td><a href="{{ url('admin/man') . '/'  . $man->father_id . '/edit' }}">{{ $man->father_name }}</a></td>
+        <td><a href="{{ url('admin/man') . '/'  . $man->id . '/edit' }}">{{ $man->name }}</a></td>
         <td>{{ $man->uruusu }}</td>
     </tr>
     @empty

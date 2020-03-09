@@ -8,14 +8,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }} - @yield('title')</title>
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/social.js') }}" defer></script>
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/815801c4a2.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body id="body">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -45,6 +44,7 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        @include('sanjyra.search.main_search')
                         <!-- Authentication Links -->
                         @guest
                             {{-- <li class="nav-item">
@@ -83,17 +83,19 @@
             @yield('content')
         </main>
 
-        <footer class="footer">
-            <div class="row m-0">
-                <div class="col-sm-3 text-center">
-                    {{-- <a href="https://www.facebook.com/groups/471779633154987/" target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a> --}}
+        <footer class="footer" id="footer">
+            <div class="row m-0 p-3">
+                <div class="col text-center">
+                    <a href="https://www.facebook.com/groups/471779633154987/" target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a><br>
                     Email: <a href="mailto:help@sanjyra.net">help@sanjyra.net</a>
                 </div>
-                <div class="col-sm-9 text-center">
+                <div class="col text-center"><br>
+                    <a href="{{route('terms-of-use')}}">Колдонуу эрежелери</a><br>
                     &copy; 2020 <a href="{{route('man')}}">Sanjyra.net</a>
                 </div>
             </div>
         </footer>
     </div>
+    <script src="{{ asset('js/social.js') }}" defer></script>
 </body>
 </html>

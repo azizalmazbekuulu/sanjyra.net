@@ -2,7 +2,7 @@
     @csrf
     <div class="form-group">
         {{-- <label for="name">Аты</label> --}}
-        <input class="form-control" type="text" id="name" title="Атын жазыңыз" placeholder="Атын жазыңыз" name="name" required="required" pattern="[А-Яа-я,ө,ң,ү,Ү,Ң,Ө]{1,}">
+        <input class="form-control" type="text" id="name" title="Атын жазыңыз" placeholder="Атын жазыңыз" name="name" required="required">
     </div>
     <div class="form-group">
         {{-- <label for="father_name">Атасынын аты</label> --}}
@@ -19,5 +19,6 @@
             @endisset
         </select>
     </div>
+    <input type="hidden" name="admin" value="true">
     <button type="submit" class="btn btn-primary">Издөө</button>
 </form>

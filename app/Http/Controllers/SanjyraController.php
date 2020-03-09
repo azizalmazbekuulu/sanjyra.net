@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class SanjyraController extends Controller
 {
-    public function index($id = 1)
+    public function index(Int $id = 1)
     {
         $man = Man::find($id);
         $active_id = 1;
@@ -94,6 +94,11 @@ class SanjyraController extends Controller
     public function category()
     {
         # code...
+    }
+
+    public function terms_of_use()
+    {
+    return view('sanjyra.about.terms_of_use');
     }
 
     public function article()

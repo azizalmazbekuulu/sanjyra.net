@@ -40,6 +40,7 @@
                 @include('admin.men.partials.image_delete_form')
             </div>
             <div class="col-sm-6 justify-content-center" style="padding: 30px;">
+                @include('admin.men.search.person_search')
                 @include('admin.men.partials.tree')
             </div>
         </div>
