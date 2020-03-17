@@ -1,5 +1,4 @@
-<form id="izde" action="{{route('person-search')}}" method="post" class="form-inline">
-    @csrf
+<form id="izde" action="{{route('person-search')}}" method="get" class="form-inline">
     <div class="form-group">
         {{-- <label for="name">Аты</label> --}}
         <input class="form-control" type="text" id="name" title="Атын жазыңыз" placeholder="Атын жазыңыз" name="name" required="required" pattern="[А-Яа-я,ө,ң,ү,Ү,Ң,Ө]{1,}">
@@ -20,4 +19,5 @@
         </select>
     </div>
     <button type="submit" class="btn btn-primary">Издөө</button>
+    @csrf
 </form>

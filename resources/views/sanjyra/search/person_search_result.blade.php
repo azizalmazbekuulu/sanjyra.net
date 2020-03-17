@@ -24,8 +24,8 @@
         @forelse ($women as $woman)
         <tr>
             <td>{{$i++}}</td>
-            <td><a href="{{route('woman-show', $woman->grand_id)}}">{{ $woman->grand_name }}</a></td>
-            <td><a href="{{route('woman-show', $woman->father_id)}}">{{ $woman->father_name }}</a></td>
+            <td><a href="{{route('man', $woman->grand_id)}}">{{ $woman->grand_name }}</a></td>
+            <td><a href="{{route('man', $woman->father_id)}}">{{ $woman->father_name }}</a></td>
             <td><a href="{{route('woman-show', $woman->id)}}">{{ $woman->name }}</a></td>
             <td>{{ $woman->uruusu }}</td>
         </tr>

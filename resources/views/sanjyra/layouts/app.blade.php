@@ -39,6 +39,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ (Request::is('article/*') || Request::is('article') ? 'active' : '') }}" href="{{route('article')}}">Макалалар</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ (Request::is('literature/*') || Request::is('literature') ? 'active' : '') }}" href="{{route('literature')}}">Колдонулган адабияттар</a>
                         </li> --}}
                     </ul>
 

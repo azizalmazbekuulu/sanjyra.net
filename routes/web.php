@@ -41,19 +41,19 @@ Auth::routes([
     'register' => false
 ]);
 
-Route::get('/{id?}', 'SanjyraController@index')->name('man');
+Route::get('/', 'SanjyraController@index')->name('index');
+Route::get('/man/{id?}', 'SanjyraController@index')->name('man');
 Route::get('/woman/{id}', 'SanjyraController@woman_show')->name('woman-show');
 
 Route::get('/name/{slug?}', 'SanjyraController@name')->name('name');
 
-Route::post('/person-search', 'SearchController@person_search')->name('person-search');
-Route::post('/main-search', 'SearchController@main_search')->name('main-search');
+Route::get('/person-search', 'SearchController@person_search')->name('person-search');
+Route::get('/main-search', 'SearchController@main_search')->name('main-search');
 
-Route::get('/about/terms-of-use', 'SanjyraController@terms_of_use')->name('terms-of-use');
+Route::get('/terms-of-use', 'SanjyraController@terms_of_use')->name('terms-of-use');
 
 Route::get('/famous-people/{category?}', 'SanjyraController@famous_people')->name('famous-people');
 
-Route::get('/article', 'SanjyraController@article')->name('article');
+Route::get('/article/{article?}', 'SanjyraController@article')->name('article');
 
 Route::get('/category', 'SanjyraController@category')->name('category');
-
