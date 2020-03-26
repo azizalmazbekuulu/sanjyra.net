@@ -15,16 +15,16 @@ class SearchController extends Controller
 {
     public function main_search(Request $request)
     {
-        $q = $request['query'];
+        $query = $request['q'];
         $query_men = "SELECT *
         FROM men WHERE MATCH (info) AGAINST
-        ('".$q."' IN NATURAL LANGUAGE MODE)";
+        ('".$query."' IN NATURAL LANGUAGE MODE)";
         $query_women = "SELECT *
         FROM women WHERE MATCH (info) AGAINST
-        ('".$q."' IN NATURAL LANGUAGE MODE)";
+        ('".$query."' IN NATURAL LANGUAGE MODE)";
         $query_article = "SELECT *
         FROM articles WHERE MATCH (title, description) AGAINST
-        ('".$q."' IN NATURAL LANGUAGE MODE)";
+        ('".$query."' IN NATURAL LANGUAGE MODE)";
         $men = DB::select($query_men);
         $women = DB::select($query_women);
         $articles = DB::select($query_article);
@@ -32,7 +32,7 @@ class SearchController extends Controller
             'men' => $men,
             'women' => $women,
             'articles' => $articles,
-            'query' => $q
+            'query' => $query
         ]);
     }
 

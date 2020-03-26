@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="">Аталыш</label>
-    <input type="text" class="form-control" name="name" placeholder="Уруунун аталышы" value="{{$uruu->name ?? ''}}" required>
+    <input type="text" class="form-control" name="name" placeholder="Уруунун аталышы" value="{{$uruu->name ?? ''}}" required pattern="^[А-Яа-яӨөҢңҮү\s-]+$" title="Аталыш">
 </div>
 <div class="form-group">
     <label for="">Slug (Окшошу жок маани)</label>

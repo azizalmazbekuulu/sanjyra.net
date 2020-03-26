@@ -6,11 +6,11 @@
     @else
         value="{{$active_man->name ?? ''}}" 
     @endif
-    required>
+    required pattern="^[А-Яа-яӨөҢңҮү\s-]+$" title="Ысым жазыңыз">
 </div>
 <div class="form-group">
     <label for="">Энесинин IDси</label>
-    <input type="text" class="form-control" name="mother_id" placeholder="Энесинин IDси"  
+    <input type="number" min="0" class="form-control" name="mother_id" placeholder="Энесинин IDси"  
     @if (isset($active_woman))
         value="{{$active_woman->mother_id ?? ''}}"  
     @else
@@ -31,14 +31,14 @@
         @else
             value="{{$active_man->mother_name ?? ''}}"
         @endif
-    @endif>
+    @endif pattern="^[А-Яа-яӨөҢңҮү\s-]{0,}" title="Энесинин аты">
 </div>
 @if (!isset($active_woman))
 <div class="form-group">
     <label for="uruusu">Уруусу</label>
     <input type="text" class="form-control" name="uruusu" id="uruusu" placeholder="Уруусу" value="{{$active_man->uruusu ?? ''}}" @if ($active_man->uruusu != '')
         readonly="readonly"
-    @endif>
+    @endif pattern="^[А-Яа-яӨөҢңҮү\s-]{0,}" title="Уруусу">
 </div>
 @endif
 <div class="form-group">

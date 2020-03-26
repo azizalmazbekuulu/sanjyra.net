@@ -59,6 +59,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ (Request::is('admin/user_management/user/*') || Request::is('admin/user_management/user') ? 'active' : '') }}" href="{{route('admin.user_management.user.index')}}">Колдонуучулар</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

@@ -9,13 +9,12 @@
 @endif
 <div class="form-group">
     <label for="">Ысымы</label>
-    <input type="text" class="form-control" name="name" placeholder="Ысымы" 
+    <input type="text" class="form-control" name="name" placeholder="Ысымы" required
         @if (old('name'))
             value="{{old('name')}}"
         @else
             value="{{$user->name ?? ''}}"
-        @endif
-    required>
+        @endif>
 </div>
 <div class="form-group">
     <label for="">Email</label>

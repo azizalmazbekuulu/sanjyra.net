@@ -49,10 +49,10 @@ class Category extends Model
         return $this->morphedByMany('App\Woman', 'categoryable');
     }
 
-    //Polymorphic relation with reference
-    public function reference()
+    //Polymorphic relation with literature
+    public function literature()
     {
-        return $this->morphedByMany('App\Reference', 'categoryable');
+        return $this->morphedByMany('App\Literature', 'categoryable');
     }
 
     public function scopeLastCategories($query, $count)

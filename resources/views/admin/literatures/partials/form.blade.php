@@ -8,7 +8,7 @@
 </div>
 <div class="form-group">
     <label for="author">Автору</label>
-    <input type="text" class="form-control" name="author" id="author" placeholder="Автору" value="{{$literature->author ?? ''}}" required>
+    <input type="text" class="form-control" name="author" id="author" placeholder="Автору" value="{{$literature->author ?? ''}}" required pattern="^[А-Яа-яӨөҢңҮү\s-]+$" title="Автору">
 </div>
 <div class="form-group">
     <label for="">Башкы категория</label>

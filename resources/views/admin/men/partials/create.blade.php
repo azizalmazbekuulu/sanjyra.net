@@ -19,7 +19,7 @@
         <input class="btn btn-primary float-right ml-3 border border-success" type="submit" value="Уул кошуу">
         <input formaction="{{route('admin.woman.store')}}" class="btn btn-primary float-right ml-3 border border-success" type="submit" value="Кыз кошуу">
         <label for="name">Бала кошуу</label>
-        <input type="text" class="form-control" name="name" id="name" placeholder="Баланын ысымы">
+        <input type="text" class="form-control" name="name" id="name" placeholder="Баланын ысымы" required pattern="^[А-Яа-яӨөҢңҮү\s-]+$" title="Ысым жазыңыз">
     </div>
     <input type="hidden" name="father_id" value="{{$active_man->id}}">
     <input type="hidden" name="level" value="{{$active_man->level}}">

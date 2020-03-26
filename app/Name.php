@@ -16,7 +16,7 @@ class Name extends Model
     //Mutators
     public function setSlugAttribute($value)
     {
-        $this->attributes['slug'] = Str::slug( $this->name , "-");
+        $this->attributes['slug'] = Str::slug( $this->name, "-");
     }
 
     public function scopeLastNames($query, $count)
