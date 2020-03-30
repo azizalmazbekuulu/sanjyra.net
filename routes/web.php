@@ -56,4 +56,4 @@ Route::get('/famous-people/{category?}', 'SanjyraController@famous_people')->nam
 
 Route::get('/article/{article?}', 'SanjyraController@article')->name('article');
 
-Route::get('/category', 'SanjyraController@category')->name('category');
+Route::get('/category/{slug}', 'SanjyraController@category')->name('category');

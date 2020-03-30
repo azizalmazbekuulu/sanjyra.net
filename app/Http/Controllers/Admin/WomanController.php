@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Man;
 use App\Name;
-use App\Category;
+use App\Uruu;
 use App\Woman;
+use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
