@@ -1,76 +1,86 @@
 .tree tr,
 .tree td {
-    border-spacing: 0px;
+	border-spacing: 0px;
 }
 
 .tree td {
-    padding: 0px;
+	padding: 0px;
 }
 
 .tree {
-    margin: auto;
+	margin: auto;
 }
 
 /* Social icon styles */
 .facebook {
-    color: #4267B2;
+	color: #4267b2;
 }
 
 .twitter {
-    color: #1DA1F2;
+	color: #1da1f2;
 }
 
 .whatsapp {
-    color: #4AC959;
+	color: #4ac959;
 }
 
 .telegram {
-    color: #0088cc;
+	color: #0088cc;
 }
 
 .odnoklassniki {
-    color: #ED8207;
+	color: #ed8207;
 }
 
 .vkontakte {
-    color: #45668e;
+	color: #45668e;
 }
 
 .sharing {
-    display: flex;
-    align-items: baseline;
+	display: flex;
+	align-items: baseline;
 }
 
 .sharing a {
-    padding: 0px 5px;
-    display: block;
-    cursor: pointer;
-    font-size: 28px;
-    opacity: .85;
+	padding: 0px 5px;
+	display: block;
+	cursor: pointer;
+	font-size: 28px;
+	opacity: 0.85;
 }
 
 /* Sticky footer styles */
+html,
 body {
-	min-height: 100vh;
-}
-
-#app {
-	background-color: #5CEFB4;
-}
-
-#app, main {
 	min-height: 100%;
 }
 
+#app {
+	background-color: #bbded6;
+	flex: 1 0 auto;
+}
+
+#app,
+main {
+	min-height: 100%;
+}
+body {
+	display: flex;
+	flex-direction: column;
+	height: 92vh;
+}
 footer {
-	position: absolute;
-    bottom: 0;
+	flex-shrink: 0;
 	width: 100%;
-	color: white;
-    background-color: #8AC0EE;
-    font-size: 0.8rem;
+	color: #abedd8;
+	background-color: #48466d;
+	font-size: 0.8rem;
+}
+footer a {
+	color: #abedd8;
+	text-decoration: underline;
 }
 
 b {
-    background-color: cyan;
+	background-color: cyan;
 }

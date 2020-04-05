@@ -52,6 +52,8 @@ Route::get('/fill-from', 'SanjyraController@fillFrom');
 Route::get('/person-search', 'SearchController@person_search')->name('person-search');
 Route::get('/main-search', 'SearchController@main_search')->name('main-search');
 
+Route::get('/literatures', 'SanjyraController@literatures')->name('literatures');
+
 Route::get('/terms-of-use', 'SanjyraController@terms_of_use')->name('terms-of-use');
 
 Route::get('/famous-people/{category?}', 'SanjyraController@famous_people')->name('famous-people');

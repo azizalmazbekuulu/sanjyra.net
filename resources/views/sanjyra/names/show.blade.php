@@ -1,4 +1,5 @@
 @extends('sanjyra.layouts.app')
+@section('title', 'Ысымдар')
 @section('content')
 @include('sanjyra.search.name_search')
 @if($active_name != null)

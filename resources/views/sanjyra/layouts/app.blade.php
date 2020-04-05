@@ -10,12 +10,12 @@
 <link rel="dns-prefetch" href="//fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-{{-- <script src="{{ asset('js/app.js') }}" defer="defer"></script> --}}
+<script src="{{ asset('js/app.js') }}" defer="defer"></script>
 <script src="https://kit.fontawesome.com/815801c4a2.js" crossorigin="anonymous" defer></script>
 </head>
-<body onload="changePx()">
+<body>
 <div id="app">
-<nav class="navbar navbar-expand-md navbar-light shadow-sm" style="background-color: #FFCF8C;">
+<nav class="navbar navbar-expand-md navbar-light" style="background-color: #30e3ca;box-shadow:0 0.3rem 0.5rem rgba(0, 0, 0, 0.15) !important;">
 	<div class="container">
 		<a class="navbar-brand" href="{{ url('/') }}">{{ config('app.name', 'Кыргыз санжырасы') }}</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -30,14 +30,14 @@
 				<li class="nav-item">
 					<a class="nav-link {{ (Request::is('name/*') || Request::is('name') ? 'active' : '') }}" href="{{route('name')}}">Ысымдар</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link {{ (Request::is('literatures/*') || Request::is('literatures') ? 'active' : '') }}" href="{{route('literatures')}}">Колдонулган адабияттар</a>
+				</li>
 				{{-- <li class="nav-item">
 					<a class="nav-link {{ (Request::is('category/*') || Request::is('category') ? 'active' : '') }}" href="{{route('category')}}">Категориялар</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link {{ (Request::is('article/*') || Request::is('article') ? 'active' : '') }}" href="{{route('article')}}">Макалалар</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link {{ (Request::is('literature/*') || Request::is('literature') ? 'active' : '') }}" href="{{route('literature')}}">Колдонулган адабияттар</a>
 				</li> --}}
 			</ul>
 			<!-- Right Side Of Navbar -->
@@ -76,15 +76,15 @@
 </nav>
 <main class="container px-0 h-100"><div class="container bg-white py-3 h-100">@yield('content')</div></main>
 </div>
-<footer>
+<footer class="shadow-lg">
 <div class="row m-0 p-3">
 <div class="col text-center">
-<a href="https://www.facebook.com/groups/471779633154987/" target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a><br>
-Email: <a href="mailto:help@sanjyra.net">help@sanjyra.net</a>
+Email: <a href="mailto:help@sanjyra.net">info@sanjyra.net</a>
 </div>
-<div class="col text-center"><br>
-<a href="{{route('terms-of-use')}}">Колдонуу эрежелери</a><br>
-&copy; 2020 <a href="{{route('man')}}">Sanjyra.net</a>
+<div class="col text-center"><a href="https://www.facebook.com/groups/471779633154987/" target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a></div>
+<div class="col text-center">
+{{-- <a href="{{route('terms-of-use')}}">Колдонуу эрежелери</a><br> --}}
+&copy; 2020 <a href="{{route('index')}}">Sanjyra.net</a>
 </div>
 </div>
 </footer>

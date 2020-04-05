@@ -8,6 +8,7 @@ use App\Uruu;
 use App\Woman;
 use App\Article;
 use App\Category;
+use App\Literature;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -82,7 +83,7 @@ class SanjyraController extends Controller
 		$name = $request['name'];
 		return view('sanjyra.names.show', [
 			'active_name'  => Name::where('name', $name)->get()->first(),
-			'common_names' => Name::where('number_of_name', '>', 100)->orderBy('number_of_name', 'desc')->paginate(10),
+			'common_names' => Name::where('number_of_name', '>', 150)->orderBy('number_of_name', 'desc')->paginate(10),
 			'name' => $name
 		]);
 	}
@@ -90,7 +91,7 @@ class SanjyraController extends Controller
 	public function famous_people(Category $category = null)
 	{
 		return view('sanjyra.famous.famous', [
-			'famous_men' => Man::has('categories')->paginate(5),
+			'famous_men' => Man::has('categories')->orderBy('id', 'desc')->paginate(5),
 			'famous_women' => Woman::has('categories')->paginate(5),
 		]);
 	}
@@ -105,9 +106,9 @@ class SanjyraController extends Controller
 		return view('sanjyra.about.terms_of_use');
 	}
 
-	public function article()
+	public function literatures()
 	{
-		# code...
+		return view('sanjyra.literatures.literatures');
 	}
 
 	/**
