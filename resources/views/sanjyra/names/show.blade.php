@@ -1,18 +1,25 @@
 @extends('sanjyra.layouts.app')
 @section('content')
+@include('sanjyra.search.name_search')
 @if($active_name != null)
-    <dl class="row">
-        <dt class="col-sm-4">
-            <a href="{{route('name')}}">
-                <h4>{{$active_name->name}}</h4>
-            </a>
-        </dt>
-        <dd class="col-sm-8">
-            <p>{!! $active_name->description !!}</p>
-        </dd>
-    </dl>
+<div class="container py-3">
+<table class="table table-sm table-bordered" style="width: auto;">
+	<thead class="thead-light">
+		<tr>
+			<th scope="col">Ысым</th>
+			<th scope="col">Кездешүү саны</th>
+			<th scope="col">Аныктама</th>
+		</tr>
+	</thead>
+	<tbody class="text-center">
+		<tr><td>{{$active_name->name}}</td><td>{{$active_name->number_of_name}}</td><td>{!!$active_name->description!!}</td></tr>
+	</tbody>
+</table>
+</div>
+@elseif ($name !== null)
+<p>{{ $name }} - мындай ысым табылган жок.</p>
 @endif
 <div class="row p-3">
-    @include('sanjyra.partials.name')
+	@include('sanjyra.partials.name')
 </div>
 @endsection

@@ -16,7 +16,6 @@ class CreateNamesTable extends Migration
         Schema::create('names', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
-            $table->string('slug')->unique();
             $table->boolean('male_female');
             $table->text('description')->nullable();
             $table->integer('number_of_name')->nullable();

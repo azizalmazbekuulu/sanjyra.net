@@ -15,7 +15,7 @@ class SearchController extends Controller
 {
     public function main_search(Request $request)
     {
-        $query = $request['q'];
+        $query = $request['query'];
         $query_men = "SELECT *
         FROM men WHERE MATCH (info) AGAINST
         ('".$query."' IN NATURAL LANGUAGE MODE)";

@@ -1,8 +1,9 @@
 @extends('sanjyra.layouts.app')
 @section('title', 'Колдонуу эрежелери')
 @section('content')
-<p>Колдонуу эрежелери</p>
+<h5 class="text-center">Колдонуу эрежелери</h5>
 <ol>
-    <li></li>
+	<li>oiqoiuroi</li>
+	<li>oiqoiuroi</li>
 </ol>
 @endsection

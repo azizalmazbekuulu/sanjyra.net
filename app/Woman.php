@@ -24,6 +24,12 @@ class Woman extends Model
         return $this->belongsTo(self::class, 'mother_id');
     }
 
+    // Father
+    public function father()
+    {
+        return $this->belongsTo('App\Man', 'father_id');
+    }
+
     // Baldary
     public function uuldary()
     {

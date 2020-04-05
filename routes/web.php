@@ -45,7 +45,9 @@ Route::get('/', 'SanjyraController@index')->name('index');
 Route::get('/man/{id?}', 'SanjyraController@index')->name('man');
 Route::get('/woman/{id}', 'SanjyraController@woman_show')->name('woman-show');
 
-Route::get('/name/{slug?}', 'SanjyraController@name')->name('name');
+Route::get('/name/{name?}', 'SanjyraController@name')->name('name');
+
+Route::get('/fill-from', 'SanjyraController@fillFrom');
 
 Route::get('/person-search', 'SearchController@person_search')->name('person-search');
 Route::get('/main-search', 'SearchController@main_search')->name('main-search');

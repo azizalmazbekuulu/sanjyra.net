@@ -1,19 +1,16 @@
 @extends('admin.layouts.app_admin')
-
 @section('content')
-    <div class="container">
-        @component('admin.components.breadcrumb')
-            @slot('title') Ысымдарды түзүү @endslot
-            @slot('parent') Башкы бет @endslot
-            @slot('active') Ысымдар @endslot
-        @endcomponent
-        <hr>
-        <form action="{{route('admin.name.store')}}" method="post">
-            {{ csrf_field() }}
-
-            {{-- Form include --}}
-            @include('admin.names.partials.form')
-            <input type="hidden" name="created_by" value="{{Auth::id()}}">
-        </form>
-    </div>
+<div class="container">
+	@component('admin.components.breadcrumb')
+		@slot('title') Ысымдарды түзүү @endslot
+		@slot('parent') Башкы бет @endslot
+		@slot('active') Ысымдар @endslot
+	@endcomponent
+	<hr>
+	<form action="{{route('admin.name.store')}}" method="post">
+		@csrf
+		@include('admin.names.partials.form')
+		<input type="hidden" name="created_by" value="{{Auth::id()}}">
+	</form>
+</div>
 @endsection

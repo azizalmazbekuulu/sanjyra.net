@@ -1,17 +1,17 @@
 <div class="container py-3" style="overflow: auto;">
 	<table class="tree">
 		<tbody>
-			@php
-			if ($father->bala_sany - $man->kanchanchy_bala > $man->bala_sany) {
-			$count = $father->bala_sany;
-			}
-			elseif ($man->bala_sany > 0 && $man->kanchanchy_bala == $man->children->first()->kanchanchy_bala) {
-			$count = ($father->bala_sany > $man->bala_sany ? $father->bala_sany : $man->bala_sany);
-			}
-			else {
-			$count = $father->bala_sany + $man->bala_sany;
-			}
-			@endphp
+@php
+if ($father->bala_sany - $man->kanchanchy_bala > $man->bala_sany || $man->bala_sany == 0) {
+$count = $father->bala_sany;
+}
+elseif ($man->bala_sany > 0 && $man->kanchanchy_bala == $man->children->first()->kanchanchy_bala) {
+$count = ($father->bala_sany > $man->bala_sany ? $father->bala_sany : $man->bala_sany);
+}
+else {
+$count = $father->bala_sany + $man->bala_sany - 1;
+}
+@endphp
 			@for ($i = 1; $i <= $count; $i++) <tr>
 				@if ($i == 1)
 				<td>
@@ -32,8 +32,7 @@
 					</svg>
 				</td>
 				@else
-				<td></td>
-				<td></td>
+				<td></td><td></td>
 				@endif
 				@if ($i <= $father->bala_sany && $father->children->where('kanchanchy_bala', $i)->first() != null)
 					<td>
@@ -58,25 +57,24 @@
 					@else
 					<td></td>
 					@endif
-					@else
-					<td></td>
-					<td></td>
-					@endif
-					@if ($i >= $man->kanchanchy_bala && $i < $man->bala_sany + $man->kanchanchy_bala)
-						<td>
-							@php
-							$order = $i-$man->kanchanchy_bala+1;
-							@endphp
-							@if ($man->children->where('kanchanchy_bala', $order)->first() != null)
-							<a class="btn text-nowrap font-weight-bold border border-dark rounded-pill bg-primary text-white w-100 h-100"
-								href="{{route('man', $man->children->where('kanchanchy_bala', $order)->first()->id)}}">
-								{{ $man->children->where('kanchanchy_bala', $order)->first()->name }}
-							</a>
-							@endif
-						</td>
+				@else
+				<td></td><td></td>
+				@endif
+				@if ($i >= $man->kanchanchy_bala && $i < $man->bala_sany + $man->kanchanchy_bala)
+					<td>
+						@php
+						$order = $i-$man->kanchanchy_bala+1;
+						@endphp
+						@if ($man->children->where('kanchanchy_bala', $order)->first() != null)
+						<a class="btn text-nowrap font-weight-bold border border-dark rounded-pill bg-primary text-white w-100 h-100"
+							href="{{route('man', $man->children->where('kanchanchy_bala', $order)->first()->id)}}">
+							{{ $man->children->where('kanchanchy_bala', $order)->first()->name }}
+						</a>
 						@endif
-						</tr>
-						@endfor
+					</td>
+				@endif
+			</tr>
+			@endfor
 		</tbody>
 	</table>
 </div>
@@ -156,7 +154,7 @@ bg-success text-danger
 								<img class="m-3" width="200px" src="{{ asset('storage/'. $active_woman->image) }}"
 									alt="{{$active_woman->name}}">
 								@endif
-								{!! $active_woman->info !!}</dd>
+								{!! $active_woman->info ?? '' !!}</dd>
 							@endif
 						</dl>
 					</div>
@@ -170,7 +168,7 @@ bg-success text-danger
 				<img class="m-3" width="200px" src="{{ asset('storage/' . $active_man->image) }}"
 					alt="{{$active_man->name}}">
 				@endif
-				{!! $active_man->info !!}</dd>
+				{!! $active_man->info ?? '' !!}</dd>
 			@endif
 			@if ($active_man->categories()->first() != null)
 			<dt class="col-sm-2">Тегдер</dt>

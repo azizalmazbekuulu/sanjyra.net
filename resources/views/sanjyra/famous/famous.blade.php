@@ -2,16 +2,14 @@
 @section('title', 'Белгилүү инсандар')
 @section('content')
 @isset($famous_men)
-<div class="container">
 <div class="d-flex flex-wrap row">
 	@foreach ($famous_men as $famous_man)
-	<div class="card" style="width: 20%;">
+	<div class="card m-2 col-auto text-center" style="width: 200px;">
 		@isset($famous_man->image)
 			<img src="{{ asset('storage/' . $famous_man->image) }}" class="card-img-top" alt="{{ $famous_man->name }}">
 		@endisset
 		<div class="card-body">
-			<a href="{{route('man', $famous_man)}}"><h5 class="card-title">{{ $famous_man->name }}</h5></a>
-			<p class="card-text">{!! substr($famous_man->info, 0, 150).'..' !!}</p>
+			<a class="card-text" href="{{route('man', $famous_man)}}">@if ($famous_man->id !== 1){{$famous_man->father->name}} уулу @endif{{ $famous_man->name }}</a><br>@if($famous_man->uruusu != '')Уруусу: {{$famous_man->uruusu}}@endif
 		</div>
 	</div>
 	@endforeach
@@ -20,16 +18,20 @@
 @isset($famous_women)
 <div class="d-flex flex-wrap row">
 	@foreach ($famous_women as $famous_woman)
-	<div class="card" style="width: 20%;">
-		<img src="{{ asset('storage/' . $famous_woman->image) }}" class="card-img-top" alt="{{ $famous_woman->name }}">
+	<div class="card m-2 col-auto text-center" style="width: 200px;">
+		@isset($famous_woman->image)
+			<img src="{{ asset('storage/' . $famous_woman->image) }}" class="card-img-top" alt="{{ $famous_woman->name }}">
+		@endisset
 		<div class="card-body">
-			<a href="{{route('man', $famous_woman)}}"><h5 class="card-title">{{ $famous_woman->name }}</h5></a>
-			<p class="card-text">{!! substr($famous_woman->info, 0, 100).'..' !!}</p>
+			<a class="card-title" href="{{route('woman-show', $famous_woman)}}">{{$famous_woman->father->name}} кызы {{ $famous_woman->name }}</a><br>@if($famous_woman->father->uruusu != '')Уруусу: {{$famous_woman->father->uruusu}}@endif
 		</div>
 	</div>
 	@endforeach
 </div>
-<span class="float-right">{{$famous_men->links()}}</span></div>
-</div>
+@if ($famous_men->total() > $famous_women->total())
+{{$famous_men->links()}}
+@else
+{{$famous_women->links()}}
+@endif
 @endisset
 @endsection
