@@ -90,8 +90,10 @@ class SanjyraController extends Controller
 
 	public function famous_people(Category $category = null)
 	{
+		$famous_men = Man::has('categories')->orderBy('updated_at', 'desc')->paginate(10);
+		$famous_women = Woman::has('categories')->paginate(5);
 		return view('sanjyra.famous.famous', [
-			'famous_men' => Man::has('categories')->orderBy('id', 'desc')->paginate(5),
+			'famous_men' => $famous_men,//Man::has('categories')->orderBy('id', 'desc')->paginate(10),
 			'famous_women' => Woman::has('categories')->paginate(5),
 		]);
 	}
