@@ -23,11 +23,11 @@ class SearchController extends Controller
         FROM women WHERE MATCH (info) AGAINST
         ('".$query."' IN NATURAL LANGUAGE MODE)";
         $query_article = "SELECT *
-        FROM articles WHERE MATCH (title, description) AGAINST
+        FROM articles WHERE MATCH (`title`, `description`) AGAINST
         ('".$query."' IN NATURAL LANGUAGE MODE)";
         $men = DB::select($query_men);
         $women = DB::select($query_women);
-        $articles = DB::select($query_article);
+		$articles = DB::select($query_article);
         return view('sanjyra.search.main_search_result',[
             'men' => $men,
             'women' => $women,

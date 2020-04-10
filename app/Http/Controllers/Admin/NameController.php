@@ -100,4 +100,19 @@ class NameController extends Controller
 		$name->delete();
 		return redirect()->route('admin.name.index');
 	}
+
+	/**
+	* Remove the specified resource from storage.
+	*
+	* @param  \App\Name  $name
+	* @return \Illuminate\Http\Response
+	*/
+	public function name_search(String $name)
+	{
+		$names=Name::where('name',$name)->get();
+		return view('admin.names.search.search_result', [
+			'name' => $name,
+			'names' => $names
+		]);
+	}
 }

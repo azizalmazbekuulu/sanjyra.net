@@ -10,8 +10,8 @@
         @slot('active') Ысымдар @endslot
     @endcomponent
 
-    <hr>
-
+	<hr>
+	@include('admin.names.search.name_search')
     <a href="{{route('admin.name.create')}}" class="btn btn-primary float-right"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Ысым түзүү</a>
     <table class="table table-striped">
         <thead>

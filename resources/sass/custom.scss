@@ -12,30 +12,6 @@
 }
 
 /* Social icon styles */
-.facebook {
-	color: #4267b2;
-}
-
-.twitter {
-	color: #1da1f2;
-}
-
-.whatsapp {
-	color: #4ac959;
-}
-
-.telegram {
-	color: #0088cc;
-}
-
-.odnoklassniki {
-	color: #ed8207;
-}
-
-.vkontakte {
-	color: #45668e;
-}
-
 .sharing {
 	display: flex;
 	align-items: baseline;
@@ -83,4 +59,16 @@ footer a {
 
 b {
 	background-color: cyan;
+}
+
+.code {
+	border-right: 2px solid;
+	font-size: 26px;
+	padding: 0 15px 0 15px;
+	text-align: center;
+}
+
+.message {
+	font-size: 18px;
+	text-align: center;
 }

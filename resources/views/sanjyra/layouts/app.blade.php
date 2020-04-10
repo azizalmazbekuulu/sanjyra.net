@@ -5,13 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Санжыра">
 <meta name="keywords" content="санжыра; кыргыз;">
-<meta name="csrf-token" content="{{ csrf_token() }}">
 <title>@yield('title',config('app.name', 'Laravel'))</title>
-<link rel="dns-prefetch" href="//fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <script src="{{ asset('js/app.js') }}" defer="defer"></script>
-<script src="https://kit.fontawesome.com/815801c4a2.js" crossorigin="anonymous" defer></script>
 </head>
 <body>
 <div id="app">
@@ -31,14 +27,11 @@
 					<a class="nav-link {{ (Request::is('name/*') || Request::is('name') ? 'active' : '') }}" href="{{route('name')}}">Ысымдар</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link {{ (Request::is('literatures/*') || Request::is('literatures') ? 'active' : '') }}" href="{{route('literatures')}}">Колдонулган адабияттар</a>
-				</li>
-				{{-- <li class="nav-item">
-					<a class="nav-link {{ (Request::is('category/*') || Request::is('category') ? 'active' : '') }}" href="{{route('category')}}">Категориялар</a>
+					<a class="nav-link {{ (Request::is('article/*') || Request::is('article') ? 'active' : '') }}" href="{{route('article')}}">Макалалар</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link {{ (Request::is('article/*') || Request::is('article') ? 'active' : '') }}" href="{{route('article')}}">Макалалар</a>
-				</li> --}}
+					<a class="nav-link {{ (Request::is('literatures/*') || Request::is('literatures') ? 'active' : '') }}" href="{{route('literatures')}}">Колдонулган адабияттар</a>
+				</li>
 			</ul>
 			<!-- Right Side Of Navbar -->
 			<ul class="navbar-nav ml-auto">
@@ -79,9 +72,9 @@
 <footer class="shadow-lg">
 <div class="row m-0 p-3">
 <div class="col text-center">
-Email: <a href="mailto:help@sanjyra.net">info@sanjyra.net</a>
+Email: <a href="mailto:info@sanjyra.net">info@sanjyra.net</a>
 </div>
-<div class="col text-center"><a href="https://www.facebook.com/groups/471779633154987/" target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a></div>
+<div class="col text-center"><a href="https://www.facebook.com/groups/471779633154987/" target="_blank"><img src="{{asset('logos/Facebook.png')}}" width="32" height="32" title="Facebook группа"></a></div>
 <div class="col text-center">
 {{-- <a href="{{route('terms-of-use')}}">Колдонуу эрежелери</a><br> --}}
 &copy; 2020 <a href="{{route('index')}}">Sanjyra.net</a>
@@ -89,5 +82,6 @@ Email: <a href="mailto:help@sanjyra.net">info@sanjyra.net</a>
 </div>
 </footer>
 <script src="{{ asset('js/social.js') }}" defer></script>
+@yield('script')
 </body>
 </html>

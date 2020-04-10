@@ -17,7 +17,29 @@ use App\Http\Controllers\Controller;
 
 class SanjyraController extends Controller
 {
-	public function index(Int $id = 1)
+	public function index()
+	{
+		$active_id = 1;
+		$man_id = 2;
+		$father_id = 1;
+		return view('sanjyra.home', [
+			'active_man_id' => $active_id,
+			'father' => Man::with(['children' => function ($query) {
+								$query->orderBy('kanchanchy_bala');
+						},'kyzdary' => function ($query) {
+								$query->orderBy('kanchanchy_kyz');
+						}])->find($father_id),
+			'man'    => Man::with(['children' => function ($query) {
+								$query->orderBy('kanchanchy_bala');
+						},'kyzdary' => function ($query) {
+								$query->orderBy('kanchanchy_kyz');
+						}])->find($man_id),
+			'uruular' => Uruu::orderBy('name')->get(),
+			'person' => Man::with('father')->where('id', $active_id)->get()->first()
+		]);
+	}
+
+	public function man(Int $id = 1)
 	{
 		$man = Man::find($id);
 		$active_id = 1;
@@ -88,19 +110,27 @@ class SanjyraController extends Controller
 		]);
 	}
 
-	public function famous_people(Category $category = null)
+	public function famous_people(String $category = null)
 	{
-		$famous_men = Man::has('categories')->orderBy('updated_at', 'desc')->paginate(10);
-		$famous_women = Woman::has('categories')->paginate(5);
+		if (null == $category)
+			$category = 'pervaya-1502200522';
 		return view('sanjyra.famous.famous', [
-			'famous_men' => $famous_men,//Man::has('categories')->orderBy('id', 'desc')->paginate(10),
-			'famous_women' => Woman::has('categories')->paginate(5),
+			'category' => Category::with(['men' => function ($query) {
+							$query->orderBy('image', 'desc');
+					},'women' => function ($query) {
+							$query->orderBy('image', 'desc');
+					}])->where('slug', $category)->get()->first(),
+			'categories' => Category::where('published', 1)->orderBy('title')->get()
 		]);
 	}
 
-	public function category()
+	public function article(String $slug = '')
 	{
-		# code...
+		$article = Article::where('slug', $slug)->get()->first();
+		return view('sanjyra.articles.articles', [
+			'active_article' => $article,
+			'articles' => Article::where('published', 1)->orderBy('created_at', 'desc')->paginate(10)
+		]);
 	}
 
 	public function terms_of_use()

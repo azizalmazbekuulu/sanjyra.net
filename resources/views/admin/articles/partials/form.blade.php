@@ -18,7 +18,7 @@
     <label for="">Slug (Окшошу жок маани)</label>
     <input type="text" class="form-control" name="slug" placeholder="Автоматтык түрдө түзүлөт" value="{{$article->slug ?? ''}}" readonly>
 </div>
-@if ($article->image != null)
+@if ($article != null && $article->image != null)
     <img src="{{ asset('storage/'.$article->image) }}" alt="{{$article->name}}">
 @endif
 <div class="form-group">

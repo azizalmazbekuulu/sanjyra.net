@@ -1,0 +1,1 @@
+function social_share(l){var t=document.title;window.open(l.concat(t),"_blank");}
