@@ -15,11 +15,15 @@ class NameController extends Controller
 	*
 	* @return \Illuminate\Http\Response
 	*/
-	public function index()
+	public function index(Request $request)
 	{
+		if ($request['name'] != '')
 		return view('admin.names.index', [
-			'names' => Name::orderBy('created_at', 'desc')->paginate(10)
+			'query' => $request['name'],
+			'names' => Name::where('name', 'like', $request['name'].'%')->orderBy('name')->get()
 		]);
+		elseif ($request['name'] == '')
+		return view('admin.names.index');
 	}
 
 	/**
@@ -99,20 +103,5 @@ class NameController extends Controller
 	{
 		$name->delete();
 		return redirect()->route('admin.name.index');
-	}
-
-	/**
-	* Remove the specified resource from storage.
-	*
-	* @param  \App\Name  $name
-	* @return \Illuminate\Http\Response
-	*/
-	public function name_search(String $name)
-	{
-		$names=Name::where('name',$name)->get();
-		return view('admin.names.search.search_result', [
-			'name' => $name,
-			'names' => $names
-		]);
 	}
 }

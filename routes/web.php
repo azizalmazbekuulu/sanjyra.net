@@ -20,7 +20,6 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Admin', 'middleware'=>['auth']], 
     Route::delete('/article/image-delete/{article}', 'ArticleController@image_delete', ['as'=>'admin'])->name('admin.article.image-delete');
 
 	Route::resource('/name', 'NameController', ['as'=>'admin']);
-	Route::get('/name/{name}', 'NameController@name_search', ['as' => 'admin']);
 
     Route::resource('/man', 'ManController', ['as'=>'admin']);
     Route::delete('/man/image-delete/{man}', 'ManController@image_delete', ['as'=>'admin'])->name('admin.man.image-delete');
@@ -60,5 +59,10 @@ Route::get('/terms-of-use', 'SanjyraController@terms_of_use')->name('terms-of-us
 Route::get('/famous-people/{category?}', 'SanjyraController@famous_people')->name('famous-people');
 
 Route::get('/article/{slug?}', 'SanjyraController@article')->name('article');
+
+Route::get('/request', function()
+{
+	dd(request());
+});
 
 // Route::get('/category/{slug}', 'SanjyraController@category')->name('category');

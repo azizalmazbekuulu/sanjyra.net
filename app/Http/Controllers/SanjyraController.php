@@ -163,7 +163,7 @@ class SanjyraController extends Controller
 	// 				'name' => $man_name['name'],
 	// 				'number_of_name' => $man_name['count_name'],
 	// 				'created_by' => 1,
-	// 				'male_female' => 0,
+	// 				'male_female' => 1,
 	// 				'created_at' => Carbon::now(),
 	// 				'updated_at' => Carbon::now()
 	// 			]);

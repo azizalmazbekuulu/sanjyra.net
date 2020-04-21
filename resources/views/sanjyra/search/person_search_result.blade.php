@@ -3,7 +3,7 @@
 @section('content')
 <div class="justify-content-center pb-3">@include('sanjyra.search.person_search')</div>
 @php
-	$i=1;
+$i=1;
 @endphp
 <div class="row">
 <div class="col-auto">
