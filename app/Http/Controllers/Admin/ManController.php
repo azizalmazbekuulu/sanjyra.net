@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Man;
-use App\Name;
-use App\Uruu;
-use App\Category;
+use App\Models\Man;
+use App\Models\Name;
+use App\Models\Uruu;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -69,7 +69,7 @@ class ManController extends Controller
         $name = Name::where('name', $man->name)->get()->first();
         if ($name == null) {
             $number_of_name = Man::where('name', $man->name)->count();
-            Name::create(['name' => $man->name, 'slug' => '', 'male_female' => 1, 'number_of_name' => $number_of_name]);
+            Name::create(['name' => $man->name, 'male_female' => 1, 'number_of_name' => $number_of_name]);
         }
         else {
             $name = Name::where('name', $man->name)->get()->first();
@@ -106,6 +106,7 @@ class ManController extends Controller
             $id = $man->id;
             $father_id = $man->father_id;
         }
+        
         return view('admin.men.edit', [
             'active_man_id' => $man->id,
             'father' => Man::with(['children' => function ($query) {
@@ -139,7 +140,27 @@ class ManController extends Controller
             $name->number_of_name--;
             $name->save();
         }
-        $man->update($request->except('categories', 'photo'));
+        
+        $man->update($request->except('categories', 'photo', 'father_id'));
+        
+        // Changing the Father ID
+        if ($man->father_id != $request['father_id']) {
+
+            // Бир туугандарынын катарын өзгөртүү жана бала санын өзгөртүү
+            $father = Man::find($man->father_id);
+            for($i = 0; $i<$father->bala_sany - $man->kanchanchy_bala; $i++) {
+                $father->children->where('kanchanchy_bala', $i + $man->kanchanchy_bala + 1)->first()->update(['kanchanchy_bala' => $i + $man->kanchanchy_bala]);
+            }
+            $father->update(['bala_sany' => $father->bala_sany - 1]);
+
+            // Жаңы атасынын бала санын өзгөртүү
+            $father = Man::find($request['father_id']);
+            $father->update(['bala_sany' => $father->bala_sany + 1]);
+
+            // Адамдын катарын жана атасынын IDсин өзгөртүү
+            $man->update(['kanchanchy_bala' => $father->bala_sany,
+                            'father_id' => $request['father_id']]);
+        }
 
         //Categories
         $man->categories()->detach();
@@ -157,7 +178,7 @@ class ManController extends Controller
         // Name
         $name = Name::where('name', $man->name)->get()->first();
         if ($name == null)
-            Name::create(['name' => $man->name, 'slug' => '', 'male_female' => 1, 'number_of_name' => 1]);
+            Name::create(['name' => $man->name, 'male_female' => 1, 'number_of_name' => 1]);
         return redirect()->route('admin.man.edit', $man);
     }
 
@@ -205,5 +226,14 @@ class ManController extends Controller
         $man->update(['image' => null]);
 
         return redirect()->route('admin.man.edit', $man);
+    }
+
+    public function up(Request $request)
+    {
+        $upman = Man::find($request['upid']);
+        $downman = Man::find($request['downid']);
+        $upman->update(['kanchanchy_bala' => $request['upnum']]);
+        $downman->update(['kanchanchy_bala' => $request['downnum']]);
+        return redirect()->route('admin.man.edit', $upman);
     }
 }

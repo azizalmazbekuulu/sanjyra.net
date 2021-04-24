@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Man;
-use App\Name;
-use App\Woman;
+use App\Models\Man;
+use App\Models\Name;
+use App\Models\Woman;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -48,9 +48,9 @@ class NameController extends Controller
 	{
 		$name = Name::create($request->all());
 		if ($name->male_female)
-			$number_of_name = Man::count()->where('name', $name->name);
+			$number_of_name = Man::where('name', $name->name)->count();
 		else
-			$number_of_name = Woman::count()->where('name', $name->name);
+			$number_of_name = Woman::where('name', $name->name)->count();
 		$name->number_of_name = $number_of_name;
 		$name->save();
 		return redirect()->route('admin.name.index');

@@ -1,0 +1,30 @@
+{
+  "short_name": "Санжыра",
+  "name": "Кыргыз санжырасы",
+  "icons": [
+    {
+      "src": "/storage/logos/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/storage/logos/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#f3f4f6",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#f3f4f6",
+  "shortcuts": [
+    {
+      "name": "Белгилүү инсандар",
+      "short_name": "Белгилүү",
+      "description": "Белгилүү кыргыз инсандары",
+      "url": "/famous-people",
+      "icons": [{ "src": "/storage/logos/android-chrome-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}

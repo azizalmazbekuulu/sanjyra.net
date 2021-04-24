@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Article;
-use App\Category;
-use App\Name;
-use App\Man;
-use App\Woman;
+use App\Models\Article;
+use App\Models\Category;
+use App\Models\Name;
+use App\Models\Man;
+use App\Models\Woman;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -23,7 +23,7 @@ class DashboardController extends Controller
             'count_categories' => Category::count(),
             'count_articles'   => Article::count(),
             'count_names'      => Name::count(),
-            'count_men'        => Man::count(),
+            'count_men'        => Man::count() + Woman::count(),
             'count_women'      => Woman::count()
         ]);
     }

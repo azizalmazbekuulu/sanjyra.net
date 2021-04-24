@@ -1,4 +1,6 @@
-<form action="{{route('main-search')}}" method="get"><div class="form-row align-items-center">
-<div class="col-auto p-0"><input type="text" name="query" class="form-control" title="Издөө" placeholder="Издөө" required></div>
-<div class="col-auto p-0"><button type="submit" class="btn float-right"><img src="{{asset('logos/searchicon.svg')}}" width="16" height="16"></button></div>
+<form action="{{route('main-search')}}" method="get"><div class="flex flex-nowrap">
+    <input type="text" name="query" class="rounded-xl text-sm" title="Издөө" placeholder="Издөө" required>
+    <button type="submit" class="px-3 -ml-10 inline-block rounded-xl bg-blue-300 border-l-0 hover:bg-blue-200 hover:border-red-400">
+        <img src="{{asset('storage/logos/searchicon.svg')}}" width="18" height="18">
+    </button>
 </div></form>

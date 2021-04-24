@@ -45,7 +45,8 @@
             <tr>
                 <td colspan="3">
                     <ul class="pagination float-right">
-                        {{$uruular->links()}}
+                    @php $paginator = $uruular; @endphp
+                        @include('vendor.pagination.simple-bootstrap-4')
                     </ul>
                 </td>
             </tr>

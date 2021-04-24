@@ -36,15 +36,36 @@
 				@endif
 				@if ($i <= $father->bala_sany && $father->children->where('kanchanchy_bala', $i)->first() != null)
 					<td>
-						<a class="btn text-nowrap font-weight-bold border border-dark rounded-pill
-							@if ($father->children->where('kanchanchy_bala', $i)->first()->id == $active_man_id)
-								bg-success text-danger
-							@else
-								bg-primary text-white
+					<div class="container">
+					<div class="row flex-nowrap">
+							<a class="btn text-nowrap font-weight-bold border border-dark rounded-pill
+								@if ($father->children->where('kanchanchy_bala', $i)->first()->id == $active_man_id)
+									bg-success text-danger
+								@else
+									bg-primary text-white
+								@endif
+								w-100 h-100" href="{{route('admin.man.edit', $father->children->where('kanchanchy_bala', $i)->first()->id)}}">
+								{{ $father->children->where('kanchanchy_bala', $i)->first()->name }}
+							</a>
+							@if($father->bala_sany > 1)
+								@if ($i != 1)
+								@php
+								$upid = $father->children->where('kanchanchy_bala', $i)->first()->id;
+								$downid = $father->children->where('kanchanchy_bala', $i-1)->first()->id;
+								@endphp
+							<!-- Up Button -->
+							<div class="p-0 text-center">
+							<form action="{{route('admin.man.up')}}" method="post">
+								@csrf
+								<input type="hidden" name="upid" value="<?=$upid?>">
+								<input type="hidden" name="upnum" value="<?=($i-1)?>">
+								<input type="hidden" name="downid" value="<?=$downid?>">
+								<input type="hidden" name="downnum" value="<?=($i)?>">
+								<input class="change-button" type="submit" name="submit" value="&#8673;" >
+							</form></div>
+								@endif
 							@endif
-							w-100 h-100" href="{{route('admin.man.edit', $father->children->where('kanchanchy_bala', $i)->first()->id)}}">
-							{{ $father->children->where('kanchanchy_bala', $i)->first()->name }}
-						</a>
+					</div></div>
 					</td>
 					@if ($father->children->where('kanchanchy_bala', $i)->first()->id == $man->id && $man->bala_sany >
 					0)
@@ -57,22 +78,43 @@
 					@else
 					<td></td>
 					@endif
-					@else
-					<td></td><td></td>
-					@endif
-					@if ($i >= $man->kanchanchy_bala && $i < $man->bala_sany + $man->kanchanchy_bala)
-						<td>
-							@php
-							$order = $i-$man->kanchanchy_bala+1;
-							@endphp
-							@if ($man->children->where('kanchanchy_bala', $order)->first() != null)
+				@else
+				<td></td><td></td>
+				@endif
+				@if ($i >= $man->kanchanchy_bala && $i < $man->bala_sany + $man->kanchanchy_bala)
+					<td>
+						@php
+						$order = $i-$man->kanchanchy_bala+1;
+						@endphp
+						@if ($man->children->where('kanchanchy_bala', $order)->first() != null)
+						<div class="container">
+						<div class="row flex-nowrap">
 							<a class="btn text-nowrap font-weight-bold border border-dark rounded-pill bg-primary text-white w-100 h-100"
 								href="{{route('admin.man.edit', $man->children->where('kanchanchy_bala', $order)->first()->id)}}">
 								{{ $man->children->where('kanchanchy_bala', $order)->first()->name }}
 							</a>
+							@if($man->bala_sany > 1)
+								@if ($order != 1)
+								@php
+								$upid = $man->children->where('kanchanchy_bala', $order)->first()->id;
+								$downid = $man->children->where('kanchanchy_bala', $order-1)->first()->id;
+								@endphp
+							<!-- Up Button nebere -->
+							<div class="p-0 text-center">
+							<form action="{{route('admin.man.up')}}" method="post">
+								@csrf
+								<input type="hidden" name="upid" value="<?=$upid?>">
+								<input type="hidden" name="upnum" value="<?=($order-1)?>">
+								<input type="hidden" name="downid" value="<?=$downid?>">
+								<input type="hidden" name="downnum" value="<?=($order)?>">
+								<button type="submit" name="submit" class="change-button">&#8673;</button>
+							</form></div>
+								@endif
 							@endif
-						</td>
-					@endif
+						</div></div>
+						@endif
+					</td>
+				@endif
 			</tr>
 			@endfor
 		</tbody>
@@ -139,12 +181,23 @@
 							</dd>
 							@endif
 							@if ($active_woman->uuldary->first() != null)
-							<dt class="col-sm-2">Балдары</dt>
+							<dt class="col-sm-2">Уулдары</dt>
 							<dd class="col-sm-10">
 								@foreach ($active_woman->uuldary as $uulu)
 								<a class="btn font-weight-bold border border-dark bg-primary text-white"
 									href="{{route('admin.man.edit', $uulu)}}">
 									{{ $uulu->name }}
+								</a>
+								@endforeach
+							</dd>
+							@endif
+							@if ($active_woman->kyzdary->first() != null)
+							<dt class="col-sm-2">Кыздары</dt>
+							<dd class="col-sm-10">
+								@foreach ($active_woman->kyzdary as $kyzy)
+								<a class="btn font-weight-bold border border-dark bg-primary text-white"
+									href="{{route('admin.woman.edit', $kyzy->id)}}">
+									{{ $kyzy->name }}
 								</a>
 								@endforeach
 							</dd>

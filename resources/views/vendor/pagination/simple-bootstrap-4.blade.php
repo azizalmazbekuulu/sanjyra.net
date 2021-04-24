@@ -12,6 +12,10 @@
                 </li>
             @endif
 
+            <li class="page-item">
+                <span class="page-link">{{$paginator->lastPage()}} беттин {{$paginator->currentPage()}}-бети</span>
+            </li>
+
             {{-- Next Page Link --}}
             @if ($paginator->hasMorePages())
                 <li class="page-item">

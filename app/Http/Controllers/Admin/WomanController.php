@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Man;
-use App\Name;
-use App\Uruu;
-use App\Woman;
-use App\Category;
+use App\Models\Man;
+use App\Models\Name;
+use App\Models\Uruu;
+use App\Models\Woman;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -67,7 +67,7 @@ class WomanController extends Controller
         // Name
         $name = Name::where('name', $woman->name)->get()->first();
         if ($name == null)
-            Name::create(['name' => $woman->name, 'slug' => '', 'male_female' => 0, 'number_of_name' => 1]);
+            Name::create(['name' => $woman->name, 'male_female' => 0, 'number_of_name' => 1]);
         else {
             $name = Name::where('name', $woman->name)->get()->first();
             $name->number_of_name++;
@@ -143,6 +143,7 @@ class WomanController extends Controller
         }
         $woman->name = $request['name'];
         $woman->mother_id = $request['mother_id'];
+        $woman->father_id = $request['father_id'];
         $woman->mother_name = $request['mother_name'];
         $woman->info = $request['info'];
 
@@ -163,7 +164,7 @@ class WomanController extends Controller
         // Name
         $name = Name::where('name', $woman->name)->get()->first();
         if ($name == null)
-            Name::create(['name' => $woman->name, 'male_female' => 0, 'slug' => '', 'number_of_name' => 1]);
+            Name::create(['name' => $woman->name, 'male_female' => 0, 'number_of_name' => 1]);
         
         return redirect()->route('admin.woman.edit', $woman);
     }

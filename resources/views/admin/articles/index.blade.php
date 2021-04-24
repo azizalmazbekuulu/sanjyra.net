@@ -44,7 +44,8 @@
             <tr>
                 <td colspan="3">
                     <ul class="pagination float-right">
-                        {{$articles->links()}}
+                    @php $paginator = $articles; @endphp
+                        @include('vendor.pagination.simple-bootstrap-4')
                     </ul>
                 </td>
             </tr>

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Article;
-use App\Category;
+use App\Models\Article;
+use App\Models\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -111,7 +111,7 @@ class ArticleController extends Controller
             $article->image = $request->file('photo')->store('article-image', 'public');
             $article->save();
         }
-
+        
         return redirect()->route('admin.article.index');
     }
 

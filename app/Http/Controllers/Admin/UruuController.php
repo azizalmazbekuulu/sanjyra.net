@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Uruu;
-use App\Category;
+use App\Models\Uruu;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class UruuController extends Controller
@@ -43,7 +43,7 @@ class UruuController extends Controller
      */
     public function store(Request $request)
     {
-        Uruu::create($request->all());
+        $uruu = Uruu::create($request->all());
         //Categories
         if ($request->input('categories')) :
             $uruu->categories()->attach($request->input('categories'));
@@ -92,7 +92,7 @@ class UruuController extends Controller
         //Categories
         $uruu->categories()->detach();
         if ($request->input('categories')) :
-            $article->categories()->attach($request->input('categories'));
+            $uruu->categories()->attach($request->input('categories'));
         endif;
         return redirect()->route('admin.uruu.index');
     }

@@ -1,87 +1,101 @@
 <!doctype html>
 <html lang="ky">
 <head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114577571-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-114577571-1');
+</script>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Санжыра">
+<meta name="description" content="Кыргыз санжырасы">
 <meta name="keywords" content="санжыра; кыргыз;">
-<title>@yield('title',config('app.name', 'Laravel'))</title>
-<link href="{{ asset('css/app.css') }}" rel="stylesheet">
-<script src="{{ asset('js/app.js') }}" defer="defer"></script>
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('storage/logos/apple-touch-icon.png') }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('storage/logos/favicon-32x32.png') }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('storage/logos/favicon-16x16.png') }}">
+<link rel="shortcut icon" href="{{ asset('storage/logos/favicon.ico') }}" type="image/x-icon">
+<title>@yield('title',config('app.name', 'Кыргыз санжырасы'))</title>
+
+<link rel="manifest" href="/manifest.json">
+
+<!-- Styles -->
+<link rel="stylesheet" href="{{ asset('css/app.css') }}?v=2.0.1">
+<style>
+.hiddenimp {
+    display: none !important;
+}
+</style>
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}?v=2" defer></script>
 </head>
-<body>
-<div id="app">
-<nav class="navbar navbar-expand-md navbar-light" style="background-color: #30e3ca;box-shadow:0 0.3rem 0.5rem rgba(0, 0, 0, 0.15) !important;">
-	<div class="container">
-		<a class="navbar-brand" href="{{ url('/') }}">{{ config('app.name', 'Кыргыз санжырасы') }}</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<!-- Left Side Of Navbar -->
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item">
-					<a class="nav-link {{ (Request::is('famous-people/*') || Request::is('famous-people') ? 'active' : '') }}" href="{{route('famous-people')}}">Белгилүү инсандар</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link {{ (Request::is('name/*') || Request::is('name') ? 'active' : '') }}" href="{{route('name')}}">Ысымдар</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link {{ (Request::is('article/*') || Request::is('article') ? 'active' : '') }}" href="{{route('article')}}">Макалалар</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link {{ (Request::is('literatures/*') || Request::is('literatures') ? 'active' : '') }}" href="{{route('literatures')}}">Колдонулган адабияттар</a>
-				</li>
-			</ul>
-			<!-- Right Side Of Navbar -->
-			<ul class="navbar-nav ml-auto">
-				@include('sanjyra.search.main_search')
-				<!-- Authentication Links -->
-				@guest
-					{{-- <li class="nav-item">
-						<a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-					</li>
-					@if (Route::has('register'))
-						<li class="nav-item">
-							<a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-						</li>
-					@endif --}}
-				@else
-					<li class="nav-item dropdown">
-						<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-							{{ Auth::user()->name }} <span class="caret"></span>
-						</a>
-						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="{{ route('logout') }}"
-								onclick="event.preventDefault();
-												document.getElementById('logout-form').submit();">
-								{{ __('Logout') }}
-							</a>
-							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-								@csrf
-							</form>
-						</div>
-					</li>
-				@endguest
-			</ul>
-		</div>
+<body class="font-sans antialiased">
+<div id="app" class="bg-gray-100 w-screen max-w-full min-h-screen flex flex-col justify-between">
+@include('layouts.sanjyra-navigation')
+<main class="container mt-4 p-4 mx-auto w-full max-w-5xl bg-green-50 rounded-lg shadow-2xl h-full">
+	<div class="container py-3 mx-auto">
+		@yield('content')
 	</div>
-</nav>
-<main class="container px-0 h-100"><div class="container bg-white py-3 h-100">@yield('content')</div></main>
-</div>
-<footer class="shadow-lg">
-<div class="row m-0 p-3">
+</main>
+<footer class="shadow-lg bg-indigo-300 w-full">
+<div class="container max-w-2xl mx-auto p-4">
+<div class="flex justify-between m-0 p-3">
 <div class="col text-center">
-Email: <a href="mailto:info@sanjyra.net">info@sanjyra.net</a>
+<ul style="text-align: left;list-style-type:circle;">
+<li>
+	<a class="hover:underline hover:text-gray-700" href="{{route('famous-people')}}">Белгилүү инсандар</a>
+</li>
+<li>
+	<a class="hover:underline hover:text-gray-700" href="{{route('name')}}">Ысымдар</a>
+</li>
+<li>
+	<a class="hover:underline hover:text-gray-700" href="{{route('article')}}">Макалалар</a>
+</li>
+<li>
+	<a class="hover:underline hover:text-gray-700" href="{{route('literatures')}}">Колдонулган адабияттар</a>
+</li>
+<li>
+	<a class="hover:underline hover:text-gray-700" href="{{route('terms-of-use')}}">Эрежелер</a>
+</li>
+<li>
+	<a class="hover:underline hover:text-gray-700" href="{{route('forum')}}">Форум</a>
+</li>
+<li id="installContainer" class="hiddenimp">
+    <a class="hover:underline hover:text-gray-700" href="{{route('app')}}">Тиркеме (Мобилдик)</a>
+</li>
+</ul>
 </div>
-<div class="col text-center"><a href="https://www.facebook.com/groups/471779633154987/" target="_blank"><img src="{{asset('logos/Facebook.png')}}" width="32" height="32" title="Facebook группа"></a></div>
 <div class="col text-center">
-{{-- <a href="{{route('terms-of-use')}}">Колдонуу эрежелери</a><br> --}}
-&copy; 2020 <a href="{{route('index')}}">Sanjyra.net</a>
+<span style="font-size:0.9em">Биз социалдык тармактарда</span><br>
+<a href="https://www.facebook.com/groups/471779633154987/" target="_blank" rel="noopener"><img src="{{asset('storage/logos/Facebook.png')}}" class="mx-auto" width="30" height="30" alt="Sanjyra.net Facebook"></a><hr class="my-2">
+Email: <a class="underline hover:no-underline hover:text-gray-700" href="mailto:info@sanjyra.net">info@sanjyra.net</a><hr class="my-2">
+<!-- WWW.NET.KG , code for http://sanjyra.net -->
+<script>
+java1=""+"refer="+escape(document.referrer)+"&amp;page="+escape(window.location.href)
+    + "c=yes&java=now&razresh="+screen.width+'x'+screen.height+"&cvet="+
+    (((navigator.appName.substring(0,3)=="Mic"))?
+    screen.colorDepth:screen.pixelDepth) + "&jscript=1.3&rand="+Math.random();
+    document.getElementById("netkgimg").setAttribute('src', "https://www.net.kg/img.php?id=6021&"+java1);
+</script>
+<a href="https://www.net.kg/stat.php?id=6021&amp;fromsite=6021" target="_blank" rel="noopener">
+    <img id="netkgimg" class="mx-auto" src="https://www.net.kg/img.php?id=6021" alt="WWW.NET.KG" width="88" height="31" />
+</a>
+<!-- /WWW.NET.KG -->
 </div>
+</div>
+<hr class="border border-red-500 my-6">
+<div class="text-center text-gray-700">
+&copy;{{ date('Y') }} <a href="{{route('index')}}" class="hover:text-pink-900 hover:underline">Sanjyra.net</a></div>
 </div>
 </footer>
-<script src="{{ asset('js/social.js') }}" defer></script>
+</div>
+<script>function social_share(l){var t=document.title;window.open(l.concat(t),"_blank");}
+</script>
+<script src="{{ asset('js/pwa.js') }}" defer></script>
 @yield('script')
 </body>
 </html>

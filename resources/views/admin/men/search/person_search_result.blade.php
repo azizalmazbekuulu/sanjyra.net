@@ -1,10 +1,10 @@
-@extends('sanjyra.layouts.app')
+@extends('admin.layouts.app_admin')
 
 @section('title', 'Издөө')
 
 @section('content')
 <div class="justify-content-center pb-3">
-	@include('sanjyra.search.person_search')
+	@include('admin.men.search.person_search')
 </div>
 @php
 	$i=1;

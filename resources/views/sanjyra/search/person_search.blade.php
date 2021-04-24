@@ -1,5 +1,5 @@
-<form id="izde" action="{{route('person-search')}}" method="get" class="form-inline">
-<div class="form-group"><input class="form-control" type="text" id="name" title="Атын жазыңыз" placeholder="Атын жазыңыз" name="name" required="required" pattern="^[А-Яа-яЁёӨөҢңҮү\s-]+$"></div>
-<div class="form-group"><input class="form-control" type="text" id="father_name" title="Атасынын атын жазыңыз" placeholder="Атасынын атын жазыңыз" name="father_name" required="required" pattern="^[А-Яа-яЁёӨөҢңҮү\s-]+$"></div>
-<div class="form-group"><select class="form-control" name="uruusu" id="uruusu"><option value="all">Уруулар</option>@isset($uruular)@foreach ($uruular as $uruu)<option value="{{ $uruu->name }}">{{$uruu->name}}</option>@endforeach @endisset</select></div>
-<button type="submit" class="form-group btn btn-primary">Издөө</button></form>
+<form id="izde" action="{{route('person-search')}}" method="get" class="flex mb-6 flex-wrap">
+<input class="rounded-md my-1 font-medium text-sm leading-4 mx-1 max-w-full" type="text" id="name" title="Атын жазыңыз" placeholder="Атын жазыңыз" name="name" required="required" pattern="^[А-Яа-яЁёӨөҢңҮү\s-()]+$">
+<input class="rounded-md my-1 font-medium text-sm leading-4 mx-1 max-w-full" type="text" id="father_name" title="Атасынын атын жазыңыз" placeholder="Атасынын атын жазыңыз" name="father_name" required="required" pattern="^[А-Яа-яЁёӨөҢңҮү\s()-]+$">
+<select class="rounded-md my-1 font-medium text-sm leading-4 mx-1 max-w-full" name="uruusu" id="uruusu"><option value="all">Уруулар</option>@isset($uruular)@foreach ($uruular as $uruu)<option value="{{ $uruu->name }}">{{$uruu->name}}</option>@endforeach @endisset</select>
+<button type="submit" class=" my-1 mx-3 px-3 border border-yellow-700 rounded-xl bg-green-400 hover:bg-green-300 hover:border-yellow-900">Издөө</button></form>

@@ -1,5 +1,19 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\SanjyraController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ManController;
+use App\Http\Controllers\Admin\WomanController;
+use App\Http\Controllers\Admin\UruuController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\NameController;
+use App\Http\Controllers\Admin\LiteratureController;
+use App\Http\Controllers\Admin\UserManagement\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,58 +25,63 @@
 |
 */
 
-Route::group(['prefix'=>'admin', 'namespace'=>'Admin', 'middleware'=>['auth']], function(){
-    Route::get('/', 'DashboardController@dashboard')->name('admin.index');
+Route::get('/dashboard', function () {
+    return redirect('admin');
+})->middleware(['auth'])->name('dashboard');
 
-    Route::resource('/category', 'CategoryController', ['as'=>'admin']);
+require __DIR__.'/auth.php';
 
-    Route::resource('/article', 'ArticleController', ['as'=>'admin']);
-    Route::delete('/article/image-delete/{article}', 'ArticleController@image_delete', ['as'=>'admin'])->name('admin.article.image-delete');
+// Custom routes
 
-	Route::resource('/name', 'NameController', ['as'=>'admin']);
+Route::get('/', [SanjyraController::class, 'index'])->name('index');
 
-    Route::resource('/man', 'ManController', ['as'=>'admin']);
-    Route::delete('/man/image-delete/{man}', 'ManController@image_delete', ['as'=>'admin'])->name('admin.man.image-delete');
+Route::get('/man/{id?}', [SanjyraController::class, 'man'])->name('man');
+Route::get('/woman/{id}', [SanjyraController::class, 'woman_show'])->name('woman-show');
 
-    Route::resource('/woman', 'WomanController', ['as'=>'admin']);
-    Route::delete('/woman/image-delete/{woman}', 'WomanController@image_delete', ['as'=>'admin'])->name('admin.woman.image-delete');
+Route::get('/name/{name?}', [SanjyraController::class, 'name'])->name('name');
 
-    Route::resource('/uruu', 'UruuController', ['as'=>'admin']);
+Route::get('/person-search', [SearchController::class, 'person_search'])->name('person-search');
+Route::get('/main-search', [SearchController::class, 'main_search'])->name('main-search');
 
-    Route::resource('/literature', 'LiteratureController', ['as'=>'admin']);
-    Route::delete('/literature/image-delete/{literature}', 'LiteratureController@image_delete', ['as'=>'admin'])->name('admin.literature.image-delete');
+Route::get('/literatures', [SanjyraController::class, 'literatures'])->name('literatures');
 
-    Route::group(['prefix' => 'user_management', 'namespace' => 'UserManagement'], function() {
-        Route::resource('/user', 'UserController', ['as' => 'admin.user_management']);
+Route::get('/terms-of-use', [SanjyraController::class, 'terms_of_use'])->name('terms-of-use');
+
+Route::get('/famous-people/{category?}', [SanjyraController::class, 'famous_people'])->name('famous-people');
+
+Route::get('/article/{slug?}', [SanjyraController::class, 'article'])->name('article');
+
+Route::prefix('admin')->middleware('auth')->group(function(){
+    Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.index');
+
+    Route::resources([
+        'category' => CategoryController::class,
+        'man'      => ManController::class,
+        'article'  => ArticleController::class,
+        'name'     => NameController::class,
+        'woman'    => WomanController::class,
+        'uruu'     => UruuController::class,
+        'literature' => LiteratureController::class,
+    ], ['as'=>'admin']);
+
+    Route::delete('/article/image-delete/{article}', [ArticleController::class, 'image_delete'], ['as'=>'admin'])->name('admin.article.image-delete');
+
+    Route::delete('/man/image-delete/{man}', [ManController::class, 'image_delete'], ['as'=>'admin'])->name('admin.man.image-delete');
+    Route::post('/man/up', [ManController::class, 'up'], ['as'=>'admin'])->name('admin.man.up');
+
+    Route::delete('/woman/image-delete/{woman}', [WomanController::class, 'image_delete'], ['as'=>'admin'])->name('admin.woman.image-delete');
+
+    Route::delete('/literature/image-delete/{literature}', [LiteratureController::class, 'image_delete'], ['as'=>'admin'])->name('admin.literature.image-delete');
+
+    Route::prefix('user_management')->group(function() {
+        Route::resource('user', UserController::class, ['as' => 'admin.user_management']);
     });
 });
 
-Auth::routes([
-    'register' => false
-]);
+Route::get('/forum', function() {
+    return Redirect::to('https://forum.sanjyra.net');
+})->name('forum');
 
-Route::get('/', 'SanjyraController@index')->name('index');
-Route::get('/man/{id?}', 'SanjyraController@man')->name('man');
-Route::get('/woman/{id}', 'SanjyraController@woman_show')->name('woman-show');
-
-Route::get('/name/{name?}', 'SanjyraController@name')->name('name');
-
-// Route::get('/fill-from', 'SanjyraController@fillFrom');
-
-Route::get('/person-search', 'SearchController@person_search')->name('person-search');
-Route::get('/main-search', 'SearchController@main_search')->name('main-search');
-
-Route::get('/literatures', 'SanjyraController@literatures')->name('literatures');
-
-Route::get('/terms-of-use', 'SanjyraController@terms_of_use')->name('terms-of-use');
-
-Route::get('/famous-people/{category?}', 'SanjyraController@famous_people')->name('famous-people');
-
-Route::get('/article/{slug?}', 'SanjyraController@article')->name('article');
-
-Route::get('/request', function()
-{
-	dd(request());
-});
-
-// Route::get('/category/{slug}', 'SanjyraController@category')->name('category');
+Route::get('/app', function() {
+    return view('sanjyra.about.sanjyra_app');
+})->name('app');

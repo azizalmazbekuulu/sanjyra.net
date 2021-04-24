@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Man;
-use App\Uruu;
-use App\Woman;
-use App\Article;
+use App\Models\Man;
+use App\Models\Uruu;
+use App\Models\Woman;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
@@ -23,11 +23,11 @@ class SearchController extends Controller
         FROM women WHERE MATCH (info) AGAINST
         ('".$query."' IN NATURAL LANGUAGE MODE)";
         $query_article = "SELECT *
-        FROM articles WHERE MATCH (`title`, `description`) AGAINST
+        FROM articles WHERE MATCH (title, description) AGAINST
         ('".$query."' IN NATURAL LANGUAGE MODE)";
         $men = DB::select($query_men);
         $women = DB::select($query_women);
-		$articles = DB::select($query_article);
+        $articles = DB::select($query_article);
         return view('sanjyra.search.main_search_result',[
             'men' => $men,
             'women' => $women,

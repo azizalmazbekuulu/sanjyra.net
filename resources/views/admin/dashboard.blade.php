@@ -1,31 +1,25 @@
 @extends('admin.layouts.app_admin')
-
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <div class="card bg-secondary text-white">
                     <span class="card-header">Категорялар: {{ $count_categories }}</span>
                 </div>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <div class="card bg-secondary text-white">
                     <span class="card-header">Макалалар: {{ $count_articles }}</span>
                 </div>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <div class="card bg-secondary text-white">
                     <span class="card-header">Ысымдар: {{ $count_names }}</span>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="card bg-secondary text-white">
-                    <span class="card-header">Эркектер: {{ $count_men }}</span>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="card bg-secondary text-white">
-                    <span class="card-header">Аялдар: {{ $count_women }}</span>
+                    <span class="card-header">Адамдардын саны: {{ $count_men }}</span>
                 </div>
             </div>
         </div>
@@ -55,16 +49,14 @@
                 @endforeach
             </div>
             <div class="col-sm-4">
-                <a href="{{route('admin.man.create')}}" class="btn btn-block btn-primary">Адам кошуу</a>
-                Акыркы кошулгандар:
-                @foreach ($women as $woman)
-                    <a href="{{route('admin.man.edit', $woman)}}" class="list-group-item">
-                        <h4 class="list-group-item-heading">{{$woman->name}}</h4>
-                        @if ($woman->categories()->first() != null)
-                            <p class="list-group-item-text">
-                                Категориялар: {{$woman->categories()->pluck('title')->implode(', ')}}
-                            </p>
-                        @endif
+                <a href="{{route('admin.article.create')}}" class="btn btn-block btn-primary">Макала түзүү</a>
+                Акыркы макалалар:
+                @foreach ($articles as $article)
+                    <a href="{{route('admin.article.edit', $article)}}" class="list-group-item">
+                        <h4 class="list-group-item-heading">{{$article->title}}</h4>
+                        <p class="list-group-item-text">
+                            Категориялар: {{$article->categories()->pluck('title')->implode(', ')}}
+                        </p>
                     </a>
                 @endforeach
             </div>
@@ -85,14 +77,16 @@
                 @endforeach
             </div>
             <div class="col-sm-6">
-                <a href="{{route('admin.article.create')}}" class="btn btn-block btn-primary">Макала түзүү</a>
-                Акыркы макалалар:
-                @foreach ($articles as $article)
-                    <a href="{{route('admin.article.edit', $article)}}" class="list-group-item">
-                        <h4 class="list-group-item-heading">{{$article->title}}</h4>
-                        <p class="list-group-item-text">
-                            Категориялар: {{$article->categories()->pluck('title')->implode(', ')}}
-                        </p>
+                <!--<a href="{{route('admin.man.create')}}" class="btn btn-block btn-primary">Адам кошуу</a>-->
+                Акыркы кошулгандар:
+                @foreach ($women as $woman)
+                    <a href="{{route('admin.woman.edit', $woman)}}" class="list-group-item">
+                        <h4 class="list-group-item-heading">{{$woman->name}}</h4>
+                        @if ($woman->categories()->first() != null)
+                            <p class="list-group-item-text">
+                                Категориялар: {{$woman->categories()->pluck('title')->implode(', ')}}
+                            </p>
+                        @endif
                     </a>
                 @endforeach
             </div>
