@@ -190,26 +190,12 @@ class ManController extends Controller
      */
     public function destroy(Man $man)
     {
-        $man->categories()->detach();
-        $father_id = $man->father_id;
-        $kanchanchy_bala = $man->kanchanchy_bala;
+        $man->is_removed = 1;
+        $man->save();
 
-        $name = Name::where('name', $man->name)->get()->first();
-        if ($name != null) {
-            $name->number_of_name--;
-            $name->save();
-        }
-
-        Storage::delete($man->image);
-
-        $man->delete();
-
-        $father = Man::with('children')->find($father_id);
+        $father = Man::find($man->father_id);
         $father->update(['bala_sany' => ($father->bala_sany - 1)]);
 
-        foreach ($father->children as $child)
-            if ($child->kanchanchy_bala > $kanchanchy_bala)
-                $child->update(['kanchanchy_bala' => ($child->kanchanchy_bala -1)]);
         return redirect()->route('admin.man.edit', $father);
     }
 

@@ -177,22 +177,11 @@ class WomanController extends Controller
      */
     public function destroy(Woman $woman)
     {
-        $woman->categories()->detach();
-        $father_id = $woman->father_id;
-        $kanchanchy_kyz = $woman->kanchanchy_kyz;
+        $woman->is_removed = 1;
+        $woman->save();
 
-        // Name
-        $name = Name::where('name', $woman->name)->get()->first();
-        $name->number_of_name--;
-        $name->save();
+        $father = Man::find($woman->father_id);
 
-        Storage::delete($woman->image);
-
-        $woman->delete();
-        $father = Man::with('kyzdary')->find($father_id);
-        foreach ($father->kyzdary as $child)
-            if ($child->kanchanchy_kyz > $kanchanchy_kyz)
-                $child->update(['kanchanchy_kyz' => ($child->kanchanchy_kyz -1)]);
         return redirect()->route('admin.man.edit', $father);
     }
 
