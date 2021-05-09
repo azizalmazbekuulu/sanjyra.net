@@ -21,12 +21,12 @@ class SanjyraController extends Controller
 	    return  view('sanjyra.home', [
 			'active_man_id' => $active_id,
 			'father' => Man::with(['children' => function ($query) {
-								$query->orderBy('kanchanchy_bala');
+								$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
 						}])->find($father_id),
 			'man'    => Man::with(['children' => function ($query) {
-								$query->orderBy('kanchanchy_bala');
+								$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
 						},'kyzdary' => function ($query) {
-								$query->orderBy('kanchanchy_kyz');
+								$query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
 						}])->find($man_id),
 			'uruular' => Uruu::orderBy('name')->get(),
 			'person' => Man::with('father')->where('id', $active_id)->first()
@@ -47,12 +47,12 @@ class SanjyraController extends Controller
 		return view('sanjyra.home', [
 			'active_man_id' => $active_id,
 			'father' => Man::with(['children' => function ($query) {
-								$query->orderBy('kanchanchy_bala');
+								$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
 						}])->find($father_id),
 			'man'    => Man::with(['children' => function ($query) {
-								$query->orderBy('kanchanchy_bala');
+								$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
 						},'kyzdary' => function ($query) {
-								$query->orderBy('kanchanchy_kyz');
+								$query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
 						}])->find($man_id),
 			'uruular' => Uruu::orderBy('name')->get(),
 			// Full generation
@@ -75,17 +75,17 @@ class SanjyraController extends Controller
 		return view('sanjyra.home', [
 			'active_man_id'   => $man->id,
 			'active_woman' => Woman::with(['uuldary' => function ($query) {
-									$query->orderBy('kanchanchy_bala');
+									$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
 							}, 'kyzdary' => function ($query) {
-									$query->orderBy('kanchanchy_kyz');
+									$query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
 							}])->find($woman->id),
 			'father' => Man::with(['children' => function ($query) {
-									$query->orderBy('kanchanchy_bala');
+									$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
 							}])->find($father_id),
 			'man'    => Man::with(['children' => function ($query) {
-									$query->orderBy('kanchanchy_bala');
+									$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
 							},'kyzdary' => function ($query) {
-									$query->orderBy('kanchanchy_kyz');
+									$query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
 							}])->find($man_id),
 			'uruular' => Uruu::orderBy('name')->get(),
 			'person' => Man::with('father')->where('id', $active_id)->first()
@@ -108,9 +108,9 @@ class SanjyraController extends Controller
 			$category = 'tarykhiy-insandar';
 		return view('sanjyra.famous.famous', [
 			'category' => Category::with(['men' => function ($query) {
-							$query->orderBy('image', 'desc');
+							$query->where('is_removed', '0')->orderBy('image', 'desc');
 					},'women' => function ($query) {
-							$query->orderBy('image', 'desc');
+							$query->where('is_removed', '0')->orderBy('image', 'desc');
 					}])->where('slug', $category)->get()->first(),
 			'categories' => Category::where('published', 1)->orderBy('title')->get()
 		]);
