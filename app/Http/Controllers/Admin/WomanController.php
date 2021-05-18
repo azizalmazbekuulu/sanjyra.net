@@ -160,6 +160,9 @@ class WomanController extends Controller
         }
 
         $woman->save();
+        
+        // Forget the cache
+        self::forgetWomanCache($woman);
 
         // Name
         $name = Name::where('name', $woman->name)->get()->first();
@@ -181,6 +184,9 @@ class WomanController extends Controller
         $woman->modified_by = auth()->user()->id;
         $woman->save();
 
+        // Forget the cache
+        self::forgetWomanCache($woman);
+
         $father = Man::find($woman->father_id);
 
         return redirect()->route('admin.man.edit', $father);
@@ -199,5 +205,21 @@ class WomanController extends Controller
         $woman->update(['image' => null]);
 
         return redirect()->route('admin.woman.edit', $woman);
+    }
+
+    /**
+     * Forget the man cache
+     * 
+     * @param  \App\Woman  $woman
+     */
+    public static function forgetWomanCache(Woman $woman)
+    {
+        cache()->forget('woman-query-'.$woman->id);
+        cache()->forget('woman-'.$woman->id);
+        if($woman->categories) {
+            foreach($woman->categories as $category) {
+                cache()->forget('famous-people-'.$category->slug);
+            }
+        }
     }
 }

@@ -176,6 +176,9 @@ class ManController extends Controller
             $man->save();
         }
 
+        // Forget cache
+        self::forgetManCache($man);
+
         // Name
         $name = Name::where('name', $man->name)->get()->first();
         if ($name == null)
@@ -194,6 +197,9 @@ class ManController extends Controller
         $man->is_removed = 1;
         $man->modified_by = auth()->user()->id;
         $man->save();
+
+        // Forget cache
+        self::forgetManCache($man);
         
         $father = Man::find($man->father_id);
         $father->update(['bala_sany' => ($father->bala_sany - 1)]);
@@ -216,6 +222,11 @@ class ManController extends Controller
         return redirect()->route('admin.man.edit', $man);
     }
 
+    /**
+     * Move up the man, change order
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     */
     public function up(Request $request)
     {
         $upman = Man::find($request['upid']);
@@ -223,5 +234,21 @@ class ManController extends Controller
         $upman->update(['kanchanchy_bala' => $request['upnum']]);
         $downman->update(['kanchanchy_bala' => $request['downnum']]);
         return redirect()->route('admin.man.edit', $upman);
+    }
+
+    /**
+     * Forget the man cache
+     * 
+     * @param  \App\Man  $man
+     */
+    public static function forgetManCache(Man $man)
+    {
+        cache()->forget('man-query-'.$man->id);
+        cache()->forget('man-'.$man->id);
+        if($man->categories) {
+            foreach($man->categories as $category) {
+                cache()->forget('famous-people-'.$category->slug);
+            }
+        }
     }
 }

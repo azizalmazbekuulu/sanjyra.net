@@ -68,7 +68,7 @@ class SanjyraController extends Controller
 
 	public function woman_show(Int $id)
 	{
-		$woman = cache()->rememberForever('women-query-'.$id, function() use ($id) {
+		$woman = cache()->rememberForever('woman-query-'.$id, function() use ($id) {
 			return Woman::find($id);
 		});
 		$man = cache()->rememberForever('man-query-'.$woman->father_id, function() use ($woman) {
