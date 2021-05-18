@@ -8,6 +8,7 @@ use App\Models\Uruu;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -110,14 +111,14 @@ class ManController extends Controller
         return view('admin.men.edit', [
             'active_man_id' => $man->id,
             'father' => Man::with(['children' => function ($query) {
-                                $query->orderBy('kanchanchy_bala');
+                                $query->where('is_removed', '0')->orderBy('kanchanchy_bala');
                             },'kyzdary' => function ($query) {
-                                $query->orderBy('kanchanchy_kyz');
+                                $query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
                             }])->find($father_id),
             'man'    => Man::with(['children' => function ($query) {
-                                $query->orderBy('kanchanchy_bala');
+                                $query->where('is_removed', '0')->orderBy('kanchanchy_bala');
                             },'kyzdary' => function ($query) {
-                                $query->orderBy('kanchanchy_kyz');
+                                $query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
                             }])->find($id),
             'categories' => Category::with('children')->where('parent_id', '0')->get(),
             'delimiter'  => '',
@@ -191,8 +192,9 @@ class ManController extends Controller
     public function destroy(Man $man)
     {
         $man->is_removed = 1;
+        $man->modified_by = auth()->user()->id;
         $man->save();
-
+        
         $father = Man::find($man->father_id);
         $father->update(['bala_sany' => ($father->bala_sany - 1)]);
 
