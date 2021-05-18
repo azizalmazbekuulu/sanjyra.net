@@ -90,6 +90,10 @@ class NameController extends Controller
 	public function update(Request $request, Name $name)
 	{
 		$name->update($request->except('name'));
+
+		// Forget the cache
+		self::forgetNameCache($name);
+
 		return redirect()->route('admin.name.index');
 	}
 
@@ -101,7 +105,20 @@ class NameController extends Controller
 	*/
 	public function destroy(Name $name)
 	{
+		// Forget the cache
+		self::forgetNameCache($name);
+		
 		$name->delete();
 		return redirect()->route('admin.name.index');
+	}
+
+	/**
+	 * Forget the name cache
+	 * 
+	* @param  \App\Name  $name
+	 */
+	public static function forgetNameCache(Name $name)
+	{
+		cache()->forget('name-'.$name->name);
 	}
 }
