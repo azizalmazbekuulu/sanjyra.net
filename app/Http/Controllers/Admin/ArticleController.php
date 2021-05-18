@@ -111,6 +111,9 @@ class ArticleController extends Controller
             $article->image = $request->file('photo')->store('article-image', 'public');
             $article->save();
         }
+
+        // Delete the cache
+        self::forgetArticleCache($article);
         
         return redirect()->route('admin.article.index');
     }
@@ -123,6 +126,9 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        // Delete the cache
+        self::forgetArticleCache($article);
+        
         Storage::delete($article->image);
         $article->categories()->detach();
         $article->delete();
@@ -143,5 +149,14 @@ class ArticleController extends Controller
         $article->update(['image' => null]);
 
         return redirect()->route('admin.article.edit', $article);
+    }
+
+    /**
+     * Forget the articles cache
+     */
+    public static function forgetArticleCache(Article $article)
+    {
+        cache()->forget('article-query-'.$article->slug);
+        cache()->forget('article-'.$article->slug);
     }
 }
