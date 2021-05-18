@@ -22,7 +22,6 @@ class CreateWomenTable extends Migration
             $table->string('mother_name')->nullable();
             $table->mediumText('info')->nullable();
             $table->text('image')->nullable();
-            $table->boolean('is_removed')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('modified_by')->nullable();
             $table->timestamps();
