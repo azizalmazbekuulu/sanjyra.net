@@ -153,6 +153,8 @@ class ArticleController extends Controller
 
     /**
      * Forget the articles cache
+     * 
+     * @param  \App\Article  $article
      */
     public static function forgetArticleCache(Article $article)
     {
