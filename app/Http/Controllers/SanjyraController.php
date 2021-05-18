@@ -37,7 +37,9 @@ class SanjyraController extends Controller
 
 	public function man(Int $id = 1)
 	{
-		$man = Man::find($id);
+		$man = cache()->rememberForever('man-query-'.$id, function() use ($id){
+			return Man::find($id);
+		});
 		$active_id = 1;
 		$man_id = 2;
 		$father_id = 1;
@@ -66,8 +68,12 @@ class SanjyraController extends Controller
 
 	public function woman_show(Int $id)
 	{
-		$woman = Woman::find($id);
-		$man = Man::find($woman->father_id);
+		$woman = cache()->rememberForever('women-query-'.$id, function() use ($id) {
+			return Woman::find($id);
+		});
+		$man = cache()->rememberForever('man-query-'.$woman->father_id, function() use ($woman) {
+			return Man::find($woman->father_id);
+		});
 		$active_id = 1;
 		$man_id = 2;
 		$father_id = 1;
