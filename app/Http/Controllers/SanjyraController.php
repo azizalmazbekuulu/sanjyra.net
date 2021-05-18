@@ -18,19 +18,21 @@ class SanjyraController extends Controller
 		$active_id = 1;
 		$man_id = 2;
 		$father_id = 1;
-	    return  view('sanjyra.home', [
-			'active_man_id' => $active_id,
-			'father' => Man::with(['children' => function ($query) {
-								$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
-						}])->find($father_id),
-			'man'    => Man::with(['children' => function ($query) {
-								$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
-						},'kyzdary' => function ($query) {
-								$query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
-						}])->find($man_id),
-			'uruular' => Uruu::orderBy('name')->get(),
-			'person' => Man::with('father')->where('id', $active_id)->first()
-		]); 
+		return cache()->remember('sanjyra', 3600*24*30, function() use ($active_id,$father_id,$man_id){
+			return  view('sanjyra.home', [
+				'active_man_id' => $active_id,
+				'father' => Man::with(['children' => function ($query) {
+									$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
+							}])->find($father_id),
+				'man'    => Man::with(['children' => function ($query) {
+									$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
+							},'kyzdary' => function ($query) {
+									$query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
+							}])->find($man_id),
+				'uruular' => Uruu::orderBy('name')->get(),
+				'person' => Man::with('father')->where('id', $active_id)->first()
+			])->render();
+		});
 	}
 
 	public function man(Int $id = 1)
