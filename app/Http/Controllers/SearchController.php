@@ -25,15 +25,23 @@ class SearchController extends Controller
         $query_article = "SELECT *
         FROM articles WHERE MATCH (title, description) AGAINST
         ('".$query."' IN NATURAL LANGUAGE MODE)";
-        $men = DB::select($query_men);
-        $women = DB::select($query_women);
-        $articles = DB::select($query_article);
-        return view('sanjyra.search.main_search_result',[
-            'men' => $men,
-            'women' => $women,
-            'articles' => $articles,
-            'query' => $query
-        ]);
+        $men = cache()->remember('main-search-query-men-'.$query, 86400, function() use ($query_men) {
+            return DB::select($query_men);
+        });
+        $women = cache()->remember('main-search-query-women-'.$query, 86400, function() use ($query_women) {
+            return DB::select($query_women);
+        });
+        $articles = cache()->remember('main-search-query-articles-'.$query, 86400, function() use ($query_article) {
+            return DB::select($query_article);
+        });
+        return cache()->remember('main-search-'.$query, 86400, function() use ($men,$women,$articles,$query) {
+            return view('sanjyra.search.main_search_result',[
+                'men' => $men,
+                'women' => $women,
+                'articles' => $articles,
+                'query' => $query
+            ])->render();
+        });
     }
 
     public function person_search(Request $request)
