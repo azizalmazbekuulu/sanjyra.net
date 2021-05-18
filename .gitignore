@@ -15,3 +15,5 @@ yarn-error.log
 /public/ckeditor
 *.log
 /public/.htaccess
+
+/storage/debugbar
