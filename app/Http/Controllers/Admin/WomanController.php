@@ -108,17 +108,17 @@ class WomanController extends Controller
         return view('admin.men.edit', [
             'active_man_id'   => $man->id,
             'active_woman' => Woman::with(['uuldary' => function ($query) {
-                                $query->orderBy('kanchanchy_bala');
+                                $query->where('is_removed', '0')->orderBy('kanchanchy_bala');
                             }])->find($woman->id),
             'father' => Man::with(['children' => function ($query) {
-                                $query->orderBy('kanchanchy_bala');
+                                $query->where('is_removed', '0')->orderBy('kanchanchy_bala');
                             },'kyzdary' => function ($query) {
-                                $query->orderBy('kanchanchy_kyz');
+                                $query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
                             }])->find($father_id),
             'man'    => Man::with(['children' => function ($query) {
-                                $query->orderBy('kanchanchy_bala');
+                                $query->where('is_removed', '0')->orderBy('kanchanchy_bala');
                             },'kyzdary' => function ($query) {
-                                $query->orderBy('kanchanchy_kyz');
+                                $query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
                             }])->find($id),
             'categories' => Category::with('children')->where('parent_id', '0')->get(),
             'delimiter'  => '',
@@ -178,6 +178,7 @@ class WomanController extends Controller
     public function destroy(Woman $woman)
     {
         $woman->is_removed = 1;
+        $woman->modified_by = auth()->user()->id;
         $woman->save();
 
         $father = Man::find($woman->father_id);

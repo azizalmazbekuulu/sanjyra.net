@@ -15,7 +15,7 @@ class AddIsRemovedColumnToWomen extends Migration
     {
         Schema::table('women', function (Blueprint $table) {
             if(!Schema::hasColumn('women', 'is_removed')) {
-                $table->boolean('is_removed')->nullable()->after('image');
+                $table->boolean('is_removed')->default('0')->after('info');
             }
         });
     }
