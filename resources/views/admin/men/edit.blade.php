@@ -35,6 +35,7 @@
 		<div class="col justify-content-center border border-dark rounded m-1" style="padding: 30px;">
 			@include('admin.men.search.person_search')
 			@include('admin.men.partials.tree')
+			@include('admin.men.partials.info-card')
 		</div>
 	</div>
 	<hr>

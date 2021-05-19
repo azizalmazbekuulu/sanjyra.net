@@ -30,7 +30,7 @@ class SanjyraController extends Controller
 									$query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
 							}])->find($man_id),
 				'uruular' => Uruu::orderBy('name')->get(),
-				'person' => Man::with('father')->where('id', $active_id)->first()
+				'person' => Man::where('id', $active_id)->first()
 			])->render();
 		});
 	}
@@ -48,7 +48,7 @@ class SanjyraController extends Controller
 			$man_id = $man->id;
 			$father_id = $man->father_id;
 		}
-		return cache()->rememberForever('man-'.$active_id, function() use ($active_id,$man_id,$father_id) {
+		return cache()->rememberForever('man-'.$active_id, function() use ($active_id,$man_id,$father_id,$man) {
 			return view('sanjyra.home', [
 				'active_man_id' => $active_id,
 				'father' => Man::with(['children' => function ($query) {
@@ -61,7 +61,7 @@ class SanjyraController extends Controller
 							}])->find($man_id),
 				'uruular' => Uruu::orderBy('name')->get(),
 				// Full generation
-				'person' => Man::with('father')->where('id', $active_id)->first()
+				'person' => $man
 			])->render();
 		});
 	}
@@ -69,27 +69,25 @@ class SanjyraController extends Controller
 	public function woman_show(Int $id)
 	{
 		$woman = cache()->rememberForever('woman-query-'.$id, function() use ($id) {
-			return Woman::find($id);
+			return Woman::with(['uuldary' => function ($query) {
+										$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
+								}, 'kyzdary' => function ($query) {
+										$query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
+								}])->find($id);
 		});
 		$man = cache()->rememberForever('man-query-'.$woman->father_id, function() use ($woman) {
 			return Man::find($woman->father_id);
 		});
-		$active_id = 1;
 		$man_id = 2;
 		$father_id = 1;
 		if ($man->id != 1) {
-			$active_id = $man->id;
 			$man_id = $man->id;
 			$father_id = $man->father_id;
 		}
-		return cache()->rememberForever('woman-'.$id, function() use ($active_id,$man_id,$father_id,$woman,$man) {
+		return cache()->rememberForever('woman-'.$id, function() use ($man_id,$father_id,$woman,$man) {
 			return view('sanjyra.home', [
 				'active_man_id'   => $man->id,
-				'active_woman' => Woman::with(['uuldary' => function ($query) {
-										$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
-								}, 'kyzdary' => function ($query) {
-										$query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
-								}])->find($woman->id),
+				'active_woman' => $woman,
 				'father' => Man::with(['children' => function ($query) {
 										$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
 								}])->find($father_id),
@@ -99,7 +97,7 @@ class SanjyraController extends Controller
 										$query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
 								}])->find($man_id),
 				'uruular' => Uruu::orderBy('name')->get(),
-				'person' => Man::with('father')->where('id', $active_id)->first()
+				'person' => $man
 			])->render();
 		});
 	}
@@ -159,5 +157,33 @@ class SanjyraController extends Controller
 		return cache()->rememberForever('literatures', function() {
 			return view('sanjyra.literatures.literatures')->render();
 		});
+	}
+
+	/**
+	 * Check if the man exists in the men table
+	 * 
+	 * @param integer $id
+	 * @return bool
+	 */
+	public static function is_sanjyra_man(int $id)
+	{
+		if (Man::find($id)) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Check if the woman exists in the women table
+	 * 
+	 * @param integer $id
+	 * @return bool
+	 */
+	public static function is_sanjyra_woman(int $id)
+	{
+		if (Woman::find($id)) {
+			return true;
+		}
+		return false;
 	}
 }

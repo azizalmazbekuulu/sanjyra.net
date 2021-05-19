@@ -14,7 +14,7 @@
 			@if ($active_man->mother_name != '' || $active_man->mother_id != 0)
 			<dt class="pr-10 italic underline">Энеси:</dt>
 			<dd">
-				@if ($active_man->mother_id != 0)
+				@if ($active_man->mother_id != 0 && App\Http\Controllers\SanjyraController::is_sanjyra_woman($active_man->mother_id))
 				<a class="text-blue-600 underline hover:no-underline hover:text-blue-500" href="{{route('woman-show', $active_man->mother)}}">
 					{{$active_man->mother->name}}
 				</a>
@@ -42,7 +42,7 @@
 						<dl class="p-2 sm:p-4 flex">
 							<dt class="pr-7 italic underline">Энеси:</dt>
 							<dd>
-								@if ($active_woman->mother_id != 0)
+								@if ($active_woman->mother_id != 0 && App\Http\Controllers\SanjyraController::is_sanjyra_woman($active_woman->mother_id))
 								<a href="{{route('woman-show', $active_woman->mother)}}">
 									{{$active_woman->mother->name}}
 								</a>

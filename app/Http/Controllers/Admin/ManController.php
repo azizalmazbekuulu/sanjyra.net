@@ -8,8 +8,6 @@ use App\Models\Uruu;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ManController extends Controller
@@ -77,6 +75,10 @@ class ManController extends Controller
             $name->number_of_name++;
             $name->save();
         }
+
+        // Forget the father's cache
+        self::forgetManCache($man);
+
         return redirect()->route('admin.man.edit', $father);
     }
 
@@ -107,7 +109,6 @@ class ManController extends Controller
             $id = $man->id;
             $father_id = $man->father_id;
         }
-        
         return view('admin.men.edit', [
             'active_man_id' => $man->id,
             'father' => Man::with(['children' => function ($query) {
@@ -123,7 +124,7 @@ class ManController extends Controller
             'categories' => Category::with('children')->where('parent_id', '0')->get(),
             'delimiter'  => '',
             'uruular' => Uruu::orderBy('name')->get(),
-            'person' => Man::with('father')->where('id', $man->id)->get()->first()
+            'person' => $man
         ]);
     }
 
@@ -150,7 +151,10 @@ class ManController extends Controller
             // Бир туугандарынын катарын өзгөртүү жана бала санын өзгөртүү
             $father = Man::find($man->father_id);
             for($i = 0; $i<$father->bala_sany - $man->kanchanchy_bala; $i++) {
-                $father->children->where('kanchanchy_bala', $i + $man->kanchanchy_bala + 1)->first()->update(['kanchanchy_bala' => $i + $man->kanchanchy_bala]);
+                $father->children
+                    ->where('kanchanchy_bala', $i + $man->kanchanchy_bala + 1)
+                    ->first()
+                    ->update(['kanchanchy_bala' => $i + $man->kanchanchy_bala]);
             }
             $father->update(['bala_sany' => $father->bala_sany - 1]);
 
@@ -200,7 +204,7 @@ class ManController extends Controller
 
         // Forget cache
         self::forgetManCache($man);
-        
+
         $father = Man::find($man->father_id);
         $father->update(['bala_sany' => ($father->bala_sany - 1)]);
 
@@ -231,8 +235,8 @@ class ManController extends Controller
     {
         $upman = Man::find($request['upid']);
         $downman = Man::find($request['downid']);
-        $upman->update(['kanchanchy_bala' => $request['upnum']]);
-        $downman->update(['kanchanchy_bala' => $request['downnum']]);
+        $upman->update(['kanchanchy_bala' => $downman->kanchanchy_bala]);
+        $downman->update(['kanchanchy_bala' => $upman->kanchanchy_bala]);
         return redirect()->route('admin.man.edit', $upman);
     }
 
@@ -247,6 +251,15 @@ class ManController extends Controller
         cache()->forget('man-'.$man->id);
         if($man->categories) {
             foreach($man->categories as $category) {
+                cache()->forget('famous-people-'.$category->slug);
+            }
+        }
+
+        // Forget the father's cache
+        cache()->forget('man-query-'.$man->father_id);
+        cache()->forget('man-'.$man->father_id);
+        if($man->father->categories) {
+            foreach($man->father->categories as $category) {
                 cache()->forget('famous-people-'.$category->slug);
             }
         }
