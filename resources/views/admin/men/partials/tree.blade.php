@@ -61,7 +61,7 @@
 					</div>
 					</div>
 				</td>
-				@if ($child->id == $man->id && $man->bala_sany > 0)
+				@if ($child->id == $man->id && count($man->children) > 0)
 				<td>
 					<svg height="20" width="40">
 						<line x1="0" y1="10" x2="40" y2="10" style="stroke:rgb(0,0,0);stroke-width:2" />
@@ -77,49 +77,51 @@
 			@endphp
 		@endforeach
 		</table>
-		<table class="tree">
-		@for($p = 1; $p<$man->kanchanchy_bala; $p++)
-		<tr>
-			<td>
-				<div class="btn text-nowrap font-weight-bold border border-dark rounded-pill bg-primary text-white w-100 h-100" style="color: #f8f9fa !important; background-color: #f8f9fa !important;border-color: #f8f9fa !important;">Table</div>
-			</td>
-		</tr>
-		@endfor
-		@php
-			$i = 1;
-			$children = $man->children;
-		@endphp
-		@foreach($children as $key => $child)
+		@if (count($man->children) > 0)
+			<table class="tree">
+			@for($p = 1; $p<$man->kanchanchy_bala; $p++)
 			<tr>
 				<td>
-					<div class="container">
-					<div class="row flex-nowrap">
-						<a class="btn text-nowrap font-weight-bold border border-dark rounded-pill bg-primary text-white w-100 h-100"
-							href="{{ route('admin.man.edit', $child->id) }}">
-							{{ $child->name }}
-						</a>
-						@if($man->bala_sany > 1)
-							@if ($i != 1)
-								@php
-									$upid = $child->id;
-									$downid = $children[$key - 1];
-								@endphp
-								<!-- Up Button nebere -->
-								<div class="p-0 text-center">
-								<form action="{{ route('admin.man.up') }}" method="post">
-									@csrf
-									<input type="hidden" name="upid" value="{{ $upid }}">
-									<input type="hidden" name="downid" value="{{ $downid }}">
-									<button type="submit" name="submit" class="change-button">&#8673;</button>
-								</form>
-								</div>
-							@endif
-						@endif
-					</div>
-					</div>
+					<div class="btn text-nowrap font-weight-bold border border-dark rounded-pill bg-primary text-white w-100 h-100" style="color: #f8f9fa !important; background-color: #f8f9fa !important;border-color: #f8f9fa !important;">Table</div>
 				</td>
 			</tr>
-		@endforeach
-		</table>
+			@endfor
+			@php
+				$i = 1;
+				$children = $man->children;
+			@endphp
+			@foreach($children as $key => $child)
+				<tr>
+					<td>
+						<div class="container">
+						<div class="row flex-nowrap">
+							<a class="btn text-nowrap font-weight-bold border border-dark rounded-pill bg-primary text-white w-100 h-100"
+								href="{{ route('admin.man.edit', $child->id) }}">
+								{{ $child->name }}
+							</a>
+							@if($man->bala_sany > 1)
+								@if ($i != 1)
+									@php
+										$upid = $child->id;
+										$downid = $children[$key - 1];
+									@endphp
+									<!-- Up Button nebere -->
+									<div class="p-0 text-center">
+									<form action="{{ route('admin.man.up') }}" method="post">
+										@csrf
+										<input type="hidden" name="upid" value="{{ $upid }}">
+										<input type="hidden" name="downid" value="{{ $downid }}">
+										<button type="submit" name="submit" class="change-button">&#8673;</button>
+									</form>
+									</div>
+								@endif
+							@endif
+						</div>
+						</div>
+					</td>
+				</tr>
+			@endforeach
+			</table>
+		@endif
 	</div>
 </div>

@@ -148,6 +148,9 @@ class ManController extends Controller
         // Changing the Father ID
         if ($man->father_id != $request['father_id']) {
 
+            // Forget old father's cache
+            self::forgetManCache($man);
+
             // Бир туугандарынын катарын өзгөртүү жана бала санын өзгөртүү
             $father = Man::find($man->father_id);
             for($i = 0; $i<$father->bala_sany - $man->kanchanchy_bala; $i++) {

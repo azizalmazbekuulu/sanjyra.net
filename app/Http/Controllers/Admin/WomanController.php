@@ -153,6 +153,9 @@ class WomanController extends Controller
         // Changing the Father ID
         if ($woman->father_id != $request['father_id']) {
 
+            // Forget old father's cache
+            self::forgetWomanCache($woman);
+
             // Бир туугандарынын катарын өзгөртүү
             $father = Man::with('kyzdary')->find($woman->father_id);
             foreach ($father->kyzdary as $child)
@@ -177,7 +180,7 @@ class WomanController extends Controller
         }
 
         $woman->save();
-        
+
         // Forget the cache
         self::forgetWomanCache($woman);
 
