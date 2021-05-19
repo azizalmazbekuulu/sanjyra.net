@@ -74,6 +74,9 @@ class WomanController extends Controller
             $name->save();
         }
 
+        // Forget father's cache
+        self::forgetWomanCache($woman);
+
         return redirect()->route('admin.man.edit', $father);
     }
 
@@ -123,7 +126,7 @@ class WomanController extends Controller
             'categories' => Category::with('children')->where('parent_id', '0')->get(),
             'delimiter'  => '',
             'uruular' => Uruu::orderBy('name')->get(),
-            'person' => Man::with('father')->where('id', $man->id)->get()->first()
+            'person' => $man
         ]);
     }
 
@@ -147,6 +150,23 @@ class WomanController extends Controller
         $woman->mother_name = $request['mother_name'];
         $woman->info = $request['info'];
 
+        // Changing the Father ID
+        if ($woman->father_id != $request['father_id']) {
+
+            // Forget old father's cache
+            self::forgetWomanCache($woman);
+
+            // Бир туугандарынын катарын өзгөртүү
+            $father = Man::with('kyzdary')->find($woman->father_id);
+            foreach ($father->kyzdary as $child)
+                if ($child->kanchanchy_kyz > $woman->kanchanchy_kyz)
+                    $child->update(['kanchanchy_kyz' => ($child->kanchanchy_kyz - 1)]);
+
+            // Адамдын катарын жана атасынын IDсин өзгөртүү
+            $woman->update(['kanchanchy_kyz' => count($father->kyzdary) + 1,
+                            'father_id' => $request['father_id']]);
+        }
+        
         //Categories
         $woman->categories()->detach();
         if ($request->input('categories')) :
@@ -160,7 +180,7 @@ class WomanController extends Controller
         }
 
         $woman->save();
-        
+
         // Forget the cache
         self::forgetWomanCache($woman);
 
@@ -218,6 +238,15 @@ class WomanController extends Controller
         cache()->forget('woman-'.$woman->id);
         if($woman->categories) {
             foreach($woman->categories as $category) {
+                cache()->forget('famous-people-'.$category->slug);
+            }
+        }
+
+        // Forget the father's cache
+        cache()->forget('man-query-'.$woman->father_id);
+        cache()->forget('man-'.$woman->father_id);
+        if($woman->father->categories) {
+            foreach($woman->father->categories as $category) {
                 cache()->forget('famous-people-'.$category->slug);
             }
         }

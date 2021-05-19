@@ -23,7 +23,7 @@
 				</x-person-link>
 			</td>
 			<td>
-			@if($man->id === $child->id && $man->bala_sany>0)
+			@if($man->id === $child->id && count($man->children) > 0)
 				<svg height="20" width="40">
 					<line x1="0" y1="10" x2="40" y2="10" style="stroke:rgb(0,0,0);stroke-width:2" />
 					Балдары:
@@ -33,22 +33,24 @@
 		</tr>
 		@endforeach
 	</table>
-	<table class="tree">
-		@for($p = 1; $p<$man->kanchanchy_bala; $p++)
-		<tr>
-			<td>
-				<div class="inline-block py-1 px-3 w-full h-full border border-green-50 font-bold leading-6 text-green-50 text-center">Table</div>
-			</td>
-		</tr>
-		@endfor
-		@foreach($man->children as $child)
-		<tr>
-			<td>
-				<x-person-link :href="route('man', $child->id)">
-					{{ $child->name }}
-				</x-person-link>
-			</td>
-		</tr>
-		@endforeach
-	</table>
+	@if (count($man->children) > 0)
+		<table class="tree">
+			@for($p = 1; $p<$man->kanchanchy_bala; $p++)
+			<tr>
+				<td>
+					<div class="inline-block py-1 px-3 w-full h-full border border-green-50 font-bold leading-6 text-green-50 text-center">Table</div>
+				</td>
+			</tr>
+			@endfor
+			@foreach($man->children as $child)
+			<tr>
+				<td>
+					<x-person-link :href="route('man', $child->id)">
+						{{ $child->name }}
+					</x-person-link>
+				</td>
+			</tr>
+			@endforeach
+		</table>
+	@endif
 </div>
