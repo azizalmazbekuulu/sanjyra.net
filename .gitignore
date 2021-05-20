@@ -1,6 +1,6 @@
 /node_modules
-/public/hot
-/public/storage
+/public_html/hot
+/public_html/storage
 /storage/*.key
 /vendor
 .env
@@ -12,13 +12,11 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 
-/public/ckeditor
+/public_html/ckeditor
 *.log
-/public/.htaccess
+/public_html/.htaccess
 
 /storage/debugbar
 
 *.log.*
 *.zip
-
-public_html
