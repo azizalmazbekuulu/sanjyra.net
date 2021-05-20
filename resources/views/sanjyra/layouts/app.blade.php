@@ -74,6 +74,9 @@
 <a href="https://www.facebook.com/groups/471779633154987/" target="_blank" rel="noopener"><img src="{{asset('storage/logos/Facebook.png')}}" class="mx-auto" width="30" height="30" alt="Sanjyra.net Facebook"></a><hr class="my-2">
 Email: <a class="underline hover:no-underline hover:text-gray-700" href="mailto:info@sanjyra.net">info@sanjyra.net</a><hr class="my-2">
 <!-- WWW.NET.KG , code for http://sanjyra.net -->
+<a href="https://www.net.kg/stat.php?id=6021&amp;fromsite=6021" target="_blank" rel="noopener">
+    <img id="netkgimg" class="mx-auto" src="https://www.net.kg/img.php?id=6021" alt="WWW.NET.KG" width="88" height="31" />
+</a>
 <script>
 java1=""+"refer="+escape(document.referrer)+"&amp;page="+escape(window.location.href)
     + "c=yes&java=now&razresh="+screen.width+'x'+screen.height+"&cvet="+
@@ -81,9 +84,6 @@ java1=""+"refer="+escape(document.referrer)+"&amp;page="+escape(window.location.
     screen.colorDepth:screen.pixelDepth) + "&jscript=1.3&rand="+Math.random();
     document.getElementById("netkgimg").setAttribute('src', "https://www.net.kg/img.php?id=6021&"+java1);
 </script>
-<a href="https://www.net.kg/stat.php?id=6021&amp;fromsite=6021" target="_blank" rel="noopener">
-    <img id="netkgimg" class="mx-auto" src="https://www.net.kg/img.php?id=6021" alt="WWW.NET.KG" width="88" height="31" />
-</a>
 <!-- /WWW.NET.KG -->
 </div>
 </div>
