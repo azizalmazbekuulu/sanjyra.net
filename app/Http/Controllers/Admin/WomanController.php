@@ -99,7 +99,7 @@ class WomanController extends Controller
      */
     public function edit(Woman $woman)
     {
-        $man = Man::find($woman->father_id);
+        $man = Man::where('is_removed', '0')->find($woman->father_id);
         if ($man->id == 1) {
             $id = 2;
             $father_id = 1;
@@ -112,17 +112,17 @@ class WomanController extends Controller
             'active_man_id'   => $man->id,
             'active_woman' => Woman::with(['uuldary' => function ($query) {
                                 $query->where('is_removed', '0')->orderBy('kanchanchy_bala');
-                            }])->find($woman->id),
+                            }])->where('is_removed', '0')->find($woman->id),
             'father' => Man::with(['children' => function ($query) {
                                 $query->where('is_removed', '0')->orderBy('kanchanchy_bala');
                             },'kyzdary' => function ($query) {
                                 $query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
-                            }])->find($father_id),
+                            }])->where('is_removed', '0')->find($father_id),
             'man'    => Man::with(['children' => function ($query) {
                                 $query->where('is_removed', '0')->orderBy('kanchanchy_bala');
                             },'kyzdary' => function ($query) {
                                 $query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
-                            }])->find($id),
+                            }])->where('is_removed', '0')->find($id),
             'categories' => Category::with('children')->where('parent_id', '0')->get(),
             'delimiter'  => '',
             'uruular' => Uruu::orderBy('name')->get(),

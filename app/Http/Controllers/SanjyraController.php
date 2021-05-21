@@ -23,14 +23,14 @@ class SanjyraController extends Controller
 				'active_man_id' => $active_id,
 				'father' => Man::with(['children' => function ($query) {
 									$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
-							}])->find($father_id),
+							}])->find($father_id)->where('is_removed', '0'),
 				'man'    => Man::with(['children' => function ($query) {
 									$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
 							},'kyzdary' => function ($query) {
 									$query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
-							}])->find($man_id),
+							}])->where('is_removed', '0')->find($man_id),
 				'uruular' => Uruu::orderBy('name')->get(),
-				'person' => Man::where('id', $active_id)->first()
+				'person' => Man::where('is_removed', '0')->find($active_id)
 			])->render();
 		});
 	}
@@ -38,7 +38,7 @@ class SanjyraController extends Controller
 	public function man(Int $id = 1)
 	{
 		$man = cache()->rememberForever('man-query-'.$id, function() use ($id){
-			return Man::find($id);
+			return Man::where('is_removed', '0')->find($id);
 		});
 		$active_id = 1;
 		$man_id = 2;
@@ -53,12 +53,12 @@ class SanjyraController extends Controller
 				'active_man_id' => $active_id,
 				'father' => Man::with(['children' => function ($query) {
 									$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
-							}])->find($father_id),
+							}])->where('is_removed', '0')->find($father_id),
 				'man'    => Man::with(['children' => function ($query) {
 									$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
 							},'kyzdary' => function ($query) {
 									$query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
-							}])->find($man_id),
+							}])->where('is_removed', '0')->find($man_id),
 				'uruular' => Uruu::orderBy('name')->get(),
 				// Full generation
 				'person' => $man
@@ -73,10 +73,10 @@ class SanjyraController extends Controller
 										$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
 								}, 'kyzdary' => function ($query) {
 										$query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
-								}])->find($id);
+								}])->where('is_removed', '0')->find($id);
 		});
 		$man = cache()->rememberForever('man-query-'.$woman->father_id, function() use ($woman) {
-			return Man::find($woman->father_id);
+			return Man::where('is_removed', '0')->find($woman->father_id);
 		});
 		$man_id = 2;
 		$father_id = 1;
@@ -90,12 +90,12 @@ class SanjyraController extends Controller
 				'active_woman' => $woman,
 				'father' => Man::with(['children' => function ($query) {
 										$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
-								}])->find($father_id),
+								}])->where('is_removed', '0')->find($father_id),
 				'man'    => Man::with(['children' => function ($query) {
 										$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
 								},'kyzdary' => function ($query) {
 										$query->where('is_removed', '0')->orderBy('kanchanchy_kyz');
-								}])->find($man_id),
+								}])->where('is_removed', '0')->find($man_id),
 				'uruular' => Uruu::orderBy('name')->get(),
 				'person' => $man
 			])->render();

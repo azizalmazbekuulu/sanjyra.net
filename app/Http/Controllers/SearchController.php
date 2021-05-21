@@ -18,10 +18,10 @@ class SearchController extends Controller
         $query = $request['query'];
         $query_men = "SELECT *
         FROM men WHERE MATCH (info) AGAINST
-        ('".$query."' IN NATURAL LANGUAGE MODE)";
+        ('".$query."' IN NATURAL LANGUAGE MODE) AND is_removed='0'";
         $query_women = "SELECT *
         FROM women WHERE MATCH (info) AGAINST
-        ('".$query."' IN NATURAL LANGUAGE MODE)";
+        ('".$query."' IN NATURAL LANGUAGE MODE) AND is_removed='0'";
         $query_article = "SELECT *
         FROM articles WHERE MATCH (title, description) AGAINST
         ('".$query."' IN NATURAL LANGUAGE MODE)";
@@ -82,12 +82,14 @@ class SearchController extends Controller
         t2.father_id AS grand_id,t3.name AS grand_name, $relevance
         FROM men t1,men t2,men t3 
         WHERE t1.father_id=t2.id AND t2.father_id=t3.id AND t1.name LIKE '%$name%' 
+                AND t1.is_removed='0'  AND t2.is_removed='0'
                 AND t2.name LIKE '%$father_name%'$man_uruusu
         ORDER BY relevance desc";
         $query_women = "SELECT t1.id,t1.name,t2.uruusu,t2.name AS father_name,t2.id AS father_id,
         t2.father_id AS grand_id,t3.name AS grand_name, $relevance
         FROM women t1,men t2,men t3 
         WHERE t1.father_id=t2.id AND t2.father_id=t3.id AND t1.name LIKE '%$name%' 
+                AND t1.is_removed='0'  AND t2.is_removed='0'
                 AND t2.name LIKE '%$father_name%'$woman_uruusu
         ORDER BY relevance desc";
         $men = DB::select($query_men);
