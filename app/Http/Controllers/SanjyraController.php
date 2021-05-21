@@ -23,7 +23,7 @@ class SanjyraController extends Controller
 				'active_man_id' => $active_id,
 				'father' => Man::with(['children' => function ($query) {
 									$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
-							}])->find($father_id)->where('is_removed', '0'),
+							}])->where('is_removed', '0')->find($father_id),
 				'man'    => Man::with(['children' => function ($query) {
 									$query->where('is_removed', '0')->orderBy('kanchanchy_bala');
 							},'kyzdary' => function ($query) {
