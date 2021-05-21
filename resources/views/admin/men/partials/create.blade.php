@@ -1,5 +1,5 @@
 <div class="container border pt-3 bg-secondary text-light">
-	@if ($active_man->bala_sany == 0 && $active_man->kyzdary->first() == null)
+	@if (count($active_man->children) == 0 && $active_man->kyzdary->first() == null)
 	<form onsubmit="if(confirm('Уулду өчүрүү керекпи?')){ return true }else{ return false }" action="{{route('admin.man.destroy', $active_man)}}" method="post">
 		<input type="hidden" name="_method" value="DELETE">
 		@csrf
@@ -7,11 +7,13 @@
 	</form>
 	@endif
 	@isset($active_woman)
-	<form onsubmit="if(confirm('Кызды өчүрүү керекпи?')){ return true }else{ return false }" action="{{route('admin.woman.destroy', $active_woman)}}" method="post">
-		<input type="hidden" name="_method" value="DELETE">
-		@csrf
-		<button type="submit" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> Кызды өчүрүү</button>
-	</form>
+		@if ($active_woman->kyzdary->first() == null)
+			<form onsubmit="if(confirm('Кызды өчүрүү керекпи?')){ return true }else{ return false }" action="{{route('admin.woman.destroy', $active_woman)}}" method="post">
+				<input type="hidden" name="_method" value="DELETE">
+				@csrf
+				<button type="submit" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> Кызды өчүрүү</button>
+			</form>
+		@endif
 	@endisset
 	<form action="{{route('admin.man.store')}}" method="post">
 		@csrf
