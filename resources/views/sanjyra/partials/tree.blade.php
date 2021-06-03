@@ -1,5 +1,5 @@
-<div class="p-3 flex flex-nowrap text-center mx-auto w-max max-w-full overflow-x-auto">
-	<table class="tree">
+<div class="p-3 flex flex-nowrap items-start text-center mx-auto w-max max-w-full overflow-x-auto">
+	<table style="border-spacing: 0px">
 		<tr>
 			<td>
 				<x-person-link :href="route('man', $father->id)" :active="$father->id === $active_man_id">
@@ -14,7 +14,7 @@
 			</td>
 		</tr>
 	</table>
-	<table class="tree">
+	<table style="border-spacing: 0px">
 		@foreach($father->children as $child)
 		<tr>
 			<td>
@@ -34,7 +34,7 @@
 		@endforeach
 	</table>
 	@if (count($man->children) > 0)
-		<table class="tree">
+		<table style="border-spacing: 0px">
 			@for($p = 1; $p<$man->kanchanchy_bala; $p++)
 			<tr>
 				<td>
