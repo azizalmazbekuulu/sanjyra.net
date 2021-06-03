@@ -24,7 +24,8 @@
 <link rel="manifest" href="/manifest.json">
 
 <!-- Styles -->
-<link rel="stylesheet" href="{{ asset('css/app.css') }}?v=2.0.1">
+<link rel="stylesheet" href="{{ asset('css/app.css') }}?v=2.0.5">
+<link rel="stylesheet" href="{{ asset('css/sanjyra.css') }}?v=2.0.5">
 <style>
 .hiddenimp {
     display: none !important;

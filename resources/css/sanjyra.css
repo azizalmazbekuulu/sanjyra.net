@@ -5,11 +5,3 @@ td {
     padding: 0px;
     white-space: nowrap;
 }
-
-.sharing a {
-    margin: 0 5px;
-}
-
-.sharing a:hover {
-    cursor: pointer;
-}
