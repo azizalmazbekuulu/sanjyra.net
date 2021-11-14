@@ -109,6 +109,7 @@ class ManController extends Controller
             $id = $man->id;
             $father_id = $man->father_id;
         }
+
         return view('admin.men.edit', [
             'active_man_id' => $man->id,
             'father' => Man::with(['children' => function ($query) {
@@ -142,9 +143,9 @@ class ManController extends Controller
             $name->number_of_name--;
             $name->save();
         }
-        
+
         $man->update($request->except('categories', 'photo', 'father_id'));
-        
+
         // Changing the Father ID
         if ($man->father_id != $request['father_id']) {
 
@@ -231,21 +232,33 @@ class ManController extends Controller
 
     /**
      * Move up the man, change order
-     * 
+     *
      * @param  \Illuminate\Http\Request  $request
      */
     public function up(Request $request)
     {
         $upman = Man::find($request['upid']);
         $downman = Man::find($request['downid']);
+        if ($upman->kanchanchy_bala === $downman->kanchanchy_bala) {
+            $brothers = $upman->where('father_id', $upman->father_id)->get();
+            foreach ($brothers as $key => $brother) {
+                if ($brother->id === $downman->id) {
+                    $brother->update(['kanchanchy_bala' => $key + 1]);
+                    continue;
+                } elseif ($brother->id === $upman->id) {
+                    $brother->update(['kanchanchy_bala' => $key + 1]);
+                }
+            }
+        }
+        $up_man_order = $upman->kanchanchy_bala;
         $upman->update(['kanchanchy_bala' => $downman->kanchanchy_bala]);
-        $downman->update(['kanchanchy_bala' => $upman->kanchanchy_bala]);
+        $downman->update(['kanchanchy_bala' => $up_man_order]);
         return redirect()->route('admin.man.edit', $upman);
     }
 
     /**
      * Forget the man cache
-     * 
+     *
      * @param  \App\Man  $man
      */
     public static function forgetManCache(Man $man)
