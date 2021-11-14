@@ -4,6 +4,12 @@
         $count = count($father->children) + $man_child_count;
         $sons = $father->children;
         $childs = $man->children;
+        $is_father_id = false;
+        $man_index = 1;
+        foreach ($sons as $key => $son) {
+            if ($son->id === $man->id)
+                $man_index = $key;
+        }
     @endphp
     <table style="border-spacing: 0px">
         @for($i = 0; $i <= $count; $i++)
@@ -25,10 +31,10 @@
                 </td>
                 <td>
                     @if(isset($sons[$i]))
-                    <x-person-link :href="route('man', $sons[$i]->id)"
-                                   :active="$sons[$i]->id === $active_man_id">
-                        {{ $sons[$i]->name }}
-                    </x-person-link>
+                        <x-person-link :href="route('man', $sons[$i]->id)"
+                                       :active="$sons[$i]->id === $active_man_id">
+                            {{ $sons[$i]->name }}
+                        </x-person-link>
                     @endif
                 </td>
                 <td>
@@ -41,12 +47,18 @@
                 </td>
                 <td>
                     @php
-                    $order = $i - $man->kanchanchy_bala + 1;
+                        if (isset($sons[$i]) && $sons[$i]->id === $man->id)
+                            $is_father_id = true;
                     @endphp
-                    @if(isset($childs[$order]) && $man_child_count > 0 && $man->kanchanchy_bala >= $i + 1)
-                        <x-person-link :href="route('man', $childs[$order]->id)">
-                            {{ $childs[$order]->name }}
-                        </x-person-link>
+                    @if($man_child_count > 0 && $is_father_id)
+                        @php
+                            $order = $i - $man_index;
+                        @endphp
+                        @if(isset($childs[$order]))
+                            <x-person-link :href="route('man', $childs[$order]->id)">
+                                {{ $childs[$order]->name }}
+                            </x-person-link>
+                        @endif
                     @endif
                 </td>
             </tr>
