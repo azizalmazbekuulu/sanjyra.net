@@ -1,56 +1,55 @@
 <div class="p-3 flex flex-nowrap items-start text-center mx-auto w-max max-w-full overflow-x-auto">
-	<table style="border-spacing: 0px">
-		<tr>
-			<td>
-				<x-person-link :href="route('man', $father->id)" :active="$father->id === $active_man_id">
-					{{ $father->name }}
-				</x-person-link>
-			</td>
-			<td>
-				<svg height="20" width="40">
-					<line x1="0" y1="10" x2="40" y2="10" style="stroke:rgb(0,0,0);stroke-width:2" />
-					Балдары:
-				</svg>
-			</td>
-		</tr>
-	</table>
-	<table style="border-spacing: 0px">
-		@foreach($father->children as $child)
-		<tr>
-			<td>
-				<x-person-link :href="route('man', $child->id)" :active="$child->id === $active_man_id">
-					{{ $child->name }}
-				</x-person-link>
-			</td>
-			<td>
-			@if($man->id === $child->id && count($man->children) > 0)
-				<svg height="20" width="40">
-					<line x1="0" y1="10" x2="40" y2="10" style="stroke:rgb(0,0,0);stroke-width:2" />
-					Балдары:
-				</svg>
-			@endif
-			</td>
-		</tr>
-		@endforeach
-	</table>
-	@if (count($man->children) > 0)
-		<table style="border-spacing: 0px">
-			@for($p = 1; $p<$man->kanchanchy_bala; $p++)
-			<tr>
-				<td>
-					<div class="inline-block py-1 px-3 w-full h-full border border-green-50 font-bold leading-6 text-green-50 text-center">Table</div>
-				</td>
-			</tr>
-			@endfor
-			@foreach($man->children as $child)
-			<tr>
-				<td>
-					<x-person-link :href="route('man', $child->id)">
-						{{ $child->name }}
-					</x-person-link>
-				</td>
-			</tr>
-			@endforeach
-		</table>
-	@endif
+    @php
+        $man_child_count = count($man->children);
+        $count = count($father->children) + $man_child_count;
+        $sons = $father->children;
+        $childs = $man->children;
+    @endphp
+    <table style="border-spacing: 0px">
+        @for($i = 0; $i <= $count; $i++)
+            <tr>
+                <td>
+                    @if($i === 0)
+                        <x-person-link :href="route('man', $father->id)" :active="$father->id === $active_man_id">
+                            {{ $father->name }}
+                        </x-person-link>
+                    @endif
+                </td>
+                <td>
+                    @if($i === 0)
+                        <svg height="20" width="40">
+                            <line x1="0" y1="10" x2="40" y2="10" style="stroke:rgb(0,0,0);stroke-width:2"/>
+                            -----
+                        </svg>
+                    @endif
+                </td>
+                <td>
+                    @if(isset($sons[$i]))
+                    <x-person-link :href="route('man', $sons[$i]->id)"
+                                   :active="$sons[$i]->id === $active_man_id">
+                        {{ $sons[$i]->name }}
+                    </x-person-link>
+                    @endif
+                </td>
+                <td>
+                    @if(isset($sons[$i]) && $man->id === $sons[$i]->id && $man_child_count > 0)
+                        <svg height="20" width="40">
+                            <line x1="0" y1="10" x2="40" y2="10" style="stroke:rgb(0,0,0);stroke-width:2"/>
+                            Балдары:
+                        </svg>
+                    @endif
+                </td>
+                <td>
+                    @php
+                    $order = $i - $man->kanchanchy_bala + 1;
+                    @endphp
+                    @if(isset($childs[$order]) && $man_child_count > 0 && $man->kanchanchy_bala >= $i + 1)
+                        <x-person-link :href="route('man', $childs[$order]->id)">
+                            {{ $childs[$order]->name }}
+                        </x-person-link>
+                    @endif
+                </td>
+            </tr>
+        @endfor
+    </table>
 </div>
